@@ -1,13 +1,19 @@
 ---
-import Hamburger from "./Hamburger.astro";
-import Navigation from "./Navigation.astro";
 import ThemeIcon from "./ThemeIcon.astro";
 ---
 
-<header>
-    <nav>
-        <Hamburger />
-        <ThemeIcon />
-        <Navigation />
+<header class="border-b border-gray-200 dark:border-white/30 bg-white dark:bg-transparent">
+    <nav class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between w-full">
+        <div class="flex-1 flex justify-start">
+            <a href="/" class="text-2xl font-bold text-gray-900 dark:text-white border border-gray-900 dark:border-white rounded px-6 py-1 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+                新手程序员
+            </a>
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="border border-gray-900 dark:border-white rounded p-2 hover:bg-gray-100 dark:hover:bg-white/10 transition-colors" aria-label="GitHub">
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.867 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.529 2.341 1.088 2.91.832.091-.647.35-1.088.636-1.339-2.22-.253-4.555-1.112-4.555-4.951 0-1.093.39-1.987 1.029-2.686-.103-.253-.446-1.272.098-2.65 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.748-1.025 2.748-1.025.546 1.378.202 2.397.1 2.65.64.699 1.028 1.593 1.028 2.686 0 3.848-2.337 4.695-4.565 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.749 0 .268.18.579.688.481C19.135 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+            </a>
+            <ThemeIcon />
+        </div>
     </nav>
 </header>

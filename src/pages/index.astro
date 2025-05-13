@@ -1,9 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Greeting from '../components/Greeting';
 const pageTitle = "新手程序员";
+
+interface Post {
+  frontmatter: {
+    tags: string[];
+  };
+}
+
+const allPosts = Object.values(
+  import.meta.glob<Post>("./posts/*.md", { eager: true })
+);
+const tags = [
+  ...new Set(allPosts.flatMap((post) => post.frontmatter.tags)),
+];
 ---
 <BaseLayout pageTitle={pageTitle}>
-  <h2>My awesome blog subtitle</h2>
-  <Greeting client:load messages={["Hej", "Hallo", "Hola", "Habari"]} />
+  <div class="flex flex-wrap justify-center gap-4 mt-8">
+    {tags.map((tag) => (
+      <a
+        href={`/tags/${tag}`}
+        class="px-6 py-3 rounded-xl border border-gray-200 dark:border-white/30 text-gray-900 dark:text-white text-lg font-medium bg-white dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-white/10 transition-all shadow-md backdrop-blur-sm"
+      >
+        {tag}
+      </a>
+    ))}
+  </div>
 </BaseLayout>
