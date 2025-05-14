@@ -1,11 +1,16 @@
-import rss, { pagesGlobToRssItems } from "@astrojs/rss";
+import rss from '@astrojs/rss';
+import { getCollection } from 'astro:content';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 
 export async function GET(context) {
+	const posts = await getCollection('posts');
 	return rss({
-		title: "新手程序员",
-		description: "新手程序员",
+		title: SITE_TITLE,
+		description: SITE_DESCRIPTION,
 		site: context.site,
-		items: await pagesGlobToRssItems(import.meta.glob("./**/*.md")),
-		customData: '<language>zh-cn</language>',
+		items: posts.map((post) => ({
+			...post.data,
+			link: `/posts/${post.id}/`,
+		})),
 	});
 }
