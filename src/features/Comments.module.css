@@ -1,0 +1,132 @@
+.section {
+  margin-top: 50px;
+}
+.section h2 {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+.hint {
+  font-size: 13px;
+  color: var(--muted);
+}
+.empty {
+  font-size: 13px;
+  color: var(--muted);
+  text-align: center;
+  padding: 35px;
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  margin: 25px 0;
+}
+.login {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 23px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  margin-top: 20px;
+  background: var(--surface);
+}
+.login strong {
+  font-size: 13px;
+}
+.login p {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 7px 0 0;
+  line-height: 1.8;
+}
+.login button {
+  margin-left: auto;
+  white-space: nowrap;
+}
+.comment {
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+}
+.commentHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 12px;
+}
+.commentHead strong {
+  font-size: 12px;
+}
+.commentHead time {
+  font-size: 10px;
+  color: var(--muted);
+}
+.markdown {
+  font-size: 14px;
+}
+.markdown p {
+  margin: 10px 0;
+}
+.commentActions {
+  display: flex;
+  gap: 14px;
+}
+.commentActions button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 11px;
+  padding: 4px 0;
+}
+.reply {
+  margin-left: 30px;
+  padding-left: 15px;
+  border-left: 2px solid var(--line);
+}
+.pending {
+  margin-top: 20px;
+}
+.form {
+  margin-top: 25px;
+}
+.form > label {
+  display: inline-block;
+  font-size: 13px;
+  margin: 0 12px 12px 0;
+}
+.form textarea {
+  resize: vertical;
+  line-height: 1.8;
+}
+.formFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 12px 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+@media (max-width: 550px) {
+  .login {
+    flex-wrap: wrap;
+    padding: 18px;
+  }
+  .login > svg {
+    display: none;
+  }
+  .login button {
+    margin-left: 0;
+  }
+  .reply {
+    margin-left: 10px;
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "semicoder",
+  "main": "src/server.ts",
+  "compatibility_date": "2026-09-20",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+  },
+  "assets": {
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*", "/_serverFn/*", "/admin", "/admin/*", "/healthz"],
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "none",
+  },
+  "vars": {
+    "SITE_URL": "http://localhost:3000",
+    "TURNSTILE_SITE_KEY": "",
+    "APP_ENV": "development",
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "semicoder-local",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "drizzle",
+    },
+  ],
+  "triggers": {
+    "crons": ["0 3 * * *"],
+  },
+  "env": {
+    "staging": {
+      "name": "semicoder-staging",
+      "vars": {
+        "SITE_URL": "https://staging.semicoder.dev",
+        "TURNSTILE_SITE_KEY": "0x4AAAAAAE9yqJBjO8mlcEGi",
+        "APP_ENV": "staging",
+      },
+      "routes": [
+        {
+          "pattern": "staging.semicoder.dev",
+          "custom_domain": true,
+        },
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "semicoder-staging",
+          "database_id": "baabf7ac-5020-4404-b075-98a4439f1129",
+          "migrations_dir": "drizzle",
+        },
+      ],
+    },
+    "production": {
+      "name": "semicoder-production",
+      "vars": {
+        "SITE_URL": "https://semicoder.dev",
+        "TURNSTILE_SITE_KEY": "0x4AAAAAAE9yqdnzHy_0maR8",
+        "APP_ENV": "production",
+      },
+      "routes": [
+        {
+          "pattern": "semicoder.dev",
+          "custom_domain": true,
+        },
+        {
+          "pattern": "www.semicoder.dev",
+          "custom_domain": true,
+        },
+      ],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "semicoder-production",
+          "database_id": "1ca2aca5-8f28-4b75-a106-e523d31351ff",
+          "migrations_dir": "drizzle",
+        },
+      ],
+    },
+  },
+  "account_id": "5bbccee387535cd240d58ed6a0c63f5c",
+}

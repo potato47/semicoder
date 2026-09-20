@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": false,
+  "endOfLine": "lf",
+  "proseWrap": "preserve",
+  "ignorePatterns": [
+    "src/generated/**",
+    "src/routeTree.gen.ts",
+    "worker-configuration.d.ts",
+    "docs/generated.md",
+    "public/pagefind/**",
+    "dist/**",
+    ".wrangler/**",
+    "bun.lock"
+  ]
+}
