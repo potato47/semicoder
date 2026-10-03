@@ -1,25 +1,73 @@
 {
-	"name": "semicoder",
-	"type": "module",
-	"version": "0.0.1",
-	"scripts": {
-		"dev": "astro dev",
-		"build": "astro build",
-		"preview": "astro preview",
-		"astro": "astro"
-	},
-	"dependencies": {
-		"@astrojs/react": "^4.2.7",
-		"@astrojs/rss": "^4.0.11",
-		"astro": "^5.7.10",
-		"@astrojs/mdx": "^4.2.6",
-		"@astrojs/sitemap": "^3.4.0",
-		"react": "^19.1.0",
-		"react-dom": "^19.1.0"
-	},
-	"devDependencies": {
-		"@types/react": "^19.1.2",
-		"@types/react-dom": "^19.1.3",
-		"unocss": "^66.1.1"
-	}
+  "name": "semicoder",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run content:generate && vite --host 127.0.0.1",
+    "prepare": "bun run content:generate && wrangler types",
+    "build": "bun run content:generate && vite build",
+    "build:check": "node scripts/build-check.ts",
+    "preview": "vite preview --host 127.0.0.1",
+    "lint": "oxlint --max-warnings=0",
+    "lint:fix": "oxlint --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "typecheck": "tsc --noEmit",
+    "content:generate": "bun scripts/content.ts",
+    "content:check": "bun scripts/content.ts --check",
+    "docs:generate": "bun scripts/docs.ts",
+    "docs:check": "bun scripts/docs.ts --check",
+    "docs:impact": "bun scripts/docs-impact.ts",
+    "check": "bun run lint && bun run fmt:check && bun run typecheck && bun run content:check && bun run docs:check",
+    "test": "bun test tests/unit",
+    "test:workers": "vitest run",
+    "db:local": "wrangler d1 migrations apply DB --local",
+    "db:generate": "drizzle-kit generate",
+    "deploy:staging": "bun scripts/deploy.ts staging",
+    "deploy:production": "bun scripts/deploy.ts production",
+    "smoke": "bun scripts/smoke.ts"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "5.103.1",
+    "@tanstack/react-router": "1.170.38",
+    "@tanstack/react-start": "1.168.56",
+    "better-auth": "1.7.5",
+    "drizzle-orm": "0.45.2",
+    "lucide-react": "1.47.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-markdown": "10.1.0",
+    "remark-gfm": "4.0.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "1.56.0",
+    "@cloudflare/vitest-plugin": "1.1.13",
+    "@cloudflare/workers-types": "5.20260920.1",
+    "@mdx-js/mdx": "3.1.1",
+    "@mdx-js/rollup": "3.1.1",
+    "@types/bun": "1.4.2",
+    "@types/node": "26.6.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "6.1.1",
+    "drizzle-kit": "0.31.10",
+    "gray-matter": "4.0.3",
+    "jsonc-parser": "3.3.1",
+    "oxfmt": "0.68.0",
+    "oxlint": "1.83.0",
+    "pagefind": "1.5.2",
+    "rehype-pretty-code": "0.14.5",
+    "rehype-slug": "6.0.0",
+    "remark-frontmatter": "5.0.0",
+    "typescript": "7.0.2",
+    "vite": "8.3.0",
+    "vitest": "4.1.0",
+    "wrangler": "4.135.0"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "packageManager": "bun@1.4.2"
 }

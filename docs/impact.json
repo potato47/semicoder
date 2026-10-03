@@ -1,0 +1,11 @@
+{
+  "src/server/": ["docs/data.md"],
+  "src/routes/": ["docs/architecture.md"],
+  "scripts/content": ["docs/content.md"],
+  "content/": ["docs/content.md"],
+  "drizzle/": ["docs/data.md", "docs/deployment.md"],
+  "wrangler.jsonc": ["docs/deployment.md"],
+  ".github/": ["docs/deployment.md"],
+  ".ox": ["docs/development.md"],
+  "package.json": ["docs/development.md"]
+}

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /_serverFn/
+Sitemap: https://semicoder.dev/sitemap.xml
