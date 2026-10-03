@@ -8,9 +8,33 @@
 
 ## 发布
 
-GitHub Actions 使用 staging / production environments，分别设置 CLOUDFLARE_API_TOKEN、CLOUDFLARE_ACCOUNT_ID 和所需 Worker secrets。Token 按 Worker/D1 最小权限配置。production environment 应设审核保护。外部 PR 不运行带密钥部署。
+GitHub Actions 工作流为 [`.github/workflows/ci.yml`](../.github/workflows/ci.yml)，在仓库 Actions 中显示为 **Quality and release**。使用 Bun 1.4.2、Node 24 和锁文件安装依赖，显式生成内容与 Worker 类型后开始检查。
 
-PR 执行安装、生成、只读检查、测试和构建。主分支顺序执行预发布迁移、构建、部署、冒烟；通过后执行生产迁移、构建、部署、冒烟。登录密钥通过 Cloudflare 预先配置，不传入构建。上线前用真实 GitHub 账号验证登录、评论、审批、封禁与注销。
+| 触发方式               | 行为                                                                                                    |
+| ---------------------- | ------------------------------------------------------------------------------------------------------- |
+| Pull request           | 只读检查、单元测试、Workers/D1 测试、构建、草稿与搜索校验、生成路由一致性和文档影响检查；不读取部署密钥 |
+| 推送或合并到 `main`    | 质量检查通过后发布 staging；预发布冒烟通过后进入 production，遵循生产环境审核规则                       |
+| Actions → Run workflow | 分支必须选 `main`；`target=staging`（默认）只发预发布，`target=production` 依次发布两个环境             |
+
+同一分支串行发布，新提交不会中断正在执行的数据库迁移或部署；PR 新提交可取消旧检查。质量检查最多 15 分钟，每个环境部署最多 20 分钟。每个环境先检查凭据是否存在，再安装、生成、检查、按目标环境构建、校验产物、应用 Git 中的 D1 增量迁移、部署 Worker 与 Assets、运行冒烟。预发布失败会阻止生产发布；冒烟失败会将该环境任务标红，但不会自动回滚已经部署的代码或数据库。
+
+### 首次接通 GitHub
+
+1. 在仓库 **Settings → Environments** 创建 `staging` 和 `production`。两者的 **Deployment branches and tags** 选择 **Selected branches and tags**，只允许分支 `main`，不添加 tag 规则。production 设置 **Required reviewers**，发布到生产前由维护者审核；staging 无需审核。
+2. 按 [Cloudflare GitHub Actions 指南](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/) 创建专用 API Token，限定本项目 Cloudflare account；需要 Workers Scripts 编辑、D1 编辑，以及本项目自定义域所需的 Zone 读取与 Workers Routes 编辑权限，zone 限定为 `semicoder.dev`。不要使用 Global API Key，也不要提交 token。
+3. 在两个 environment 各自添加以下 **Environment secrets**。同名 secret 由当前部署 environment 提供；OAuth 和 Turnstile 私钥仍只保存在 Cloudflare Worker 中。
+
+| Secret                  | 配置值                                                    |
+| ----------------------- | --------------------------------------------------------- |
+| `CLOUDFLARE_API_TOKEN`  | 上一步创建的部署 token                                    |
+| `CLOUDFLARE_ACCOUNT_ID` | `wrangler.jsonc` 的 `account_id`，需与 token 所属账号一致 |
+
+4. 确认 `wrangler.jsonc` 中两个环境的 D1 ID、域名和 Turnstile site key 都是已创建资源，且对应 Worker 已设置本文“环境”一节列出的运行时 secrets。工作流不会创建 OAuth App 或自动填充运行时密钥；`/healthz` 冒烟会阻止未就绪服务被视为发布成功。
+5. 将新站代码与工作流合入 `main` 后，在 Actions 查看 **Quality checks → Deploy staging → Deploy production**。生产有审核保护时，选择 **Review deployments** 批准后继续。需要重试时可对 `main` 手动运行，保持相同检查与预发布验证流程。
+
+GitHub CLI 用户也可用 `gh secret set CLOUDFLARE_API_TOKEN --repo potato47/semicoder --env staging` 交互式录入；分别替换 secret 名与环境完成四项设置，不把 token 放在命令参数、日志或 PR 中。详细规则见 [GitHub environment 文档](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments)。
+
+登录密钥通过 Cloudflare 预先配置，不传入构建。上线前用真实 GitHub 账号验证登录、评论、审批、封禁与注销。确认自动部署接通必须以 GitHub 中对应 commit 的实际运行和线上冒烟结果为准，只有本地检查或工作流文件并不代表已经发布。
 
 ## 观察与费用
 
