@@ -43,4 +43,6 @@
 
 当前真实内容包含 FIA、麻辣烫与本站。FIA 和麻辣烫分别在 `content/projects/fia/`、`content/projects/malatang/` 维护，首页通过 `featured` 选择。资料和版本差异见 [内容核对记录](project-sources.md)。新增正式安装包时先核实 Release、文件、平台与签名状态，再更新麻辣烫安装页；框架 `.tgz` 不能标为应用下载。网站不代理安装包，不在访问时请求 GitHub 或 npm。
 
+麻辣烫 SDK 开发文档采用 `@semicoder/malatang-sdk`；安装教程的固定旧提交仍使用原 scope，因此保留旧快照的导入说明。npm 发布状态与应用 DMG 状态分别核实，不因新增发布工作流就标记 SDK 已上线。
+
 主操作按钮悬停使用强调背景与深色前景 `--on-accent`，避免浅深色模式下白字与橙色背景对比不足。

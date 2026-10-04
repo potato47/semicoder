@@ -14,6 +14,7 @@
 - 公开源码基线：`300453def9ac082b21922f3216f4f41be25a89ef`。依据 `README.md`、`shared/api.ts`、`packages/sdk/README.md`、`packages/sdk/build.ts`、`frontend/PluginManager.tsx`、`release/runtime-lock.json` 与发布说明。
 - 匿名 GitHub Releases 当前只返回两个 `fia-runtime-*` 预发布，没有应用 DMG。未使用会误导读者的 latest 安装包按钮。
 - 安装教程固定源码提交和 `fia-runtime-8650f80f4a11` 附件，先 SHA-256 校验再解压到相邻依赖目录；SDK 从源码 workspace 获取，未声称已发布 npm。
+- 2026-10-04 包名迁移：基于本地麻辣烫 `f6ab337e0e97` 的后续改动，介绍与插件指南改为 `@semicoder/malatang-sdk`；固定安装快照仍使用旧 scope，指南保留明确替换说明。SDK npm 流程采用独立 `sdk-v*` 标签；源码尚未推送、npm 尚未发布，不能将本地迁移描述为线上验收。
 - 官方登录与一次真实翻译的历史验证来自项目记录；本站集成不代表新增真实模型、账号或自动更新验收。
 
 ## 维护入口

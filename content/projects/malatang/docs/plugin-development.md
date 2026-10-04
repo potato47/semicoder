@@ -8,7 +8,9 @@ date: "2026-10-04"
 
 ## 准备源码工作区
 
-先完成 [源码安装](/malatang/docs/installation)。`@malatang/sdk` 当前尚未发布到 npm；在麻辣烫仓库的 `examples/` 下开发，可直接使用 workspace SDK。
+先完成 [源码安装](/malatang/docs/installation)。`@semicoder/malatang-sdk` 当前尚未发布到 npm；在麻辣烫仓库的 `examples/` 下开发，可直接使用 workspace SDK。
+
+本页采用新的 `@semicoder` 包名。安装教程锁定的旧源码快照仍使用 `@malatang/sdk`；在旧快照上操作时，把本页清单和导入中的 `@semicoder/malatang-sdk` 替换为 `@malatang/sdk`。新名称需要包含包名迁移的源码版本，以 `packages/sdk/package.json` 的 `name` 为准。
 
 每个插件拥有 React 页面，可选后端，使用版本化 manifest 描述入口。React、主题和基础 UI 来自宿主，不再创建独立 React 运行时。
 
@@ -22,7 +24,7 @@ date: "2026-10-04"
   "version": "0.1.0",
   "type": "module",
   "files": ["dist"],
-  "devDependencies": { "@malatang/sdk": "workspace:*" },
+  "devDependencies": { "@semicoder/malatang-sdk": "workspace:*" },
   "malatang": {
     "schemaVersion": 1,
     "id": "my-notes",
@@ -45,8 +47,8 @@ date: "2026-10-04"
 
 ```tsx
 import { useEffect, useState } from "react";
-import { createPluginClient } from "@malatang/sdk/client";
-import { Button, PageHeader, Panel } from "@malatang/sdk/ui";
+import { createPluginClient } from "@semicoder/malatang-sdk/client";
+import { Button, PageHeader, Panel } from "@semicoder/malatang-sdk/ui";
 
 const host = createPluginClient("my-notes");
 
