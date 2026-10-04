@@ -10,7 +10,7 @@ date: "2026-10-04"
 
 先完成 [源码安装](/malatang/docs/installation)。`@semicoder/malatang-sdk` 当前尚未发布到 npm；在麻辣烫仓库的 `examples/` 下开发，可直接使用 workspace SDK。
 
-本页采用新的 `@semicoder` 包名。安装教程锁定的旧源码快照仍使用 `@malatang/sdk`；在旧快照上操作时，把本页清单和导入中的 `@semicoder/malatang-sdk` 替换为 `@malatang/sdk`。新名称需要包含包名迁移的源码版本，以 `packages/sdk/package.json` 的 `name` 为准。
+本页与安装指南统一使用 **v0.1.0** 源码，SDK 包名为 `@semicoder/malatang-sdk`。应用 DMG 已发布不代表 SDK npm 包已发布；插件开发继续使用源码 workspace，无需更换为旧包名。
 
 每个插件拥有 React 页面，可选后端，使用版本化 manifest 描述入口。React、主题和基础 UI 来自宿主，不再创建独立 React 运行时。
 
@@ -131,7 +131,7 @@ bun pm pack
 
 前端通过 `host.models.list()` 获取宿主模型，用 `host.models.start()` 创建生成任务。订阅 `models.onChange`、`runs.onChange` 后读取快照，重连再读，并在卸载时取消订阅。没有可用模型时提示去设置，不提供虚构结果。
 
-后端使用 `definePlugin` 和 `defineMethod` 导出方法，manifest 增加 `backend: "dist/backend.js"`；输入由 schema 校验。完整示例见 [内置译文源码](https://github.com/potato47/malatang/tree/main/plugins/translate) 和 [SDK 文档](https://github.com/potato47/malatang/blob/main/packages/sdk/README.md)。
+后端使用 `definePlugin` 和 `defineMethod` 导出方法，manifest 增加 `backend: "dist/backend.js"`；输入由 schema 校验。完整示例见 [内置译文源码](https://github.com/potato47/malatang/tree/v0.1.0/plugins/translate) 和 [SDK 文档](https://github.com/potato47/malatang/blob/v0.1.0/packages/sdk/README.md)。
 
 ## 页面生命周期与主题
 

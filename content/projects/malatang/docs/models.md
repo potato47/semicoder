@@ -10,7 +10,9 @@ date: "2026-10-04"
 
 模型服务由宿主管理。插件只拿到模型标识和公开配置，通过 SDK 调用；密钥不会通过业务 API 返回前端。
 
-[安装指南](/malatang/docs/installation) 锁定的源码快照 `300453def9ac` 使用 `@earendil-works/pi-ai@1.0.0` 的 provider 目录和协议适配，并支持自定义 OpenAI-compatible Chat Completions 服务。本页以该可复现快照为基线；其他源码版本以其 `package.json` 为准。预设目录随应用依赖更新，不代表所有服务已用真实账号逐一验收。
+麻辣烫 **0.1.0** 使用固定版本 `@earendil-works/pi-ai@1.0.2` 的 provider 目录和协议适配，并支持自定义 OpenAI-compatible Chat Completions 服务。[安装指南](/malatang/docs/installation) 的 DMG 与源码均对应这一版本；其他源码版本以其 `package.json` 为准。预设目录随应用依赖更新，不代表所有服务已用真实账号逐一验收。
+
+从较早的开发版本升级时，已确认的模型 ID 重命名会自动迁移；已从目录移除且没有明确替代项的模型会保留配置和历史，并提示重新选择。应用不会擅自换用其他模型，需在设置中重新选择可用项后再生成。
 
 ## API Key 或 Token
 

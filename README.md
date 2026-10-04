@@ -29,6 +29,6 @@ bun run build
 
 工程约定见 [AGENTS.md](AGENTS.md)，完整说明见 [docs](docs/README.md)，环境资源和上线步骤见 [部署手册](docs/deployment.md)。网站内容在 `content/`，与工程文档分离。
 
-FIA、麻辣烫和本站的项目介绍与文档已使用真实资料；博客仍保留明确标注的示例。安装说明区分已发布 npm 包、框架固定构建与尚未公开的应用安装包。正式部署前仍需核对 D1 ID、域名、GitHub OAuth 和 Turnstile，并完成预发布验收。没有凭据时不会把功能模拟声称为线上验证。
+FIA、麻辣烫和本站的项目介绍与文档已使用真实资料；博客仍保留明确标注的示例。安装说明区分 FIA npm 包、框架固定构建、麻辣烫正式 DMG 与尚未发布 npm 的插件 SDK。正式部署前仍需核对 D1 ID、域名、GitHub OAuth 和 Turnstile，并完成预发布验收。没有凭据时不会把功能模拟声称为线上验证。
 
 旧 Astro 实现保留在 Git 标签 `archive/astro-before-rebuild`。

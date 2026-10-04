@@ -14,7 +14,7 @@ date: "2026-10-04"
 | ------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
 | FIA npm 0.16.1      | [npm](https://www.npmjs.com/package/@semicoder/fia)                                    | 已发布的 FIA 4 基础框架，含预编译 Apple Silicon 运行时               |
 | 麻辣烫固定 FIA 构建 | [框架归档](https://github.com/potato47/malatang/releases/tag/fia-runtime-8650f80f4a11) | 源码基线 `8650f80f4a11`，用于麻辣烫构建；包版本同为 0.16.1，内容不同 |
-| 麻辣烫应用          | [下载与安装说明](/malatang/docs/installation)                                          | 当前可从源码构建；公开应用 DMG 尚未发布                              |
+| 麻辣烫应用          | [下载与安装说明](/malatang/docs/installation)                                          | 0.1.0 正式 DMG 已发布，支持 macOS 14+ / Apple Silicon                |
 
 框架归档 `.tgz` 是开发依赖，不是双击安装的应用。FIA 4 的“4”也不是 npm 版本号。
 

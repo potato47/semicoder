@@ -2,33 +2,54 @@
 id: "docs-malatang-installation"
 slug: "installation"
 title: "下载与安装"
-description: "查看发布状态，或用公开源码和固定 FIA 运行时构建应用。"
+description: "下载麻辣烫正式 DMG，或使用同一版本的公开源码自行构建。"
 date: "2026-10-04"
 ---
 
-## 下载状态
+## 下载麻辣烫
 
-**截至 2026-10-04，尚无公开的麻辣烫应用 DMG。** 可以查看 [GitHub Releases](https://github.com/potato47/malatang/releases) 获取后续发行信息。当前以 `fia-runtime-` 命名的预发布只包含框架依赖，不是麻辣烫安装包。
+麻辣烫官网位于 [Semicoder 的麻辣烫项目页](/malatang)，本页是统一安装入口。
 
-正式发行的安装方式是打开 DMG，将 `Malatang.app` 拖到 Applications，然后从应用程序目录启动。当前可按下面步骤自行构建；不需要等待 FIA 源码仓库公开，也不需要编译 Swift。
+**当前版本：0.1.0（Build 1）。** 支持 **macOS 14 及以上、Apple Silicon（M 系列）**；当前不支持 Intel、Windows 或 Linux。应用和 DMG 已使用 Developer ID 签名，DMG 已通过 Apple 公证。
 
-## 准备环境
+- [下载麻辣烫 0.1.0 DMG](https://github.com/potato47/malatang/releases/download/v0.1.0/Malatang-0.1.0-1-mac-arm64.dmg)
+- [下载 SHA-256 校验文件](https://github.com/potato47/malatang/releases/download/v0.1.0/Malatang-0.1.0-1-mac-arm64.dmg.sha256)
+- [查看本次发行说明](https://github.com/potato47/malatang/releases/tag/v0.1.0)
 
-需要 macOS 14+、Apple Silicon、Git 和 Bun 1.4.2。下载 Bun 的方法见 [官方安装说明](https://bun.sh/docs/installation)。以下命令在一个新建的工作目录执行，不要覆盖已有 `fia` 或 `malatang` 项目。
+使用应用无需安装 Git、Bun 或 Swift。首次安装：
 
-## 获取已核对的源码
+1. 下载并打开 DMG。
+2. 将 `Malatang.app` 拖入 **Applications / 应用程序**。
+3. 推出磁盘映像，从“应用程序”打开麻辣烫。
+4. 前往 [第一次使用](/malatang/docs/getting-started)，配置自己的模型服务或体验随手记插件。
+
+如需校验下载完整性，将 DMG 和校验文件放在同一目录，进入该目录执行：
+
+```bash
+shasum -a 256 -c Malatang-0.1.0-1-mac-arm64.dmg.sha256
+```
+
+应显示 `Malatang-0.1.0-1-mac-arm64.dmg: OK`。校验失败时重新下载，不继续安装。
+
+## 从源码构建
+
+仅开发者需要本节。以下固定使用 **v0.1.0** 源码（提交 `f1b1c7fc60120c9af1c41dd14b1c35b532fc6bc8`）和该版本的 FIA 归档，提供与本次发行一致的功能；本机构建不会自动获得官方签名和公证。
+
+需要 Git 和 Bun 1.4.2；系统要求与 DMG 相同。下载 Bun 的方法见 [官方安装说明](https://bun.sh/docs/installation)。固定框架包自带 Host 和 Bun，不需要 FIA 源码或 Swift 编译器。以下命令在新建目录执行，不要覆盖已有 `fia` 或 `malatang` 项目。
+
+### 获取固定源码
 
 ```bash
 mkdir malatang-workspace
 cd malatang-workspace
 git clone https://github.com/potato47/malatang.git
 cd malatang
-git checkout 300453def9ac082b21922f3216f4f41be25a89ef
+git checkout f1b1c7fc60120c9af1c41dd14b1c35b532fc6bc8
 ```
 
-本页使用固定提交。若使用其他版本，请同时使用该版本 `release/runtime-lock.json` 中的框架依赖，不能混用任意 npm 同版本包。
+若使用其他版本，请同时使用该版本 `release/runtime-lock.json` 中的框架依赖，不能混用任意 npm 同版本包。
 
-## 准备固定 FIA 运行时
+### 准备固定 FIA 运行时
 
 在 `malatang` 目录执行：
 
@@ -48,7 +69,7 @@ tar -xzf fia-runtime.tgz --strip-components=1 -C ../fia/packages/cli
 bun install --frozen-lockfile --ignore-scripts
 ```
 
-归档自带 Host 和 Bun，且包含麻辣烫需要的框架改进。安装后会得到下面的相邻目录结构：
+安装后会得到相邻目录：
 
 ```text
 malatang-workspace/
@@ -56,7 +77,7 @@ malatang-workspace/
 └── malatang/            应用源码
 ```
 
-## 运行或构建
+### 运行或构建
 
 开发体验：
 
@@ -72,10 +93,10 @@ bun run build
 open dist/Malatang.app
 ```
 
-构建结果位于 `dist/Malatang.app`，是本机开发构建，不是正式签名公证发行版。运行最终应用不需要系统 Bun。开发实例与构建应用的数据各自独立，模型配置和插件不会自动迁移。
-
-完成后阅读 [第一次使用](/malatang/docs/getting-started)。如果需要开发插件，继续 [插件开发](/malatang/docs/plugin-development)。
+构建结果位于 `dist/Malatang.app`。开发实例与安装应用的数据各自独立，模型配置和插件不会自动迁移。开发插件可继续阅读 [插件开发](/malatang/docs/plugin-development)，本版本使用 `@semicoder/malatang-sdk`。
 
 ## 后续更新
 
-正式安装包配置签名更新源后，可以从「设置 → 应用更新」检查。更新由用户确认，任务忙碌时推迟；运行时变化需要重新下载安装包。当前尚无公开稳定更新清单，因此不能据此承诺已可在线升级。
+稳定更新源已发布 0.1.0（Build 1）清单，可在「设置 → 应用更新」检查当前发行。此次是首个正式版本，跨版本升级仍未实测；使用早期本地构建或验收包时，请从上方 DMG 安装正式版本。
+
+更新由用户确认，模型、插件或登录任务忙碌时推迟。原生运行时变化需要从本页重新下载完整安装包；代码更新不会替你升级独立安装的插件。
