@@ -1,20 +1,54 @@
 import { readFile, readdir } from "node:fs/promises";
-import { resolve, join, sep } from "node:path";
+import { resolve, join, sep, dirname } from "node:path";
 import { pathToFileURL, fileURLToPath } from "node:url";
 import matter from "gray-matter";
-import type { ContentEntry } from "../src/lib/site.ts";
+import { markdownFiles } from "./content-files.ts";
+import { searchLiteral } from "../src/lib/search.ts";
+import type { SearchRecord } from "../src/lib/search.ts";
+import type { ContentCatalog, ContentEntry } from "../src/lib/site.ts";
 
 const root = resolve("dist/client");
 const entries: ContentEntry[] = JSON.parse(await readFile("src/generated/manifest.json", "utf8"));
 const privateMarkers: string[] = [];
-for (const kind of ["blog", "projects", "docs"]) {
-  for (const filename of await readdir(`content/${kind}`)) {
-    if (!/\.mdx?$/.test(filename)) continue;
-    const { data, content } = matter(await readFile(`content/${kind}/${filename}`, "utf8"));
-    if (data.draft)
-      privateMarkers.push(data.id, ...content.split("\n").filter((x) => x.length > 30));
-  }
+const catalog: ContentCatalog = JSON.parse(await readFile("src/generated/catalog.json", "utf8"));
+const sources = await Promise.all(
+  (await markdownFiles("content")).map(async (file) => ({
+    file,
+    ...matter(await readFile(file, "utf8")),
+  })),
+);
+const draftProjects = sources
+  .filter((source) => source.file.endsWith("/index.mdx") && source.data.draft)
+  .map((source) => dirname(source.file) + sep);
+for (const source of sources) {
+  if (source.data.draft || draftProjects.some((directory) => source.file.startsWith(directory)))
+    privateMarkers.push(
+      source.data.id,
+      ...source.content.split("\n").filter((line) => line.length > 30),
+    );
 }
+const sitemap = await readFile(join(root, "sitemap.xml"), "utf8");
+for (const path of catalog.publicPaths) {
+  const html = await readFile(join(root, path, "index.html"), "utf8");
+  if (!html.includes("新手程序员")) throw new Error(`预渲染缺少正文 ${path}`);
+  if (!sitemap.includes(`<loc>https://semicoder.dev${path}</loc>`))
+    throw new Error(`sitemap 缺少页面 ${path}`);
+  if (path !== "/" && !html.includes(`rel="canonical" href="https://semicoder.dev${path}"`))
+    throw new Error(`canonical 不匹配 ${path}`);
+}
+for (const entry of entries) {
+  const html = await readFile(join(root, entry.path, "index.html"), "utf8");
+  if (!html.includes(entry.title) || !html.includes("data-pagefind-body"))
+    throw new Error(`预渲染缺少内容 ${entry.path}`);
+  for (const heading of entry.toc)
+    if (!html.includes(`id="${heading.id}"`))
+      throw new Error(`目录锚点无效 ${entry.path}#${heading.id}`);
+}
+const sitemapPaths = [...sitemap.matchAll(/<loc>https:\/\/semicoder\.dev([^<]*)<\/loc>/g)].map(
+  (match) => match[1],
+);
+if (JSON.stringify([...sitemapPaths].sort()) !== JSON.stringify([...catalog.publicPaths].sort()))
+  throw new Error("sitemap 包含过期路径");
 async function scan(directory: string): Promise<void> {
   for (const file of await readdir(directory, { withFileTypes: true })) {
     const path = join(directory, file.name);
@@ -47,7 +81,7 @@ interface SearchIndex {
   options(options: { baseUrl: string }): Promise<void>;
   search(
     query: string,
-    options?: { filters: { type: string } },
+    options?: { filters: Record<string, string> },
   ): Promise<{
     results: { data(): Promise<{ url: string }> }[];
   }>;
@@ -56,11 +90,35 @@ interface SearchIndex {
 const index: SearchIndex = await import(pathToFileURL(join(searchRoot, "pagefind.js")).href);
 try {
   await index.options({ baseUrl: "/" });
+  const fallback: SearchRecord[] = JSON.parse(
+    await readFile(join(searchRoot, "fallback.json"), "utf8"),
+  );
   for (const entry of entries) {
     const found = await index.search(entry.title, { filters: { type: entry.kind } });
     const hits = await Promise.all(found.results.map((result) => result.data()));
     if (!hits.some((hit) => hit.url.replace(/\/$/, "") === entry.path))
       throw new Error(`中文搜索或类型筛选不可用：${entry.path}`);
+    if (entry.kind === "docs") {
+      const scoped = await index.search(entry.title, {
+        filters: { type: "docs", projectId: entry.projectId },
+      });
+      const scopedHits = await Promise.all(scoped.results.map((result) => result.data()));
+      const expectedPaths = new Set(
+        entries
+          .filter((item) => item.kind === "docs" && item.projectId === entry.projectId)
+          .map((item) => item.path),
+      );
+      for (const result of [
+        scopedHits,
+        searchLiteral(fallback, entry.title, "docs", entry.projectId),
+      ]) {
+        if (
+          !result.some((hit) => hit.url.replace(/\/$/, "") === entry.path) ||
+          result.some((hit) => !expectedPaths.has(hit.url.replace(/\/$/, "")))
+        )
+          throw new Error(`项目搜索范围错误 ${entry.projectId}`);
+      }
+    }
     if (
       hits.some(
         (hit) =>
@@ -74,4 +132,4 @@ try {
 } finally {
   await index.destroy();
 }
-console.log(`✓ 构建草稿隔离、${entries.length} 篇内容的中文搜索和类型筛选通过`);
+console.log(`✓ ${catalog.publicPaths.length} 个静态页面、目录锚点、草稿隔离与项目搜索通过`);

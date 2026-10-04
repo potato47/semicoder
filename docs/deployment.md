@@ -65,3 +65,9 @@ bunx wrangler d1 execute DB --env staging --local --persist-to /private/tmp/semi
 路径必须选用新的私有目录；SQL、导出日志、数据库文件包含认证数据，禁止提交仓库，演练结束后安全清理。真实恢复还需逐表核对、抽样与登录验证，再切换绑定。[首发验收记录](releases/2026-09-20.md) 包含本次演练范围。
 
 从旧 Pages 迁移时既要移除根域名 CNAME，也要解除旧 Pages 项目的自定义域，否则请求可能仍落到旧应用。原记录为 proxied CNAME `semicoder.dev → semicoder.pages.dev`；旧 Pages 项目和 Git 标签 `archive/astro-before-rebuild` 保留。需要回退旧站时先解除新 Worker 根域名绑定，再恢复 Pages 自定义域和对应 CNAME；邮件 MX/TXT 不变。
+
+## 项目文档路由验收
+
+公开预渲染路径由内容生成的统一清单提供，包含项目主页、存在公开文档的项目文档首页和全部公开章节。部署仍采用 Assets 优先，不增加 Worker 优先路径或付费服务。生成器和草稿检查递归扫描项目内的文档子目录；项目本身是草稿时，其文档也必须从产物中隔离。
+
+本次 URL 直接切换，不部署旧详情页或兼容重定向。验证 `/semicoder`、`/semicoder/docs`、`/semicoder/docs/guides/writing` 返回完整静态正文和正确 canonical；旧 `/projects/semicoder`、`/docs/semicoder/getting-started` 以及不存在的项目/章节返回 404。`bun run build:check` 检查统一清单对应的静态 HTML、sitemap、目录锚点和中文项目筛选；浏览器验收还包括刷新、站内跳转、搜索状态保留、手机导航和浅深色主题。

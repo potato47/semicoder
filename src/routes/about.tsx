@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { seo } from "../lib/seo";
 export const Route = createFileRoute("/about")({
   head: () => seo("关于", "保持好奇，认真构建。认识新手程序员。", "/about"),
@@ -20,13 +20,13 @@ export const Route = createFileRoute("/about")({
         <h2>在这里，你可以找到</h2>
         <ul>
           <li>
-            <a href="/blog">博客</a>：学习笔记、技术实践与工程思考。
+            <Link to="/blog">博客</Link>：学习笔记、技术实践与工程思考。
           </li>
           <li>
-            <a href="/projects">项目</a>：从想法到作品的构建过程。
+            <Link to="/projects">项目</Link>：从想法到作品的构建过程。
           </li>
           <li>
-            <a href="/docs">文档</a>：让使用和理解项目更容易。
+            <Link to="/docs">文档</Link>：让使用和理解项目更容易。
           </li>
         </ul>
         <p className="notice">

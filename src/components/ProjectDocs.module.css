@@ -1,0 +1,345 @@
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 32px;
+}
+.projectHero {
+  padding: 44px 0;
+  border-bottom: 1px solid var(--line);
+}
+.projectHero h1 {
+  font-size: clamp(40px, 6vw, 68px);
+  letter-spacing: -2px;
+  margin: 22px 0 16px;
+}
+.projectHero > p {
+  max-width: 680px;
+  font-size: 18px;
+  color: var(--muted);
+  line-height: 1.9;
+  margin-bottom: 24px;
+}
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 28px;
+}
+.projectContent {
+  display: grid;
+  grid-template-columns: minmax(0, 740px) minmax(220px, 1fr);
+  gap: 64px;
+  padding-top: 20px;
+}
+.projectGuide {
+  align-self: start;
+  margin-top: 30px;
+  padding: 26px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.projectGuide h2 {
+  font-size: 22px;
+}
+.projectGuide h3 {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 26px 0 12px;
+}
+.projectGuide a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  padding: 10px 0;
+}
+.docsToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 12px;
+}
+.docsToolbar select {
+  min-width: 120px;
+  max-width: 220px;
+  padding: 8px 28px 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+}
+.docsLayout {
+  display: grid;
+  grid-template-columns: 205px minmax(0, 1fr);
+  gap: 36px;
+  padding-top: 30px;
+}
+.chapters {
+  align-self: start;
+  position: sticky;
+  top: 25px;
+  max-height: calc(100vh - 50px);
+  overflow-y: auto;
+  padding-right: 20px;
+  border-right: 1px solid var(--line);
+}
+.chapters nav {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.chapters section {
+  margin-top: 18px;
+}
+.chapters h2 {
+  font-size: 11px;
+  color: var(--muted);
+  margin: 8px 10px;
+  letter-spacing: 1px;
+}
+.chapters a {
+  display: block;
+  border-radius: 6px;
+  padding: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.chapters a:hover {
+  background: var(--surface);
+}
+.chapters a[aria-current="page"] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 650;
+}
+.mobileNav,
+.mobileToc {
+  display: none;
+}
+.documentLayout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 150px;
+  gap: 30px;
+  align-items: start;
+}
+.document,
+.overview {
+  min-width: 0;
+}
+.breadcrumbs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+.breadcrumbs a:hover {
+  color: var(--accent);
+}
+.docHeading {
+  margin: 30px 0 12px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.docHeading h1 {
+  font-size: clamp(28px, 3vw, 38px);
+  line-height: 1.4;
+  margin: 14px 0;
+}
+.docHeading > p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+.docHeading small {
+  display: block;
+  font-size: 11px;
+  margin-top: 18px;
+}
+.toc {
+  position: sticky;
+  top: 28px;
+  color: var(--muted);
+  font-size: 11px;
+  padding-top: 4px;
+}
+.toc summary,
+.desktopToc > span {
+  cursor: pointer;
+  color: var(--ink);
+  font-size: 12px;
+}
+.toc nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+  line-height: 1.7;
+}
+.toc a:hover {
+  color: var(--accent);
+}
+.pagination {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  margin: 28px 0;
+}
+.pagination a {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.pagination a:last-child {
+  text-align: right;
+}
+.pagination small {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+.pagination a:last-child small {
+  justify-content: flex-end;
+}
+.groups {
+  display: grid;
+  gap: 28px;
+  margin-top: 30px;
+}
+.groups h2 {
+  font-size: 18px;
+}
+.docCard {
+  display: block;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  margin: 12px 0;
+  background: var(--surface);
+}
+.docCard:hover {
+  border-color: var(--accent);
+}
+.docCard h3 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+.docCard p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 0;
+}
+.docsIndex {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr));
+  gap: 24px;
+}
+.projectCard {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 28px;
+}
+.projectCard h2 {
+  font-size: 24px;
+}
+.projectCard p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.projectCard .row {
+  margin-top: 22px;
+}
+@media (max-width: 1100px) {
+  .desktopToc {
+    display: none;
+  }
+  .mobileToc {
+    display: block;
+  }
+  .documentLayout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+  .toc {
+    grid-row: 1;
+    position: static;
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .toc nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+  }
+  .docsLayout {
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 25px;
+  }
+}
+@media (max-width: 760px) {
+  .projectContent {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+  }
+  .projectGuide {
+    margin-top: 10px;
+  }
+  .docsLayout {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 18px;
+    gap: 22px;
+  }
+  .chapters {
+    position: static;
+    max-height: none;
+    padding: 0;
+    border: 0;
+  }
+  .chapters .desktopNav {
+    display: none;
+  }
+  .mobileNav {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .mobileNav summary {
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .mobileNav nav {
+    padding-top: 15px;
+  }
+  .projectHero {
+    padding-top: 30px;
+  }
+  .projectHero > p {
+    font-size: 16px;
+  }
+  .docHeading {
+    margin-top: 24px;
+  }
+}

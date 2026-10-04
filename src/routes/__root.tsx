@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import { HeadContent, Outlet, Scripts, createRootRouteWithContext } from "@tanstack/react-router";
 import { QueryClientProvider, type QueryClient } from "@tanstack/react-query";
 import type { ReactNode } from "react";
@@ -25,9 +26,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       <span className="eyebrow">404 / LOST IN THE CODE</span>
       <h1>这个页面还没有被写出来。</h1>
       <p>可能链接已经改变，回到首页继续探索吧。</p>
-      <a className="button primary" href="/">
+      <Link className="button primary" to="/">
         返回首页 ↗
-      </a>
+      </Link>
     </div>
   ),
   errorComponent: ({ reset }) => (

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun run content:generate && vite --host 127.0.0.1",
     "prepare": "bun run content:generate && wrangler types",
-    "build": "bun run content:generate && vite build",
+    "build": "bun run content:generate --production && vite build",
     "build:check": "node scripts/build-check.ts",
     "preview": "vite preview --host 127.0.0.1",
     "lint": "oxlint --max-warnings=0",

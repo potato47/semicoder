@@ -6,7 +6,7 @@ import mdx from "@mdx-js/rollup";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode from "rehype-pretty-code";
-import manifest from "./src/generated/manifest.json" with { type: "json" };
+import catalog from "./src/generated/catalog.json" with { type: "json" };
 
 export default defineConfig({
   server: { port: 3000 },
@@ -26,18 +26,7 @@ export default defineConfig({
         autoStaticPathsDiscovery: false,
         failOnError: true,
       },
-      pages: [
-        "/",
-        "/blog",
-        "/projects",
-        "/docs",
-        "/search",
-        "/about",
-        "/privacy",
-        "/rules",
-        "/admin",
-        ...manifest.map((x) => x.path),
-      ].map((path) => ({ path })),
+      pages: [...catalog.publicPaths, "/admin"].map((path) => ({ path })),
     }),
     react(),
   ],

@@ -10,9 +10,9 @@ describe("内容发布与边界", () => {
     expect(preview.some((x) => x.entry.id === "draft-not-published")).toBe(true);
   });
   test("文档绑定项目，内容 ID 独立于路径", () => {
-    const original = { id: "stable-id", slug: "old", project: "portal" };
+    const original = { id: "stable-id", slug: "old", projectSlug: "portal" };
     const renamed = { ...original, slug: "new" };
-    expect(contentPath("docs", renamed)).toBe("/docs/portal/new");
+    expect(contentPath("docs", renamed)).toBe("/portal/docs/new");
     expect(original.id).toBe(renamed.id);
     expect(contentPath("blog", original)).not.toBe(contentPath("blog", renamed));
   });

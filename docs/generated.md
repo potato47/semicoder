@@ -8,7 +8,7 @@
 | --- | --- |
 | `bun run dev` | `bun run content:generate && vite --host 127.0.0.1` |
 | `bun run prepare` | `bun run content:generate && wrangler types` |
-| `bun run build` | `bun run content:generate && vite build` |
+| `bun run build` | `bun run content:generate --production && vite build` |
 | `bun run build:check` | `node scripts/build-check.ts` |
 | `bun run preview` | `vite preview --host 127.0.0.1` |
 | `bun run lint` | `oxlint --max-warnings=0` |
@@ -33,16 +33,19 @@
 ## 路由
 
 - `/`
+- `/$project`
+- `/$project/`
+- `/$project/docs`
+- `/$project/docs/`
+- `/$project/docs/$`
 - `/about`
 - `/admin`
 - `/api/auth/$`
 - `/blog/`
 - `/blog/$slug`
 - `/docs/`
-- `/docs/$project/$slug`
 - `/privacy`
 - `/projects/`
-- `/projects/$slug`
 - `/rules`
 - `/search`
 - `/healthz`（Worker）

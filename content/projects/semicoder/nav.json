@@ -1,0 +1,6 @@
+{
+  "groups": [
+    { "title": "入门", "items": ["docs-semicoder-start"] },
+    { "title": "指南", "items": ["docs-semicoder-writing"] }
+  ]
+}

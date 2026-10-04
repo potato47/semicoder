@@ -6,7 +6,8 @@
 - [内容发布](content.md)
 - [认证与数据](data.md)
 - [部署与恢复](deployment.md)
-- [架构决策](adr/0001-platform.md)
+- [平台架构决策](adr/0001-platform.md)
+- [项目与文档架构决策](adr/0002-project-docs.md)
 - [生成的技术清单](generated.md)
 - [免费演示版首发验收](releases/2026-09-20.md)
 

@@ -9,3 +9,5 @@ Oxlint 检查 JS/TS、React Hooks 与可访问性；warning 阻断 CI。Oxfmt �
 新增生成文件须明确加入排除范围并增加一致性检查，不可忽略整个业务目录。CI 安装和生成类型后执行检查，不自动修复、提交或放宽规则。文档影响映射见 `impact.json`；PR 必须更新对应文档，或提供带原因的 `docs-impact: none — ...` 声明。
 
 构建后执行 `bun run build:check`：扫描客户端产物中的草稿标识和正文，并加载实际 Pagefind WebAssembly 索引验证公开内容的中文搜索及类型筛选。CI 和部署脚本均执行此检查。
+
+`bun run build` 使用内容生成器的 `--production` 模式；如果设置了 `CONTENT_PREVIEW=true`，在写入产物前直接失败。预览草稿只使用开发服务。内容与路由变更需额外验证 `bun run build:check` 的静态 HTML、canonical、锚点和项目搜索检查。

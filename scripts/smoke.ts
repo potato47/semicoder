@@ -1,15 +1,6 @@
-export {};
+import catalog from "../src/generated/catalog.json";
 const base = process.argv[2] ?? "http://localhost:3000";
-for (const path of [
-  "/",
-  "/blog",
-  "/projects",
-  "/docs",
-  "/search",
-  "/rss.xml",
-  "/sitemap.xml",
-  "/healthz",
-]) {
+for (const path of [...catalog.publicPaths, "/rss.xml", "/sitemap.xml", "/healthz"]) {
   const response = await fetch(new URL(path, base));
   if (!response.ok) throw new Error(`${path} 返回 ${response.status}`);
   if (!path.includes(".") && path !== "/healthz") {
@@ -26,8 +17,15 @@ for (const path of [
     throw new Error("线上动态服务尚未就绪");
   console.log(`✓ ${path} ${response.status}`);
 }
-const missing = await fetch(new URL("/this-page-does-not-exist", base));
-if (missing.status !== 404) throw new Error(`404 页面返回 ${missing.status}`);
+for (const path of [
+  "/this-page-does-not-exist",
+  "/projects/semicoder",
+  "/docs/semicoder/getting-started",
+  ...catalog.projects.map((project) => `${project.path}/docs/this-page-does-not-exist`),
+]) {
+  const missing = await fetch(new URL(path, base), { redirect: "manual" });
+  if (missing.status !== 404) throw new Error(`${path} 应返回 404，实际 ${missing.status}`);
+}
 const session = await fetch(new URL("/api/auth/get-session", base));
 if (!session.ok || !session.headers.get("content-type")?.includes("application/json"))
   throw new Error("认证接口未返回有效 JSON 响应");

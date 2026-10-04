@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { entries } from "../generated/content";
+import { entries } from "../generated/catalog";
 import { ProjectCard } from "../components/ContentCards";
 import { seo } from "../lib/seo";
 export const Route = createFileRoute("/projects/")({

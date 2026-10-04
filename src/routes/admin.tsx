@@ -1,10 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { getAdminData, moderate, setUserBan } from "../server/functions";
 import { useSessionInfo, unwrap, signIn } from "../lib/client";
-import { entries } from "../generated/content";
+import { entries } from "../generated/catalog";
 export const Route = createFileRoute("/admin")({
   head: () => ({
     meta: [{ title: "管理后台 · 新手程序员" }, { name: "robots", content: "noindex,nofollow" }],
@@ -63,9 +63,9 @@ function Admin() {
       <div className="empty">
         <h1>无权访问</h1>
         <p>此页面仅对站点管理员开放。</p>
-        <a className="button" href="/">
+        <Link className="button" to="/">
           返回首页
-        </a>
+        </Link>
       </div>
     );
   return (

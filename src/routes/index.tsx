@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { ArrowUpRight, ArrowRight, BookOpen, Terminal, GitFork, Rss, Sprout } from "lucide-react";
-import { entries } from "../generated/content";
+import { entries } from "../generated/catalog";
 import { ArticleList, ProjectCard } from "../components/ContentCards";
 import styles from "../styles/Home.module.css";
 export const Route = createFileRoute("/")({ component: Home });
@@ -34,14 +34,14 @@ function Home() {
             不急着成为专家，先认真做好每一次尝试。
           </p>
           <div className={styles.heroButtons}>
-            <a href="/blog" className="button primary">
+            <Link to="/blog" className="button primary">
               开始阅读
               <ArrowUpRight size={16} />
-            </a>
-            <a href="/projects" className="button">
+            </Link>
+            <Link to="/projects" className="button">
               探索项目
               <ArrowRight size={16} />
-            </a>
+            </Link>
           </div>
           <div className={styles.heroNote}>
             <span />
@@ -90,10 +90,10 @@ function Home() {
             <h2>
               最近在写<span className={styles.sectionLabel}> / JOURNAL</span>
             </h2>
-            <a href="/blog">
+            <Link to="/blog">
               全部文章
               <ArrowUpRight size={14} />
-            </a>
+            </Link>
           </div>
           <ArticleList items={blogs.slice(0, 3)} />
         </div>
@@ -102,15 +102,15 @@ function Home() {
             <h2>
               正在构建<span className={styles.sectionLabel}> / WORK</span>
             </h2>
-            <a href="/projects" aria-label="全部项目">
+            <Link to="/projects" aria-label="全部项目">
               <ArrowUpRight size={16} />
-            </a>
+            </Link>
           </div>
           {projects[0] && <ProjectCard item={projects[0]} />}
         </aside>
       </section>
       <section className={styles.bottomGrid}>
-        <a href="/docs" className={styles.docsCard}>
+        <Link to="/docs" className={styles.docsCard}>
           <span className={styles.cardIcon}>
             <BookOpen size={23} />
           </span>
@@ -120,7 +120,7 @@ function Home() {
             <p>从快速开始到实现细节，少一点摸索，多一点理解。</p>
           </div>
           <ArrowUpRight size={22} />
-        </a>
+        </Link>
         <div className={styles.connect}>
           <Sprout size={23} />
           <h3>一起，慢慢成长。</h3>

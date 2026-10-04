@@ -1,6 +1,7 @@
 import { ArrowUpRight, Code2, ArrowRight } from "lucide-react";
-import type { ContentEntry } from "../lib/site";
+import type { ContentEntry, ProjectEntry } from "../lib/site";
 import { formatDate } from "../lib/site";
+import { ContentLink } from "./ContentLink";
 import styles from "./ContentCards.module.css";
 export function ArticleList({ items }: { items: ContentEntry[] }) {
   return (
@@ -16,7 +17,7 @@ export function ArticleList({ items }: { items: ContentEntry[] }) {
               {item.sample && <span className="sample">示例</span>}
             </div>
             <h3>
-              <a href={item.path}>{item.title}</a>
+              <ContentLink entry={item}>{item.title}</ContentLink>
             </h3>
             <p>{item.description}</p>
             <div className={styles.articleBottom}>
@@ -29,15 +30,15 @@ export function ArticleList({ items }: { items: ContentEntry[] }) {
               </span>
             </div>
           </div>
-          <a href={item.path} className={styles.arrow} aria-label={`阅读 ${item.title}`}>
+          <ContentLink entry={item} className={styles.arrow} aria-label={`阅读 ${item.title}`}>
             <ArrowUpRight size={21} />
-          </a>
+          </ContentLink>
         </article>
       ))}
     </div>
   );
 }
-export function ProjectCard({ item }: { item: ContentEntry }) {
+export function ProjectCard({ item }: { item: ProjectEntry }) {
   return (
     <article className={styles.project}>
       <div className={styles.visual} aria-hidden="true">
@@ -45,7 +46,7 @@ export function ProjectCard({ item }: { item: ContentEntry }) {
           <span />
           <span />
           <span />
-          <small>semicoder / workspace</small>
+          <small>{item.slug} / workspace</small>
         </div>
         <div className={styles.codeArt}>
           <div>
@@ -76,10 +77,10 @@ export function ProjectCard({ item }: { item: ContentEntry }) {
           <span className="tag">{item.status}</span>
         </div>
         <h3>
-          <a href={item.path}>
+          <ContentLink entry={item}>
             {item.title}
             <ArrowUpRight size={20} />
-          </a>
+          </ContentLink>
         </h3>
         <p>{item.description}</p>
         <div className={styles.stack}>
@@ -89,9 +90,9 @@ export function ProjectCard({ item }: { item: ContentEntry }) {
         </div>
         <div className={styles.projectFooter}>
           {item.sample ? <span className="sample">示例项目介绍</span> : <span>开源项目</span>}
-          <a href={item.path}>
+          <ContentLink entry={item}>
             查看项目 <ArrowRight size={14} />
-          </a>
+          </ContentLink>
         </div>
       </div>
     </article>

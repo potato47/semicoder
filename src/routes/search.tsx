@@ -1,9 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Search as SearchIcon, ArrowUpRight } from "lucide-react";
+import { projects, entries } from "../generated/catalog";
+import { ContentLink } from "../components/ContentLink";
+import type { ContentKind } from "../lib/site";
 import { seo } from "../lib/seo";
 import { useMounted } from "../lib/client";
-import { needsChineseFallback, searchLiteral, type SearchRecord } from "../lib/search";
+import {
+  needsChineseFallback,
+  searchLiteral,
+  searchFilters,
+  parseSearch,
+  type SearchRecord,
+} from "../lib/search";
 interface Hit {
   url: string;
   meta: { title: string; description?: string };
@@ -26,14 +35,22 @@ function loadIndex(): Promise<SearchIndex> {
   }));
 }
 export const Route = createFileRoute("/search")({
+  validateSearch: (raw) =>
+    parseSearch(
+      raw,
+      projects.filter((project) => project.docsPath).map((project) => project.id),
+    ),
   head: () => seo("搜索", "搜索博客、项目和文档。", "/search"),
   component: Search,
 });
 function Search() {
   const mounted = useMounted();
-  const [query, setQuery] = useState(""),
-    [kind, setKind] = useState("all"),
-    [hits, setHits] = useState<Hit[]>([]),
+  const search = Route.useSearch();
+  const navigate = Route.useNavigate();
+  const query = search.q ?? "",
+    kind = search.type ?? "all",
+    projectId = search.projectId;
+  const [hits, setHits] = useState<Hit[]>([]),
     [loading, setLoading] = useState(false),
     [error, setError] = useState("");
   useEffect(() => {
@@ -58,13 +75,13 @@ function Search() {
               fallbackPromise = undefined;
               throw cause;
             });
-          const data = searchLiteral(await fallbackPromise, query, kind);
+          const data = searchLiteral(await fallbackPromise, query, kind, projectId);
           if (!cancelled) setHits(data);
           return;
         }
         const index = await loadIndex();
         const results = await index.search(query, {
-          filters: kind === "all" ? {} : { type: kind },
+          filters: searchFilters(kind, projectId),
         });
         const data = await Promise.all(results.results.slice(0, 30).map((x) => x.data()));
         if (!cancelled) setHits(data);
@@ -78,7 +95,7 @@ function Search() {
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [query, kind]);
+  }, [query, kind, projectId]);
   return (
     <>
       <div className="pageIntro">
@@ -99,7 +116,9 @@ function Search() {
           className="field"
           style={{ flex: 1, minWidth: 180 }}
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) =>
+            void navigate({ search: { ...search, q: e.target.value || undefined }, replace: true })
+          }
           placeholder="试试「编程」「Cloudflare」或「文档」"
           type="search"
         />
@@ -114,13 +133,50 @@ function Search() {
           <button
             className={`button small ${kind === k.id ? "primary" : ""}`}
             key={k.id}
-            onClick={() => setKind(k.id)}
+            onClick={() =>
+              void navigate({
+                search: {
+                  ...search,
+                  type: k.id === "all" ? undefined : (k.id as ContentKind),
+                  projectId: k.id === "docs" ? projectId : undefined,
+                },
+              })
+            }
             aria-pressed={kind === k.id}
           >
             {k.label}
           </button>
         ))}
       </div>
+      {kind === "docs" && (
+        <div className="row" style={{ marginBottom: 24 }}>
+          <label htmlFor="search-project">文档范围</label>
+          <select
+            id="search-project"
+            className="field"
+            style={{ width: "auto", maxWidth: "100%" }}
+            value={projectId ?? ""}
+            onChange={(event) =>
+              void navigate({ search: { ...search, projectId: event.target.value || undefined } })
+            }
+          >
+            <option value="">全部项目文档</option>
+            {projects
+              .filter((project) => project.docsPath)
+              .map((project) => (
+                <option key={project.id} value={project.id}>
+                  {project.title}
+                </option>
+              ))}
+          </select>
+          <button
+            className="button small"
+            onClick={() => void navigate({ search: { q: search.q } })}
+          >
+            搜索全站
+          </button>
+        </div>
+      )}
       <div aria-live="polite">
         {loading ? (
           <p className="muted">正在查找…</p>
@@ -135,18 +191,21 @@ function Search() {
         )}
       </div>
       {!loading &&
-        hits.map((h) => (
-          <article key={h.url} style={{ padding: "25px 0", borderTop: "1px solid var(--line)" }}>
-            <h2 style={{ fontSize: 21 }}>
-              <a href={h.url}>
-                {h.meta.title} <ArrowUpRight size={17} />
-              </a>
-            </h2>
-            <p className="muted" style={{ fontSize: 14, lineHeight: 1.9 }}>
-              {h.excerpt.replace(/<[^>]*>/g, "")}
-            </p>
-          </article>
-        ))}
+        hits.map((h) => {
+          const entry = entries.find((item) => item.path === h.url.replace(/\/$/, ""));
+          return entry ? (
+            <article key={h.url} style={{ padding: "25px 0", borderTop: "1px solid var(--line)" }}>
+              <h2 style={{ fontSize: 21 }}>
+                <ContentLink entry={entry}>
+                  {h.meta.title} <ArrowUpRight size={17} />
+                </ContentLink>
+              </h2>
+              <p className="muted" style={{ fontSize: 14, lineHeight: 1.9 }}>
+                {h.excerpt.replace(/<[^>]*>/g, "")}
+              </p>
+            </article>
+          ) : null;
+        })}
     </>
   );
 }

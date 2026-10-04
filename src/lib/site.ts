@@ -6,9 +6,8 @@ export const site = {
   repository: "https://github.com/potato47/semicoder",
 };
 export type ContentKind = "blog" | "projects" | "docs";
-export interface ContentEntry {
+interface ContentBase {
   id: string;
-  kind: ContentKind;
   title: string;
   description: string;
   slug: string;
@@ -22,13 +21,34 @@ export interface ContentEntry {
   draft: boolean;
   readingTime: number;
   toc: { id: string; text: string; depth: number }[];
-  project?: string;
-  order: number;
+  aliases: string[];
+}
+export interface BlogEntry extends ContentBase {
+  kind: "blog";
+}
+export interface ProjectEntry extends ContentBase {
+  kind: "projects";
   stack: string[];
   status?: string;
   source?: string;
   demo?: string;
-  aliases: string[];
+  docsPath?: string;
+}
+export interface DocEntry extends ContentBase {
+  kind: "docs";
+  projectId: string;
+  projectSlug: string;
+}
+export type ContentEntry = BlogEntry | ProjectEntry | DocEntry;
+export interface DocNavGroup {
+  title: string;
+  items: DocEntry[];
+}
+export interface ContentCatalog {
+  entries: ContentEntry[];
+  projects: ProjectEntry[];
+  navigation: Record<string, DocNavGroup[]>;
+  publicPaths: string[];
 }
 export function formatDate(date: string) {
   return new Intl.DateTimeFormat("zh-CN", {

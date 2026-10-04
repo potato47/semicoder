@@ -1,11 +1,9 @@
 ---
 id: docs-semicoder-start
 slug: getting-started
-project: semicoder
 title: 快速开始
 description: 了解新手程序员门户的内容结构与开发流程。
 date: 2026-09-20
-order: 1
 sample: true
 ---
 
@@ -26,4 +24,4 @@ bun run dev
 
 ## 下一步
 
-阅读 [内容维护](/docs/semicoder/writing) 了解如何添加文章和项目文档。
+阅读 [内容维护](/semicoder/docs/guides/writing) 了解如何添加文章和项目文档。

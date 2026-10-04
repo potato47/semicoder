@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { entries } from "../generated/content";
+import { entries } from "../generated/catalog";
 import { ArticleList } from "../components/ContentCards";
 import { seo } from "../lib/seo";
 export const Route = createFileRoute("/blog/")({
