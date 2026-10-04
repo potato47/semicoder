@@ -3,6 +3,8 @@
   "src/routes/": ["docs/architecture.md"],
   "scripts/content": ["docs/content.md"],
   "content/": ["docs/content.md"],
+  "content/projects/fia/": ["docs/project-sources.md"],
+  "content/projects/malatang/": ["docs/project-sources.md"],
   "drizzle/": ["docs/data.md", "docs/deployment.md"],
   "wrangler.jsonc": ["docs/deployment.md"],
   ".github/": ["docs/deployment.md"],

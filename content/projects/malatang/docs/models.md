@@ -10,7 +10,7 @@ date: "2026-10-04"
 
 模型服务由宿主管理。插件只拿到模型标识和公开配置，通过 SDK 调用；密钥不会通过业务 API 返回前端。
 
-底层使用固定版本 `@earendil-works/pi-ai@1.0.0` 的 provider 目录和协议适配，并支持自定义 OpenAI-compatible Chat Completions 服务。预设目录随应用依赖更新，不代表所有服务已用真实账号逐一验收。
+[安装指南](/malatang/docs/installation) 锁定的源码快照 `300453def9ac` 使用 `@earendil-works/pi-ai@1.0.0` 的 provider 目录和协议适配，并支持自定义 OpenAI-compatible Chat Completions 服务。本页以该可复现快照为基线；其他源码版本以其 `package.json` 为准。预设目录随应用依赖更新，不代表所有服务已用真实账号逐一验收。
 
 ## API Key 或 Token
 
