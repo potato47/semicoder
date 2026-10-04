@@ -32,6 +32,9 @@ export interface ProjectEntry extends ContentBase {
   status?: string;
   source?: string;
   demo?: string;
+  category?: string;
+  featured?: boolean;
+  start?: { label: string; doc: string };
   docsPath?: string;
 }
 export interface DocEntry extends ContentBase {

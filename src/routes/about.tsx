@@ -23,10 +23,7 @@ export const Route = createFileRoute("/about")({
             <Link to="/blog">博客</Link>：学习笔记、技术实践与工程思考。
           </li>
           <li>
-            <Link to="/projects">项目</Link>：从想法到作品的构建过程。
-          </li>
-          <li>
-            <Link to="/docs">文档</Link>：让使用和理解项目更容易。
+            <Link to="/projects">项目</Link>：了解作品、阅读文档，找到安装与使用方式。
           </li>
         </ul>
         <p className="notice">

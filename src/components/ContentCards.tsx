@@ -1,4 +1,6 @@
 import { ArrowUpRight, Code2, ArrowRight } from "lucide-react";
+import { catalog } from "../generated/catalog";
+import { projectDocuments } from "../lib/content";
 import type { ContentEntry, ProjectEntry } from "../lib/site";
 import { formatDate } from "../lib/site";
 import { ContentLink } from "./ContentLink";
@@ -39,6 +41,7 @@ export function ArticleList({ items }: { items: ContentEntry[] }) {
   );
 }
 export function ProjectCard({ item }: { item: ProjectEntry }) {
+  const start = projectDocuments(catalog, item.id).find((doc) => doc.id === item.start?.doc);
   return (
     <article className={styles.project}>
       <div className={styles.visual} aria-hidden="true">
@@ -48,25 +51,10 @@ export function ProjectCard({ item }: { item: ProjectEntry }) {
           <span />
           <small>{item.slug} / workspace</small>
         </div>
-        <div className={styles.codeArt}>
-          <div>
-            <span className={styles.codeOrange}>const</span> idea ={" "}
-            <span className={styles.codeGreen}>"make something"</span>;
-          </div>
-          <div>
-            <span className={styles.codeOrange}>while</span> (curious) {"{"}
-          </div>
-          <div className={styles.indent}>
-            learn();
-            <br />
-            build();
-            <br />
-            <span className={styles.codeDim}>// a little better, every day</span>
-          </div>
-          <div>{"}"}</div>
-        </div>
-        <div className={styles.buildBadge}>
-          <span /> ALWAYS IN PROGRESS
+        <div className={styles.projectArt}>
+          <span>{item.category ?? "个人项目"}</span>
+          <strong>{item.title}</strong>
+          <small>{item.stack.join(" / ")}</small>
         </div>
       </div>
       <div className={styles.projectBody}>
@@ -89,7 +77,16 @@ export function ProjectCard({ item }: { item: ProjectEntry }) {
           ))}
         </div>
         <div className={styles.projectFooter}>
-          {item.sample ? <span className="sample">示例项目介绍</span> : <span>开源项目</span>}
+          {start ? (
+            <ContentLink entry={start}>
+              {item.start?.label}
+              <ArrowRight size={14} />
+            </ContentLink>
+          ) : item.sample ? (
+            <span className="sample">示例项目介绍</span>
+          ) : (
+            <span>{item.category ?? "个人项目"}</span>
+          )}
           <ContentLink entry={item}>
             查看项目 <ArrowRight size={14} />
           </ContentLink>

@@ -10,10 +10,14 @@ import styles from "./ProjectDocs.module.css";
 export function DocsBreadcrumbs({ project, title }: { project: ProjectEntry; title: string }) {
   return (
     <nav className={styles.breadcrumbs} aria-label="面包屑">
-      <Link to="/docs">文档</Link>
+      <Link to="/projects">项目</Link>
+      <span>/</span>
+      <Link to="/$project" params={{ project: project.slug }}>
+        {project.title}
+      </Link>
       <span>/</span>
       <Link to="/$project/docs" params={{ project: project.slug }}>
-        {project.title}
+        文档
       </Link>
       <span>/</span>
       <span aria-current="page">{title}</span>

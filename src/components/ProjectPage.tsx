@@ -1,11 +1,13 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, BookOpen, GitFork, ArrowUpRight } from "lucide-react";
 import type { ProjectEntry } from "../lib/site";
-import { navigation } from "../generated/catalog";
+import { catalog, navigation } from "../generated/catalog";
+import { projectDocuments } from "../lib/content";
 import { ContentBody, ContentLabels } from "./ContentBody";
 import { ContentLink } from "./ContentLink";
 import styles from "./ProjectDocs.module.css";
 export function ProjectPage({ project }: { project: ProjectEntry }) {
+  const start = projectDocuments(catalog, project.id).find((doc) => doc.id === project.start?.doc);
   return (
     <>
       <header className={styles.projectHero}>
@@ -14,7 +16,7 @@ export function ProjectPage({ project }: { project: ProjectEntry }) {
           全部项目
         </Link>
         <div className="row">
-          <span className="eyebrow">PROJECT / 开放构建</span>
+          <span className="eyebrow">PROJECT / {project.category ?? "持续构建"}</span>
           {project.status && <span className="tag">{project.status}</span>}
         </div>
         <h1>{project.title}</h1>
@@ -28,8 +30,18 @@ export function ProjectPage({ project }: { project: ProjectEntry }) {
           ))}
         </div>
         <div className="row">
+          {start && (
+            <ContentLink className="button primary" entry={start}>
+              {project.start?.label}
+              <ArrowUpRight size={16} />
+            </ContentLink>
+          )}
           {project.docsPath && (
-            <Link className="button primary" to="/$project/docs" params={{ project: project.slug }}>
+            <Link
+              className={start ? "button" : "button primary"}
+              to="/$project/docs"
+              params={{ project: project.slug }}
+            >
               <BookOpen size={16} />
               阅读文档
             </Link>

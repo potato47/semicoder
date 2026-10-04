@@ -1,0 +1,49 @@
+---
+id: "project-malatang"
+slug: "malatang"
+title: "麻辣烫"
+description: "把模型、存储和界面能力组合起来，让每个插件成为一个好用的小应用。"
+date: "2026-10-04"
+tags: ["AI 应用", "插件平台", "macOS"]
+stack: ["FIA", "React", "Pi AI"]
+status: "构建中"
+source: "https://github.com/potato47/malatang"
+category: "本地插件应用平台"
+featured: true
+start: { "label": "下载与安装", "doc": "docs-malatang-installation" }
+---
+
+## 想做什么，就装一个小应用
+
+翻译一段文字，记录一个想法，或者用模型完成自己的工作流。麻辣烫把共用的模型服务、KV 存储和 UI 组件放在宿主里，插件专注自己的交互与业务。
+
+侧边栏切换应用，右侧整个空间交给当前插件。插件可以是翻译工具、编辑器或表单，不必长成聊天窗口。
+
+## 现在可以做什么
+
+- **译文**：选择自己的模型，流式翻译、取消生成、查看运行历史。
+- **模型服务**：配置 API Key / Token、自定义 OpenAI-compatible 服务，或通过官方浏览器授权连接 ChatGPT 订阅。
+- **应用中心**：安装、启停和卸载可信插件；内含可一键安装的随手记示例。
+- **统一界面**：浅色、深色与跟随系统，插件共享组件与主题。
+- **页面与数据**：插件可选择保留切页状态，长期数据通过 KV 保存。
+- **开发与自动化**：前端、可选后端和应用 CLI 使用同一套宿主能力。
+
+## 从第一次翻译开始
+
+先 [安装或构建麻辣烫](/malatang/docs/installation)，再在「设置 → 模型服务」添加模型。打开「译文」，选择模型、输入文字、开始翻译。没有配置时不会产生模拟结果。
+
+还不想配置模型，也可以在应用中心安装随手记，先体验插件与本地存储。
+
+## 给插件开发者
+
+插件默认导出 React 页面，通过 `@malatang/sdk` 获取模型、任务和 KV。后端可注册带输入 schema 的业务方法，UI 组件与 React 运行时由宿主共享。
+
+从 [第一个插件](/malatang/docs/plugin-development) 开始，或查看 [源码中的 SDK 文档](https://github.com/potato47/malatang/blob/main/packages/sdk/README.md)。SDK 目前由源码 workspace 提供，尚未独立发布到 npm。
+
+## 当前边界
+
+当前是 **0.1.0 MVP**，支持 macOS 14+ / Apple Silicon。插件按可信本地代码运行，具有本机代码执行能力，不是强隔离沙箱。用户内容在调用模型时会发送到所选服务商，并非离线 AI。
+
+工具注册与调用、预设 agent loop、调研应用、其他服务商订阅登录和插件自动升级尚未实现。不要把规划中的能力当成当前功能。
+
+截至 2026-10-04，公开应用 DMG 尚未发布；[下载页](/malatang/docs/installation) 提供可复现的源码安装方式和正式发布入口。底层框架介绍见 [FIA](/fia)。

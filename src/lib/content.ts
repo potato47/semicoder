@@ -4,7 +4,6 @@ export const staticPublicPaths = [
   "/",
   "/blog",
   "/projects",
-  "/docs",
   "/search",
   "/about",
   "/privacy",
@@ -12,6 +11,7 @@ export const staticPublicPaths = [
 ];
 export const reservedSegments = [
   ...staticPublicPaths.filter((path) => path !== "/").map((path) => path.slice(1)),
+  "docs",
   "admin",
   "api",
   "_serverFn",

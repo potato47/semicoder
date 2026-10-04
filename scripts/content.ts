@@ -36,6 +36,12 @@ const schemas = {
       status: z.enum(["构建中", "已发布", "已归档"]).optional(),
       source: z.url().optional(),
       demo: z.url().optional(),
+      category: z.string().trim().min(1).optional(),
+      featured: z.boolean().optional(),
+      start: z
+        .object({ label: z.string().trim().min(1), doc: z.string().min(1) })
+        .strict()
+        .optional(),
     })
     .strict(),
   docs: common
@@ -200,6 +206,11 @@ export async function loadCatalog(preview = false, root = ".") {
         throw new Error(`${entry.file}: 公开文档未配置导航`);
     }
     if (publishedProjects.has(project.id)) {
+      if (
+        project.start &&
+        !groups.some((group) => group.items.some((doc) => doc.id === project.start?.doc))
+      )
+        throw new Error(`${project.file}: 开始入口必须引用本项目可见的文档`);
       catalog.navigation[project.id] = groups;
       if (rows.some(({ entry }) => entry.kind === "docs" && entry.projectId === project.id))
         project.docsPath = `${project.path}/docs`;

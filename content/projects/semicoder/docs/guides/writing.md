@@ -4,7 +4,7 @@ slug: guides/writing
 title: 内容维护
 description: 用 Markdown 和 MDX 发布文章，为每一份内容设置稳定身份。
 date: 2026-09-20
-sample: true
+updated: 2026-10-04
 ---
 
 ## 添加内容

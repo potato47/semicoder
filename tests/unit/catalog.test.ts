@@ -197,6 +197,62 @@ describe("项目内容目录", () => {
     expect(catalog.publicPaths).not.toContain("/alpha/docs");
     expect(catalog.publicPaths).toContain("/alpha");
   });
+  test("安装入口跟随文档稳定 ID，并拒绝缺失、跨项目和未发布文档", async () => {
+    const root = await fixture();
+    const project = { id: "project-alpha", slug: "alpha", category: "框架", featured: true };
+    await write(
+      root,
+      "content/projects/alpha/index.mdx",
+      markdown({ ...project, start: { label: "安装", doc: "doc-start" } }),
+    );
+    const initial = (await loadCatalog(false, root)).catalog;
+    expect(initial.projects[0].start?.doc).toBe("doc-start");
+    await write(
+      root,
+      "content/projects/alpha/docs/start.md",
+      markdown({ id: "doc-start", slug: "install" }),
+    );
+    expect(
+      projectDocuments((await loadCatalog(false, root)).catalog, "project-alpha").find(
+        (doc) => doc.id === "doc-start",
+      )?.path,
+    ).toBe("/alpha/docs/install");
+    await write(
+      root,
+      "content/projects/beta/index.mdx",
+      markdown({ id: "project-beta", slug: "beta" }),
+    );
+    await write(
+      root,
+      "content/projects/beta/docs/start.md",
+      markdown({ id: "doc-beta-start", slug: "start" }),
+    );
+    await write(
+      root,
+      "content/projects/beta/nav.json",
+      JSON.stringify({ groups: [{ title: "入门", items: ["doc-beta-start"] }] }),
+    );
+    for (const doc of ["missing", "doc-beta-start"]) {
+      await write(
+        root,
+        "content/projects/alpha/index.mdx",
+        markdown({ ...project, start: { label: "安装", doc } }),
+      );
+      await expect(loadCatalog(false, root)).rejects.toThrow("开始入口必须引用本项目可见的文档");
+    }
+    await write(
+      root,
+      "content/projects/alpha/index.mdx",
+      markdown({ ...project, start: { label: "安装", doc: "doc-start" } }),
+    );
+    await write(
+      root,
+      "content/projects/alpha/docs/start.md",
+      markdown({ id: "doc-start", slug: "install", draft: true }),
+    );
+    await expect(loadCatalog(false, root)).rejects.toThrow("开始入口必须引用本项目可见的文档");
+    expect((await loadCatalog(true, root)).catalog.projects[0].start?.doc).toBe("doc-start");
+  });
 });
 
 test("生产生成命令拒绝草稿预览", async () => {

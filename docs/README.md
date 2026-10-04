@@ -4,6 +4,7 @@
 - [架构](architecture.md)
 - [开发与质量](development.md)
 - [内容发布](content.md)
+- [项目资料与发布状态核对](project-sources.md)
 - [认证与数据](data.md)
 - [部署与恢复](deployment.md)
 - [平台架构决策](adr/0001-platform.md)

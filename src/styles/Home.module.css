@@ -185,6 +185,20 @@
   grid-template-columns: 1.6fr 1fr;
   gap: 65px;
 }
+.featured {
+  margin-bottom: 60px;
+}
+.projectIntro {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+  margin: -4px 0 24px;
+}
+.featuredGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 25px;
+}
 .sectionLabel {
   font:
     9px ui-monospace,
@@ -199,7 +213,7 @@
   gap: 25px;
   margin-top: 60px;
 }
-.docsCard {
+.projectCta {
   display: flex;
   align-items: center;
   gap: 22px;
@@ -213,21 +227,21 @@
   color: var(--accent);
   margin-top: 2px;
 }
-.docsCard h2 {
+.projectCta h2 {
   font-size: 20px;
   line-height: 1.5;
   margin: 12px 0 9px;
 }
-.docsCard p {
+.projectCta p {
   font-size: 12px;
   color: var(--muted);
   line-height: 1.9;
   margin: 0;
 }
-.docsCard > svg {
+.projectCta > svg {
   margin-left: auto;
 }
-.docsCard .eyebrow {
+.projectCta .eyebrow {
   font-size: 8px;
 }
 .connect {
@@ -283,12 +297,15 @@
   .bottomGrid {
     gap: 20px;
   }
-  .docsCard {
+  .projectCta {
     padding: 25px;
     gap: 15px;
   }
 }
 @media (max-width: 750px) {
+  .featuredGrid {
+    grid-template-columns: 1fr;
+  }
   .hero {
     grid-template-columns: 1fr;
     padding: 43px 0 35px;

@@ -6,7 +6,6 @@ import { authClient, signIn, useSessionInfo } from "../lib/client";
 import styles from "./Shell.module.css";
 export function Shell({ children }: { children: ReactNode }) {
   const matches = useMatches();
-  const inDocs = matches.some((match) => match.routeId === "/$project/docs");
   const inProject = matches.some((match) => match.routeId === "/$project");
   const [open, setOpen] = useState(false),
     [loginError, setLoginError] = useState("");
@@ -52,23 +51,14 @@ export function Shell({ children }: { children: ReactNode }) {
               { to: "/", label: "首页" },
               { to: "/blog", label: "博客" },
               { to: "/projects", label: "项目" },
-              { to: "/docs", label: "文档" },
               { to: "/about", label: "关于" },
             ] as const
           ).map((n) => (
             <Link
               key={n.to}
               to={n.to}
-              className={
-                (n.to === "/docs" && inDocs) || (n.to === "/projects" && inProject && !inDocs)
-                  ? styles.active
-                  : undefined
-              }
-              aria-current={
-                (n.to === "/docs" && inDocs) || (n.to === "/projects" && inProject && !inDocs)
-                  ? "page"
-                  : undefined
-              }
+              className={n.to === "/projects" && inProject ? styles.active : undefined}
+              aria-current={n.to === "/projects" && inProject ? "page" : undefined}
               onClick={() => setOpen(false)}
               activeOptions={{ exact: n.to === "/" }}
               activeProps={{ className: styles.active }}

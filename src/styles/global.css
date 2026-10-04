@@ -6,6 +6,7 @@
   --muted: #7b7c72;
   --line: #e3e3d9;
   --accent: #e9743e;
+  --on-accent: #252724;
   --accent-soft: #f6e8db;
   --green: #608369;
   --code: #242923;
@@ -131,7 +132,7 @@ a:hover {
 .button.primary:hover {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 .button.small {
   padding: 7px 11px;

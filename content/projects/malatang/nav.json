@@ -1,0 +1,16 @@
+{
+  "groups": [
+    {
+      "title": "开始使用",
+      "items": ["docs-malatang-installation", "docs-malatang-getting-started"]
+    },
+    {
+      "title": "使用指南",
+      "items": ["docs-malatang-models", "docs-malatang-plugins", "docs-malatang-troubleshooting"]
+    },
+    {
+      "title": "开发与自动化",
+      "items": ["docs-malatang-plugin-development", "docs-malatang-automation"]
+    }
+  ]
+}

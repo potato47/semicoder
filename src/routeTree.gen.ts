@@ -20,7 +20,6 @@ import { Route as ProjectIndexRouteImport } from './routes/$project.index'
 import { Route as ProjectDocsRouteImport } from './routes/$project.docs'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as DocsIndexRouteImport } from './routes/docs.index'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
 import { Route as ProjectDocsIndexRouteImport } from './routes/$project.docs.index'
 import { Route as ProjectDocsSplatRouteImport } from './routes/$project.docs.$'
@@ -81,11 +80,6 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DocsIndexRoute = DocsIndexRouteImport.update({
-  id: '/docs/',
-  path: '/docs/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
   id: '/projects/',
   path: '/projects/',
@@ -119,7 +113,6 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/$project/': typeof ProjectIndexRoute
   '/blog/': typeof BlogIndexRoute
-  '/docs/': typeof DocsIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/$project/docs/$': typeof ProjectDocsSplatRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -135,7 +128,6 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/$project': typeof ProjectIndexRoute
   '/blog': typeof BlogIndexRoute
-  '/docs': typeof DocsIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/$project/docs/$': typeof ProjectDocsSplatRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -154,7 +146,6 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/$project/': typeof ProjectIndexRoute
   '/blog/': typeof BlogIndexRoute
-  '/docs/': typeof DocsIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/$project/docs/$': typeof ProjectDocsSplatRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -174,7 +165,6 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/$project/'
     | '/blog/'
-    | '/docs/'
     | '/projects/'
     | '/$project/docs/$'
     | '/api/auth/$'
@@ -190,7 +180,6 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/$project'
     | '/blog'
-    | '/docs'
     | '/projects'
     | '/$project/docs/$'
     | '/api/auth/$'
@@ -208,7 +197,6 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/$project/'
     | '/blog/'
-    | '/docs/'
     | '/projects/'
     | '/$project/docs/$'
     | '/api/auth/$'
@@ -225,7 +213,6 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
-  DocsIndexRoute: typeof DocsIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -309,13 +296,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/docs/': {
-      id: '/docs/'
-      path: '/docs'
-      fullPath: '/docs/'
-      preLoaderRoute: typeof DocsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/projects/': {
       id: '/projects/'
       path: '/projects'
@@ -384,7 +364,6 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
-  DocsIndexRoute: DocsIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }

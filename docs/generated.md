@@ -43,7 +43,6 @@
 - `/api/auth/$`
 - `/blog/`
 - `/blog/$slug`
-- `/docs/`
 - `/privacy`
 - `/projects/`
 - `/rules`

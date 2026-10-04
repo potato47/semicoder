@@ -1,5 +1,5 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { ArrowUpRight, ArrowRight, BookOpen, Terminal, GitFork, Rss, Sprout } from "lucide-react";
+import { ArrowUpRight, ArrowRight, Code2, Terminal, GitFork, Rss, Sprout } from "lucide-react";
 import { entries } from "../generated/catalog";
 import { ArticleList, ProjectCard } from "../components/ContentCards";
 import styles from "../styles/Home.module.css";
@@ -7,6 +7,8 @@ export const Route = createFileRoute("/")({ component: Home });
 function Home() {
   const blogs = entries.filter((x) => x.kind === "blog"),
     projects = entries.filter((x) => x.kind === "projects");
+  const featured = projects.filter((project) => project.featured);
+  const otherProject = projects.find((project) => !project.featured);
   return (
     <>
       <section className={styles.hero}>
@@ -29,17 +31,17 @@ function Home() {
           <p>
             你好，这里是新手程序员。
             <br />
-            记录编程路上的思考与实践，分享从零到一的作品。
+            从 FIA 桌面框架，到麻辣烫插件应用，
             <br />
-            不急着成为专家，先认真做好每一次尝试。
+            把想法做成工具，也把过程写成文档。
           </p>
           <div className={styles.heroButtons}>
-            <Link to="/blog" className="button primary">
-              开始阅读
+            <Link to="/projects" className="button primary">
+              探索项目
               <ArrowUpRight size={16} />
             </Link>
-            <Link to="/projects" className="button">
-              探索项目
+            <Link to="/blog" className="button">
+              阅读博客
               <ArrowRight size={16} />
             </Link>
           </div>
@@ -84,6 +86,25 @@ function Home() {
         <div />
         <span>从这里，继续向前 ↓</span>
       </div>
+      <section className={styles.featured} aria-labelledby="featured-projects">
+        <div className="sectionHeading">
+          <h2 id="featured-projects">
+            正在构建<span className={styles.sectionLabel}> / FRAMEWORK & APPS</span>
+          </h2>
+          <Link to="/projects">
+            全部项目
+            <ArrowUpRight size={14} />
+          </Link>
+        </div>
+        <p className={styles.projectIntro}>
+          FIA 提供桌面应用的基础，麻辣烫用插件把模型能力变成日常工具。
+        </p>
+        <div className={styles.featuredGrid}>
+          {featured.map((project) => (
+            <ProjectCard key={project.id} item={project} />
+          ))}
+        </div>
+      </section>
       <section className={styles.contentGrid}>
         <div>
           <div className="sectionHeading">
@@ -100,24 +121,24 @@ function Home() {
         <aside>
           <div className="sectionHeading">
             <h2>
-              正在构建<span className={styles.sectionLabel}> / WORK</span>
+              关于本站<span className={styles.sectionLabel}> / THIS SITE</span>
             </h2>
             <Link to="/projects" aria-label="全部项目">
               <ArrowUpRight size={16} />
             </Link>
           </div>
-          {projects[0] && <ProjectCard item={projects[0]} />}
+          {otherProject && <ProjectCard item={otherProject} />}
         </aside>
       </section>
       <section className={styles.bottomGrid}>
-        <Link to="/docs" className={styles.docsCard}>
+        <Link to="/projects" className={styles.projectCta}>
           <span className={styles.cardIcon}>
-            <BookOpen size={23} />
+            <Code2 size={23} />
           </span>
           <div>
             <span className="eyebrow">BUILD WITH CONTEXT</span>
-            <h2>好项目，也需要好文档。</h2>
-            <p>从快速开始到实现细节，少一点摸索，多一点理解。</p>
+            <h2>从一个项目，开始动手。</h2>
+            <p>了解设计、阅读文档，找到适合你的安装方式。</p>
           </div>
           <ArrowUpRight size={22} />
         </Link>

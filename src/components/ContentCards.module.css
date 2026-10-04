@@ -75,39 +75,26 @@
   color: #94a08f;
   margin-left: auto;
 }
-.codeArt {
-  font:
-    12px/1.85 ui-monospace,
-    monospace;
-  padding: 25px 10px;
+.projectArt {
+  display: grid;
+  gap: 12px;
+  padding: 26px 8px 12px;
 }
-.codeOrange {
-  color: #e8a075;
-}
-.codeGreen {
+.projectArt > span {
+  font-size: 11px;
   color: #a5b891;
+  letter-spacing: 0.1em;
 }
-.codeDim {
-  color: #7e8e7a;
+.projectArt strong {
+  font-size: clamp(32px, 4vw, 46px);
+  font-weight: 500;
+  letter-spacing: -0.04em;
 }
-.indent {
-  padding-left: 24px;
-}
-.buildBadge {
-  font: 8px monospace;
-  letter-spacing: 1.5px;
-  color: #9aa995;
-  position: absolute;
-  right: 20px;
-  bottom: 18px;
-}
-.buildBadge span {
-  display: inline-block;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #acc49d;
-  margin-right: 8px;
+.projectArt small {
+  font:
+    10px/1.8 ui-monospace,
+    monospace;
+  color: #b4c1ae;
 }
 .projectBody {
   padding: 24px;

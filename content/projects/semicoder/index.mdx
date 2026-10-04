@@ -2,27 +2,30 @@
 id: project-semicoder
 slug: semicoder
 title: Semicoder
-description: 一个不断生长的个人技术门户，把文章、作品与项目文档连接在一起。
+description: 这个网站本身：连接文章、真实作品与项目文档的个人技术门户。
 date: 2026-09-20
-tags: [全栈开发, 开源]
+updated: 2026-10-04
+tags: [全栈开发, 内容网站]
 stack: [TanStack Start, Cloudflare, Bun]
 status: 构建中
+category: 个人项目网站
 source: https://github.com/potato47/semicoder
-sample: true
 ---
 
-## 关于这个项目
+## 记录构建，也让作品被使用
 
-Semicoder 是「新手程序员」的门户建设项目。这个页面是项目展示模板，内容将随着建设进展持续更新。
+Semicoder 是「新手程序员」的个人网站。这里集中介绍 [FIA 桌面框架](/fia) 与 [麻辣烫插件应用](/malatang)，提供安装入口、使用指南和开发文档，也保留博客来记录过程。
 
-## 设计目标
+## 内容各有归属
 
-- 阅读体验清晰，内容可以长期维护。
-- 静态内容与动态评论共存。
-- 开发规范、自动检查和部署流程从第一天建立。
+每个项目拥有独立主页、分组文档和项目内搜索。介绍说明解决什么问题，安装页给出真实可获取的版本，文档帮助读者从第一次运行走到自己的实现。
 
-## 技术路线
+项目内容以 Markdown / MDX 在仓库中维护，稳定 ID 关联评论，URL 可以独立演进。公开页面、RSS、sitemap 和搜索在构建时生成，草稿不会进入生产内容。
 
-TanStack Start 负责应用层，Cloudflare Workers 处理动态请求，D1 保存评论与账号，Bun 组织开发工具链。
+## 技术实现
 
-从 [快速开始](/semicoder/docs/getting-started) 了解项目结构。
+TanStack Start 与 React 提供页面和路由，Cloudflare Assets 提供公开内容，Workers 与 D1 处理登录、评论及审核，Bun 组织构建与检查。页面支持浅色、深色与移动端阅读。
+
+本站项目介绍与文档已使用实际项目资料；博客中仍有明确标注的示例文章。登录、评论与部署的可用性取决于运行环境配置。
+
+从 [快速开始](/semicoder/docs/getting-started) 了解本地开发，或阅读 [内容维护](/semicoder/docs/guides/writing) 了解如何添加内容。

@@ -1,0 +1,16 @@
+{
+  "groups": [
+    {
+      "title": "开始使用",
+      "items": ["docs-fia-installation"]
+    },
+    {
+      "title": "开发指南",
+      "items": ["docs-fia-shared-api", "docs-fia-development", "docs-fia-automation"]
+    },
+    {
+      "title": "分发",
+      "items": ["docs-fia-distribution"]
+    }
+  ]
+}

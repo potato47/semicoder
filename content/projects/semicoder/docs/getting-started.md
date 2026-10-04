@@ -4,19 +4,23 @@ slug: getting-started
 title: 快速开始
 description: 了解新手程序员门户的内容结构与开发流程。
 date: 2026-09-20
-sample: true
+updated: 2026-10-04
 ---
 
 ## 准备环境
 
-安装 Bun 和 Node.js，克隆仓库后安装锁定的依赖。
+安装 Bun 1.4.2 和 Node.js 24，克隆仓库后安装锁定的依赖。
 
 ```bash
+git clone https://github.com/potato47/semicoder.git
+cd semicoder
 bun install --frozen-lockfile
 bun run prepare
 bun run db:local
 bun run dev
 ```
+
+默认打开 `http://localhost:3000`。不配置 OAuth 密钥也可以阅读公开内容；真实 GitHub 登录需要按仓库 `.dev.vars.example` 配置本地环境。
 
 ## 浏览项目
 
