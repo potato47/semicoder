@@ -8,15 +8,9 @@ import styles from "../styles/Home.module.css";
 
 export const Route = createFileRoute("/")({
   head: () =>
-    seo(
-      "此时此刻",
-      "看看此时此刻：本地时间、公历农历、节气节日，以及年、月、周、日的时间进度。",
-      "/",
-    ),
+    seo("此时此刻", "看看此时此刻：本地时间、公历农历、节气节日，以及今年的时间进度。", "/"),
   component: Home,
 });
-
-const progressLabels = ["今年", "本月", "本周", "今天", "当前小时", "当前分钟"];
 
 function Progress({ item, label }: { item?: TimeProgress; label: string }) {
   const percent = item ? Math.floor(item.ratio * 10_000) / 100 : undefined;
@@ -143,9 +137,7 @@ function Home() {
           时间进度
         </h2>
         <div className={styles.progressGrid}>
-          {progressLabels.map((label, index) => (
-            <Progress key={label} label={label} item={local?.progress[index]} />
-          ))}
+          <Progress label="今年" item={local?.progress.find((item) => item.id === "year")} />
         </div>
       </section>
 
