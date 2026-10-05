@@ -49,3 +49,7 @@ bun run agent call appearance.set --json '{"theme":"dark"}'
 安装生产 CLI 后，可运行 `malatang skill install` 安装随应用生成的使用说明。FIA 提供发现与调用机制，麻辣烫提供业务方法；这不表示应用内已经实现通用 agent loop。
 
 需要用脚本组合多次调用时，参阅 [FIA 的脚本说明](/fia/docs/automation)。
+
+## 插件开发命令预览（未发布）
+
+本地开发分支增加 `malatang plugin create/check/build/pack`，开发入口为 `bun run agent plugin …`，需要新的 FIA runtime 和开发者 Bun。该能力不在正式 v0.1.0 中；所有子命令提供 --help/--json。命令沿用实例连接、进程取消和更新占用规则，保留调用目录、参数和退出码。插件安装仍走已有 plugins.install。用法与版本边界见 [插件开发](/malatang/docs/plugin-development)。

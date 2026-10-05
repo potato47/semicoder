@@ -12,6 +12,31 @@ date: "2026-10-04"
 
 本页与安装指南统一使用 **v0.1.0** 源码，SDK 包名为 `@semicoder/malatang-sdk`。应用 DMG 已发布不代表 SDK npm 包已发布；插件开发继续使用源码 workspace，无需更换为旧包名。
 
+## 未发布开发版：SDK 0.2 与插件 CLI
+
+以下为本地开发分支预览，**不包含在已发布的 v0.1.0 DMG、源码固定快照或旧 FIA 固定归档中**。SDK 0.2.0 尚未发布 npm；正式版用户继续使用下方 SDK 0.1 指南和现有安装入口。
+
+支持新 runtime 的开发应用提供：
+
+```sh
+malatang plugin create ./my-notes --template notes
+cd my-notes
+bun install --ignore-scripts
+malatang plugin check
+malatang plugin build
+malatang plugin pack
+```
+
+开发宿主对应 `bun run agent plugin …`。开发者安装 Bun >=1.4.2；create 还支持 model 模板、--id、--name，拒绝覆盖非空目录，不自动安装依赖、初始化 Git 或安装插件。生成项目携带 SDK 归档并用相对 file 依赖引用，可离开源码 workspace。check/build/pack 默认当前目录，也可传含空格路径；所有命令支持 --help 和 --json，诊断在 stderr，机器结果在 stdout。
+
+SDK 0.2 的 manifest 必须声明 `sdkVersion: "0.2"`、`frontend: "dist/client.js"`、`styles: "dist/client.css"`。React、JSX、ReactDOM 和公共 UI 实现由宿主提供；插件从 `@semicoder/malatang-sdk/ui` 使用 Button、Input、Field、Panel 等组件，以及由 Radix 封装的 Menu/Popover/Dialog/Tooltip，不直接依赖 Radix。sm/md 控件为 28px/36px。
+
+业务样式用 CSS Modules 与 --m-* 语义 token。检查会拒绝全局 reset、根主题覆盖、公共 token 重定义和宿主私有类依赖；品牌或数据颜色需在 malatangStyleExceptions 按样式文件注明理由。构建产生 JS、CSS 与资源；pack 重新检查构建并验证完整归档，再通过已有应用中心或 plugins.install 安装。
+
+notes 模板演示表单、保存状态和 KV；model 演示模型选择、流式输出、取消、错误及空模型状态，并在卸载时清理订阅。keepAlive 页面隐藏时关闭公共弹层、释放弹层键盘监听；保留草稿的语义不变。SDK 0.1 插件需迁移重建，宿主模型配置、账号、KV 与历史保留。
+
+## 正式版 v0.1.0：源码工作区流程
+
 每个插件拥有 React 页面，可选后端，使用版本化 manifest 描述入口。React、主题和基础 UI 来自宿主，不再创建独立 React 运行时。
 
 ## 创建插件清单

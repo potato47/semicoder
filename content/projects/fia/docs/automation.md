@@ -59,3 +59,11 @@ my-app skill install --dir ~/.agents/skills
 构建会生成方法 schema、类型定义和 skill，并合入 `agent/instructions.md` 的业务指导。说明应该解释工作流、前置条件和失败处理。安装 skill 本身不会授予工具权限。
 
 skill 随应用生效的代码版本更新和回退；不要把工作区内部笔记、账号信息或凭证写入公开说明。
+
+## 应用子命令预览（未发布）
+
+FIA 本地开发分支新增 `agent.commands`：以命令名称为键，声明 description 与项目内 entry 模块。名称不得覆盖 FIA 内置命令。入口默认导出函数，接收 args、cwd、assetsDirectory，返回 void 或 0–255 退出码；构建将入口编译到应用代码产物，并加入 help 与 agent 使用说明。
+
+执行从当前生效代码加载，沿用应用实例连接、后台启动和脚本进程监督机制；Ctrl-C 清理子进程，运行期间阻止代码更新。开发与安装入口分别为 `bun run agent <命令>`、`<应用命令> <命令>`。应用可声明额外开发依赖，例如麻辣烫插件开发命令要求开发者 Bun。
+
+公开 npm 0.16.1 与麻辣烫此前固定 FIA 归档不包含这一能力。CLI 改变 runtimeId，后续需要新完整安装包；本轮未发布归档、切换下载锁或部署网站。
