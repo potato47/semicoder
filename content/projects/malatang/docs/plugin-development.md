@@ -2,164 +2,122 @@
 id: "docs-malatang-plugin-development"
 slug: "plugin-development"
 title: "开发第一个插件"
-description: "在源码 workspace 中使用 SDK，构建一个能持久保存内容的独立页面。"
-date: "2026-10-04"
+description: "用麻辣烫 CLI 创建独立插件项目，共享宿主组件、模型与本地存储。"
+date: "2026-10-05"
 ---
 
-## 准备源码工作区
+## 准备开发环境
 
-先完成 [源码安装](/malatang/docs/installation)。`@semicoder/malatang-sdk` 当前尚未发布到 npm；在麻辣烫仓库的 `examples/` 下开发，可直接使用 workspace SDK。
+本页适用于 **麻辣烫 0.2.0 / SDK 0.2**。先完成 [安装](/malatang/docs/installation)，从应用菜单安装 CLI，并安装 [Bun](https://bun.sh/docs/installation) 1.4.2 或以上。普通应用用户不需要 Bun。
 
-本页与安装指南统一使用 **v0.1.0** 源码，SDK 包名为 `@semicoder/malatang-sdk`。应用 DMG 已发布不代表 SDK npm 包已发布；插件开发继续使用源码 workspace，无需更换为旧包名。
+插件项目可以放在任意目录。CLI 会复制随应用提供、经过验证的 SDK 归档，以相对 `file:./vendor/malatang-sdk.tgz` 依赖引用，不要求克隆麻辣烫源码，也不依赖 SDK npm 安装成功。
 
-## 未发布开发版：SDK 0.2 与插件 CLI
+## 创建随手记插件
 
-以下为本地开发分支预览，**不包含在已发布的 v0.1.0 DMG、源码固定快照或旧 FIA 固定归档中**。SDK 0.2.0 尚未发布 npm；正式版用户继续使用下方 SDK 0.1 指南和现有安装入口。
-
-支持新 runtime 的开发应用提供：
-
-```sh
-malatang plugin create ./my-notes --template notes
+```bash
+malatang plugin create ./my-notes --template notes --name 我的笔记
 cd my-notes
 bun install --ignore-scripts
-malatang plugin check
-malatang plugin build
-malatang plugin pack
+bun run check
+bun run build
+bun run pack
 ```
 
-开发宿主对应 `bun run agent plugin …`。开发者安装 Bun >=1.4.2；create 还支持 model 模板、--id、--name，拒绝覆盖非空目录，不自动安装依赖、初始化 Git 或安装插件。生成项目携带 SDK 归档并用相对 file 依赖引用，可离开源码 workspace。check/build/pack 默认当前目录，也可传含空格路径；所有命令支持 --help 和 --json，诊断在 stderr，机器结果在 stdout。
+`create` 默认使用 notes 模板，ID 和名称从目录推导，也可用 `--id`、`--name` 指定。ID 为 2–64 位小写字母、数字和连字符，首位为字母；`models`、`plugins`、`settings` 是保留名称。名称不能留空。命令不覆盖非空目录，不自动安装依赖、初始化 Git 或安装插件。
 
-SDK 0.2 的 manifest 必须声明 `sdkVersion: "0.2"`、`frontend: "dist/client.js"`、`styles: "dist/client.css"`。React、JSX、ReactDOM 和公共 UI 实现由宿主提供；插件从 `@semicoder/malatang-sdk/ui` 使用 Button、Input、Field、Panel 等组件，以及由 Radix 封装的 Menu/Popover/Dialog/Tooltip，不直接依赖 Radix。sm/md 控件为 28px/36px。
+项目包含页面源码、CSS Module、图片资源、manifest、TypeScript 配置、README、AGENTS 开发约定、工具脚本和 SDK 快照。`vendor/` 下的 SDK 归档需要随项目保存；不用把 node_modules、dist 或插件发布包提交到源码仓库。
 
-业务样式用 CSS Modules 与 --m-* 语义 token。检查会拒绝全局 reset、根主题覆盖、公共 token 重定义和宿主私有类依赖；品牌或数据颜色需在 malatangStyleExceptions 按样式文件注明理由。构建产生 JS、CSS 与资源；pack 重新检查构建并验证完整归档，再通过已有应用中心或 plugins.install 安装。
+四个命令都支持 `--help` 和 `--json`；诊断输出到 stderr，机器结果输出到 stdout。check/build/pack 默认当前目录，也接受显式路径；路径含空格时加引号。
 
-notes 模板演示表单、保存状态和 KV；model 演示模型选择、流式输出、取消、错误及空模型状态，并在卸载时清理订阅。keepAlive 页面隐藏时关闭公共弹层、释放弹层键盘监听；保留草稿的语义不变。SDK 0.1 插件需迁移重建，宿主模型配置、账号、KV 与历史保留。
+| 命令                    | 行为                                                  |
+| ----------------------- | ----------------------------------------------------- |
+| `malatang plugin check` | 检查 manifest、TypeScript、样式约束和资源，不修改源码 |
+| `malatang plugin build` | 先检查，再生成完整 dist；失败清除 dist                |
+| `malatang plugin pack`  | 重新检查、构建，生成并解包验证完整 `.tgz`             |
 
-## 正式版 v0.1.0：源码工作区流程
+项目的 `bun run check/build/pack` 与 CLI 使用同一 SDK 实现。使用源码开发宿主时，在运行 `bun run dev` 的项目中改用 `bun run agent plugin …`，通过显式目录指定插件项目。
 
-每个插件拥有 React 页面，可选后端，使用版本化 manifest 描述入口。React、主题和基础 UI 来自宿主，不再创建独立 React 运行时。
+## 共享组件与样式
 
-## 创建插件清单
-
-新建 `examples/my-notes/package.json`：
-
-```json
-{
-  "name": "@local/my-notes",
-  "version": "0.1.0",
-  "type": "module",
-  "files": ["dist"],
-  "devDependencies": { "@semicoder/malatang-sdk": "workspace:*" },
-  "malatang": {
-    "schemaVersion": 1,
-    "id": "my-notes",
-    "name": "我的笔记",
-    "description": "把一个想法保存在本机。",
-    "icon": "记",
-    "color": "#6e8169",
-    "sdkVersion": "0.1",
-    "frontend": "dist/client.js",
-    "keepAlive": true
-  }
-}
-```
-
-`id` 是持久数据命名空间：2–64 位小写字母、数字和连字符，首位为字母；不要使用保留名称 `models`、`plugins`、`settings`，也不要在更新时随意更换。
-
-## 编写页面
-
-新建 `examples/my-notes/src/client.tsx`：
+插件默认导出 React 页面，通过 `@semicoder/malatang-sdk/client` 创建客户端，从 `@semicoder/malatang-sdk/ui` 导入组件。例如：
 
 ```tsx
-import { useEffect, useState } from "react";
-import { createPluginClient } from "@semicoder/malatang-sdk/client";
-import { Button, PageHeader, Panel } from "@semicoder/malatang-sdk/ui";
+import { Field, Page, PageHeader, Panel, PanelContent, Textarea } from "@semicoder/malatang-sdk/ui";
+import styles from "./page.module.css";
 
-const host = createPluginClient("my-notes");
-
-export default function MyNotes() {
-  const [text, setText] = useState("");
-  const [busy, setBusy] = useState(true);
-  const [loaded, setLoaded] = useState(false);
-  const [status, setStatus] = useState("");
-
-  useEffect(() => {
-    let active = true;
-    host.kv
-      .get("note")
-      .then((value) => {
-        if (active) {
-          if (typeof value === "string") setText(value);
-          setLoaded(true);
-        }
-      })
-      .catch((error) => {
-        if (active) setStatus(String(error));
-      })
-      .finally(() => {
-        if (active) setBusy(false);
-      });
-    return () => {
-      active = false;
-    };
-  }, []);
-
-  async function save() {
-    setBusy(true);
-    try {
-      await host.kv.set("note", text);
-      setStatus("已保存");
-    } catch (error) {
-      setStatus(String(error));
-    } finally {
-      setBusy(false);
-    }
-  }
-
+export default function Notes() {
   return (
-    <div className="m-page">
-      <PageHeader title="我的笔记" />
+    <Page>
+      <PageHeader title="我的笔记" description="把一个想法保存在本机。" />
       <Panel>
-        <label htmlFor="note">内容</label>
-        <textarea
-          id="note"
-          value={text}
-          disabled={busy || !loaded}
-          onChange={(event) => setText(event.target.value)}
-        />
-        <Button disabled={busy || !loaded} onClick={() => void save()}>
-          {busy ? "处理中…" : "保存"}
-        </Button>
-        <p role="status">{status}</p>
+        <PanelContent>
+          <Field label="笔记内容" hint="保存与读取逻辑见 notes 模板">
+            <Textarea className={styles.note} placeholder="从一个想法开始…" />
+          </Field>
+        </PanelContent>
       </Panel>
-    </div>
+    </Page>
   );
 }
 ```
 
-KV 只接受 JSON，每值最多 64 KiB，不存在的键返回 null。示例读取失败会显示错误，生产插件还应提供重试和更完整的数据恢复交互。
+`page.module.css`：
 
-## 构建与安装
-
-在麻辣烫仓库根目录执行：
-
-```bash
-bun install --ignore-scripts
-bun packages/sdk/build.ts examples/my-notes
-cd examples/my-notes
-bun pm pack
+```css
+.note {
+  min-height: 180px;
+  color: var(--m-text);
+}
 ```
 
-在应用中心选择生成的 `.tgz` 安装。构建器打包业务 JS，React 与 JSX runtime 由宿主共享；额外 CSS、图片或其他资源需要自行放入 `dist`，并在 manifest 中声明样式入口。不要把后端模块导入前端。
+React、JSX、ReactDOM 和公共 UI 实现由宿主共享。插件不直接引入 Radix，不打包自己的 React 或 UI 实现。Button、Input、Select 等控件支持 sm/md 两档（28px/36px）；Field 关联标签、提示和错误；Menu、Popover、Dialog、Tooltip 统一键盘和焦点行为。完整接口见 [SDK 文档](https://github.com/potato47/malatang/blob/v0.2.0/packages/sdk/README.md)。
 
-## 调用模型与可选后端
+业务样式使用 CSS Modules 和 `--m-*` 语义 token。检查会拒绝全局 reset、根主题覆盖、公共 token 重定义和宿主私有类依赖，不能使用 `.m-page` 等私有类代替组件。品牌或数据颜色可在 package.json 顶层 `malatangStyleExceptions` 按样式文件注明理由。
 
-前端通过 `host.models.list()` 获取宿主模型，用 `host.models.start()` 创建生成任务。订阅 `models.onChange`、`runs.onChange` 后读取快照，重连再读，并在卸载时取消订阅。没有可用模型时提示去设置，不提供虚构结果。
+CSS 的相对 url 由构建器处理；JS 导入图片后使用 `new URL(asset, import.meta.url).href`。构建自动输出 JS、统一 CSS 和引用资源，不手工遗漏资源文件。
 
-后端使用 `definePlugin` 和 `defineMethod` 导出方法，manifest 增加 `backend: "dist/backend.js"`；输入由 schema 校验。完整示例见 [内置译文源码](https://github.com/potato47/malatang/tree/v0.1.0/plugins/translate) 和 [SDK 文档](https://github.com/potato47/malatang/blob/v0.1.0/packages/sdk/README.md)。
+## 清单与数据
 
-## 页面生命周期与主题
+生成项目的 `package.json.malatang` 包含：
 
-`keepAlive` 默认 false，切走卸载；true 时隐藏并保留组件状态，订阅和计时器继续执行，仍占用内存。刷新、重启、停用或升级会释放实例，需要持久化的数据继续使用 KV。
+```json
+{
+  "schemaVersion": 1,
+  "id": "my-notes",
+  "name": "我的笔记",
+  "description": "把一个想法保存在本机。",
+  "icon": "记",
+  "color": "#686868",
+  "sdkVersion": "0.2",
+  "frontend": "dist/client.js",
+  "styles": "dist/client.css",
+  "keepAlive": true
+}
+```
 
-使用 `.m-page` 和 `--m-bg`、`--m-surface`、`--m-text`、`--m-accent` 等主题变量。避免全局 reset 与写死黑白颜色，业务 CSS 加插件前缀。宿主负责外观偏好，插件不要修改根元素主题。
+ID 是持久数据命名空间，不要在升级时随意更换。notes 模板演示读取、保存、等待与错误状态；KV 只接受 JSON，每值最多 64 KiB，不存在的键返回 null。插件卸载会保留 KV 和历史。
+
+`keepAlive` 默认 false，切走卸载；true 保留当前窗口内的草稿和滚动位置，普通订阅仍继续。公共弹层在所属页面隐藏时关闭并释放键盘/焦点占用。刷新、重启、停用或升级会释放实例，需要长期保存的数据继续使用 KV。
+
+## 创建模型插件
+
+```bash
+malatang plugin create ./my-model --template model
+```
+
+model 模板演示宿主模型选择、空模型状态、流式输出、取消及错误。模型配置来自「设置 → 模型服务」，插件不单独收集密钥。模板通过事件通知读取完整快照，重连时重新读取，卸载时取消订阅；切页不会自动取消后台模型运行。
+
+需要后端时，用 `definePlugin` 和 `defineMethod` 默认导出方法，增加 `src/backend.ts` 和 manifest 的 `backend: "dist/backend.js"`。输入由 schema 校验。可参考 [内置译文](https://github.com/potato47/malatang/tree/v0.2.0/plugins/translate)。
+
+## 打包安装与旧插件迁移
+
+`pack` 生成如 `my-notes-0.1.0.tgz` 的归档。通过「应用中心 → 选择本地包」安装，或调用现有安装 API：
+
+```bash
+malatang call plugins.install --json '{"source":"/absolute/path/my-notes-0.1.0.tgz"}'
+malatang call plugins.jobs --json '{}'
+```
+
+安装返回任务，需检查最终状态。项目创建和打包不会自动安装插件。当前不提供热更新或自动发布流程。
+
+SDK 0.1 插件不能直接用于 0.2 宿主：迁移公共组件与 CSS Modules、更新 manifest 并重新构建安装，原有 ID 对应的 KV/历史保留。旧版开发资料仍可在 [v0.1.0 的 SDK 文档](https://github.com/potato47/malatang/blob/v0.1.0/packages/sdk/README.md) 查看。

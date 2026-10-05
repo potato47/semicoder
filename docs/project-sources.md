@@ -1,24 +1,23 @@
 # 项目资料与发布状态
 
-核对日期：2026-10-04。网站内容由本站维护，不在构建时复制外部工作区，也不依赖未公开源码。本文分别记录首次正式发行、此前公开来源验收和网站本地验证。当前发行证据来自正式 Release、附件和发布工作流；本次未重新核验 FIA 或 SDK npm registry，网站上线需另核部署结果。
+核对日期：2026-10-05。网站内容由本站维护，不在构建时复制外部工作区。以下分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
 
 ## FIA
 
-- 本地源码基线：`8650f80f4a119e9b28059639acdb8dde1422a84a`。参考 `README.md`、`docs/framework/README.md`、`packages/cli/src/template.ts` 与 `packages/cli/README.md`。
-- 匿名 npm registry 查询 `@semicoder/fia`，`latest` 为 `0.16.1`。已下载该版本归档核对 README 和框架契约：它的正式 release 仍输出 ZIP，不含后来 DMG、原生外观、OAuth 回调等全部改进。
-- GitHub 匿名 API 读取 `potato47/fia` 返回 404，无法证明公开可访问；项目不配置源码按钮，也不要求访客克隆该仓库。
-- 文档基础教程面向 npm 0.16.1；固定构建的新增能力单独注明。更新 npm 后必须重新检查差异，不能只比版本字符串。
+- 当前源码 `main` / `dd430c851192b2e32116d50973e452a6ff2f1b72`；新增 `agent.commands` 与原生交互等待修复。公开基础教程仍面向 npm `0.16.1`，本次没有发布 FIA npm。
+- [固定运行时 dd430c851192](https://github.com/potato47/malatang/releases/tag/fia-runtime-dd430c851192) 已公开，附件 `semicoder-fia-0.16.1.tgz` 的 SHA-256 为 `368e6ac1316bb130360817943788129bf544adc3f163aa614ac1a8d043e2184a`。独立下载与本地验证归档一致，麻辣烫 CI 已实际消费该锁定归档。
+- 该运行时作为构建依赖标记 prerelease，不是应用安装包；版本字符串与旧 npm 相同，内容不同。旧 `fia-runtime-8650f80f4a11` 不包含新命令，不改写旧归档或其能力记录。
+- FIA 源码仓库此前匿名访问返回 404，本站不要求克隆私有源码，不增加未经验证的源码按钮。
 
 ## 麻辣烫
 
-- 当前正式版本：`v0.1.0` / Build `1`，公开源码固定提交 `f1b1c7fc60120c9af1c41dd14b1c35b532fc6bc8`。安装页的 DMG、源码步骤、模型和插件开发指南统一对应本次发行。
-- 正式发行：[Malatang 0.1.0](https://github.com/potato47/malatang/releases/tag/v0.1.0)。已核实非 draft、非 prerelease；实际 DMG 为 `Malatang-0.1.0-1-mac-arm64.dmg`，SHA-256 为 `89bb30ef97076066f06cd45b61f65e724e9442e96504d4be5dd3e4ededbfb79d`，同页提供校验文件与验证报告。
-- 本次发布工作流 [Release Malatang](https://github.com/potato47/malatang/actions/runs/37214205671) 完成固定框架归档恢复、冻结安装、代码检查、测试、签名、公证和产物校验；公开 [DMG 报告](https://github.com/potato47/malatang/releases/download/v0.1.0/Malatang-0.1.0-1-mac-arm64.dmg.report.json) 为 `ok: true`，镜像内应用启动、运行时/后端就绪、普通退出及受管进程清理检查通过；报告未覆盖桌面交互。该流程使用公开固定框架归档构建，不依赖本地 FIA 私有源码。
-- 框架仍固定 `fia-runtime-8650f80f4a11` / `semicoder-fia-0.16.1.tgz`，SHA-256 为 `e4206d0a416526e21df6387a64ca847c249fc2b9ede5db6e8c84494274ff9a16`；它是开发依赖，不是应用安装包，未因官网内容更新重打归档。
-- 本次源码使用 Pi AI `1.0.2` 与 `@semicoder/malatang-sdk`。模型目录的明确 ID 迁移和不可用提示已纳入指南。SDK 仍由源码 workspace 提供，应用标签不会触发独立 `sdk-v*` npm 发布流程，本次未宣称 SDK 已发布 npm。
-- 更新清单 `https://nobug.space/malatang/updates/latest.json` 已匿名核验 HTTP 200，与 Release 更新归档中的签名清单逐字节一致；Ed25519 签名及线上 13 个文件的 size / SHA-256 校验通过。version / build 为 `0.1.0` / `1`，runtimeId 为 `18501858e7bfb52a1e526a553d4e7949532f5d3cee5b030ed7bc03a42b03238d`，完整安装 downloadURL 指向官网安装页。跨版本升级尚未实测，早期验收包改用正式 DMG 安装。
-- 已独立通过匿名 curl 下载正式 DMG：SHA-256 与校验文件和 GitHub asset digest 一致，`hdiutil verify` 返回 VALID，`xcrun stapler validate` 成功，`spctl` 接受为 Notarized Developer ID。只读挂载后，应用 `codesign --verify --deep --strict` 与 `spctl -t execute` 通过；`verifyRelease(updates, mountedApp)` 确认安装包 runtime / version / build 和全部代码与签名更新一致，检查后已卸载镜像。
-- 真实 ChatGPT 登录与一次订阅翻译来自历史验收记录；本次发行和网站集成不代表所有服务商、模型、真实令牌刷新或撤销均已验证。
+- 正式版本 [v0.2.0 / Build 2](https://github.com/potato47/malatang/releases/tag/v0.2.0)，非 draft、非 prerelease；源码提交 `c82d6adebf0f1dfe81ded21ce15ef4b7c15040be`。统一 UI、SDK 0.2 / manifest 0.2、CSS Modules 与 notes/model 开发 CLI 已在这一发行中可用。
+- [Release Malatang 37289643139](https://github.com/potato47/malatang/actions/runs/37289643139) 成功，涵盖固定运行时、检查/测试、SDK 独立消费、签名、公证、镜像启动与退出、更新签名和 Pages 部署。SDK、应用 Release 和官网各自发布，不能互相代替验收。
+- 五项附件已匿名下载并与 GitHub digest 校验：DMG、SHA-256、DMG report、updates.tar.gz、latest.json。DMG 为 `Malatang-0.2.0-2-mac-arm64.dmg`，30,448,594 字节，SHA-256 `5d8171ab67748b5203f1abf8a3af9938edf474acf12e4441a3370899d34c03b5`。
+- 独立通过 `hdiutil verify`、`stapler validate`、Gatekeeper DMG / app 检查及 `codesign --verify --deep --strict`；公开报告 `ok: true`。`verifyRelease` 对比只读挂载应用与签名更新的全部代码、runtime、version/build，均一致；报告的桌面交互明确为未测试，真实 WKWebView UI 验收来自本地实现阶段。
+- 公网更新清单 `https://nobug.space/malatang/updates/latest.json` 与 Release 逐字节一致，Ed25519 签名及线上 33 个文件 size / SHA-256 全部通过。runtimeId 为 `ef60bd6049cc567c62980dd10fb2659e82802f2f455e393789f481cc1e8b4df4`，与 0.1.0 不同，因此升级需完整 DMG；跨版本代码更新仍未实测。
+- [@semicoder/malatang-sdk 0.2.0](https://www.npmjs.com/package/@semicoder/malatang-sdk) 已通过用户 npm 登录首次正式发布；registry latest 为 0.2.0。公开归档与验收归档逐字节一致，SHA-1 `32d14881d97c71ffcef14cd3358305d6b7209bb5`；在 workspace 外直接安装 npm 版本后，模板 check/build/pack 全部通过。此次不是 OIDC 发布，后续 Trusted Publisher 及远端 OIDC 仍待单独验收，不推送重复版本的 SDK 发布标签。
+- CLI 创建项目继续内带 SDK 快照；SDK 0.1 插件需迁移并重建，模型配置、账号、同 ID 的 KV 与历史保留。Pi AI 仍为 1.0.2；本次不代表所有模型、真实令牌刷新或撤销均已验证。
 
 ## 维护入口
 
@@ -43,7 +42,7 @@ FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 7 �
 
 `docs/impact.json` 只能发现本站仓库内的修改；相邻项目变更仍需在开发任务交付时主动核对。源码仓库不可用时保留已验证快照，记录缺少的来源，不猜测最新行为。麻辣烫更新源由应用的 GitHub Pages 发布流程维护，与本站内容部署独立，不能只因官网整合就改为本站域名。
 
-## 本次正式发行与官网文档同步
+## 首次正式发行与官网文档同步（历史）
 
 2026-10-04，网站在既有本地下载入口修订上接续更新：默认安装路线改为真实 DMG，源码锁定 v0.1.0 提交，模型和 SDK 教程统一到同一公开版本，并更新 FIA 分发页中的应用下载状态。
 
@@ -79,7 +78,7 @@ FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 7 �
 - 生产预览经 ego-browser 检查首页、项目、文档、安装入口、中文项目搜索、手机章节和项目切换；检查 1440px 桌面与 390px 手机布局、浅深色主题。
 - 内容与安装验证未执行手动部署，也未发布应用或 npm 包；网站上线以主干工作流结果为准，正式应用下载和在线更新仍以 Release 的真实状态为准。
 
-## 2026-10-05 未发布 UI / CLI 预览
+## 2026-10-05 发布前 UI / CLI 预览（历史，已由页首发行记录替代）
 
 - 本地特性分支：FIA codex/app-cli-commands（基于 ff9aa2c），麻辣烫 codex/plugin-ui-cli（基于 d9b128c）；网站 codex/plugin-ui-cli-docs。来源为 FIA config.ts / agent-artifacts.ts / agent-cli.ts / agent-server.ts 与麻辣烫 packages/sdk、commands/plugin.ts、scripts/sdk-snapshot.ts。
 - 新增 SDK 0.2.0 / manifest 0.2、宿主共享 UI 与 CSS Modules、notes/model 模板和 plugin create/check/build/pack。官网只追加明确标注的预览段落；SDK 0.1 的正式教程与已核实 v0.1.0 安装入口保留。

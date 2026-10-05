@@ -50,6 +50,6 @@ bun run agent call appearance.set --json '{"theme":"dark"}'
 
 需要用脚本组合多次调用时，参阅 [FIA 的脚本说明](/fia/docs/automation)。
 
-## 插件开发命令预览（未发布）
+## 插件开发命令（0.2.0 起）
 
-本地开发分支增加 `malatang plugin create/check/build/pack`，开发入口为 `bun run agent plugin …`，需要新的 FIA runtime 和开发者 Bun。该能力不在正式 v0.1.0 中；所有子命令提供 --help/--json。命令沿用实例连接、进程取消和更新占用规则，保留调用目录、参数和退出码。插件安装仍走已有 plugins.install。用法与版本边界见 [插件开发](/malatang/docs/plugin-development)。
+麻辣烫 0.2.0 增加 `malatang plugin create/check/build/pack`，开发入口为 `bun run agent plugin …`，需要开发者 Bun >=1.4.2；v0.1.0 不支持；所有子命令提供 --help/--json。命令沿用实例连接、进程取消和更新占用规则，保留调用目录、参数和退出码。插件安装仍走已有 plugins.install。用法与版本边界见 [插件开发](/malatang/docs/plugin-development)。

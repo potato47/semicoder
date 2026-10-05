@@ -3,14 +3,14 @@ id: "docs-malatang-models"
 slug: "models"
 title: "模型服务与账号"
 description: "集中管理 API Key、兼容服务和 ChatGPT 订阅，再让插件统一调用。"
-date: "2026-10-04"
+date: "2026-10-05"
 ---
 
 ## 一处配置，多个插件使用
 
 模型服务由宿主管理。插件只拿到模型标识和公开配置，通过 SDK 调用；密钥不会通过业务 API 返回前端。
 
-麻辣烫 **0.1.0** 使用固定版本 `@earendil-works/pi-ai@1.0.2` 的 provider 目录和协议适配，并支持自定义 OpenAI-compatible Chat Completions 服务。[安装指南](/malatang/docs/installation) 的 DMG 与源码均对应这一版本；其他源码版本以其 `package.json` 为准。预设目录随应用依赖更新，不代表所有服务已用真实账号逐一验收。
+麻辣烫 **0.2.0** 使用固定版本 `@earendil-works/pi-ai@1.0.2` 的 provider 目录和协议适配，并支持自定义 OpenAI-compatible Chat Completions 服务。[安装指南](/malatang/docs/installation) 的 DMG 与源码均对应这一版本；其他源码版本以其 `package.json` 为准。预设目录随应用依赖更新，不代表所有服务已用真实账号逐一验收。
 
 从较早的开发版本升级时，已确认的模型 ID 重命名会自动迁移；已从目录移除且没有明确替代项的模型会保留配置和历史，并提示重新选择。应用不会擅自换用其他模型，需在设置中重新选择可用项后再生成。
 

@@ -3,7 +3,7 @@ id: "docs-malatang-troubleshooting"
 slug: "troubleshooting"
 title: "常见问题"
 description: "处理模型为空、浏览器登录、系统代理、插件失败和数据恢复。"
-date: "2026-10-04"
+date: "2026-10-05"
 ---
 
 ## 为什么不能开始翻译
@@ -30,6 +30,8 @@ date: "2026-10-04"
 
 查看应用中心的任务状态与错误；CLI 可读取 `plugins.jobs`。插件 ID 重复、使用保留名称或入口超出包目录都会被拒绝。
 
+SDK 0.1 插件不能在 0.2 宿主直接运行，需要开发者按 [插件开发指南](/malatang/docs/plugin-development) 迁移后重新打包。提示缺少 Bun 时安装 Bun >=1.4.2；缺少项目依赖时在插件项目目录运行 `bun install --ignore-scripts`，再执行 `malatang plugin check`。
+
 ## 为什么切页或重启后草稿不见了
 
 未声明 `keepAlive: true` 的插件默认切页卸载。开启它也只保留当前窗口运行中的状态，不能跨刷新、重启和应用更新恢复草稿。需要长期保存的内容必须写入 KV。
@@ -38,7 +40,7 @@ date: "2026-10-04"
 
 ## 更新与安装包
 
-请从 [官网下载安装页](/malatang/docs/installation) 下载麻辣烫 0.1.0 正式 DMG，并查看 SHA-256 校验方法。Releases 中的 `fia-runtime-*` `.tgz` 仍是源码构建依赖，普通安装无需下载。更新状态以应用「设置 → 应用更新」和安装页为准。
+请从 [官网下载安装页](/malatang/docs/installation) 下载麻辣烫 0.2.0 正式 DMG，并查看 SHA-256 校验方法。Releases 中的 `fia-runtime-*` `.tgz` 仍是源码构建依赖，普通安装无需下载。更新状态以应用「设置 → 应用更新」和安装页为准。
 
 更新时，有模型、插件或登录任务会延迟切换。代码失败回退不恢复旧数据；原生运行时改变时需重新安装完整应用。
 
