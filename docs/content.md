@@ -39,9 +39,9 @@
 
 ## 项目展示与安装入口
 
-项目可填写 `category`（项目类别）、`featured: true`（首页并列推荐）和 `start: { label, doc }`。`doc` 引用本项目的文档稳定 ID，不是 URL；构建要求目标在当前模式可见且已加入导航。项目卡片和主页用它生成安装／开始入口，修改文档 slug 不会使按钮失效。未配置的项目保留通用文档入口，卡片不推断项目开源状态。
+项目可填写 `category`（项目类别）、`featured: true`（保留的推荐元数据，当前时间首页不消费）和 `start: { label, doc }`。`doc` 引用本项目的文档稳定 ID，不是 URL；构建要求目标在当前模式可见且已加入导航。项目卡片和主页用它生成安装／开始入口，修改文档 slug 不会使按钮失效。未配置的项目保留通用文档入口，卡片不推断项目开源状态。
 
-当前真实内容包含 FIA、麻辣烫与本站。FIA 和麻辣烫分别在 `content/projects/fia/`、`content/projects/malatang/` 维护，首页通过 `featured` 选择。资料、版本差异和跨项目同步流程见 [内容核对记录](project-sources.md)。两项目内容变更由 `docs/impact.json` 同时关联内容规范和来源记录；单纯文字修正无来源影响时按 PR 规则说明原因。麻辣烫官网固定为 `https://semicoder.dev/malatang`，统一安装入口为 `/malatang/docs/installation`；应用更新文件继续由独立更新源提供。新增正式安装包时先核实 Release、文件、平台与签名状态，再更新麻辣烫安装页；框架 `.tgz` 不能标为应用下载。网站不代理安装包，不在访问时请求 GitHub 或 npm。
+当前真实内容包含 FIA、麻辣烫与本站。FIA 和麻辣烫分别在 `content/projects/fia/`、`content/projects/malatang/` 维护，统一从项目集合页进入，时间首页不再展示项目推荐。资料、版本差异和跨项目同步流程见 [内容核对记录](project-sources.md)。两项目内容变更由 `docs/impact.json` 同时关联内容规范和来源记录；单纯文字修正无来源影响时按 PR 规则说明原因。麻辣烫官网固定为 `https://semicoder.dev/malatang`，统一安装入口为 `/malatang/docs/installation`；应用更新文件继续由独立更新源提供。新增正式安装包时先核实 Release、文件、平台与签名状态，再更新麻辣烫安装页；框架 `.tgz` 不能标为应用下载。网站不代理安装包，不在访问时请求 GitHub 或 npm。
 
 麻辣烫安装页默认提供已核验的 0.1.0 正式 DMG，同时保留 v0.1.0 固定提交与对应 FIA 归档的源码构建路线。模型指南统一为 Pi AI 1.0.2，插件指南统一为 `@semicoder/malatang-sdk`，不再保留旧快照的包名替换步骤。SDK 仍通过源码 workspace 使用；npm 发布状态与应用 DMG 状态分别核实，不因应用发行就标记 SDK 已上线。
 

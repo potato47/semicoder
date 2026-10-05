@@ -11,3 +11,7 @@ Oxlint 检查 JS/TS、React Hooks 与可访问性；warning 阻断 CI。Oxfmt �
 构建后执行 `bun run build:check`：扫描客户端产物中的草稿标识和正文，并加载实际 Pagefind WebAssembly 索引验证公开内容的中文搜索及类型筛选。CI 和部署脚本均执行此检查。
 
 `bun run build` 使用内容生成器的 `--production` 模式；如果设置了 `CONTENT_PREVIEW=true`，在写入产物前直接失败。预览草稿只使用开发服务。内容与路由变更需额外验证 `bun run build:check` 的静态 HTML、canonical、锚点和项目搜索检查。
+
+时间首页依赖固定版本 `lunar-typescript@1.8.6`（MIT，无第三方运行时依赖），通过 Bun lockfile 管理，作为客户端代码打包，不加载在线历法接口。升级时需回归春节换年、闰月、除夕、节气交接和时区边界。`tests/unit/time.test.ts` 使用独立 Bun 子进程设置 `TZ`，验证不同访客时区与夏令时，不修改其他测试的全局时区；`tests/unit/chinese-calendar.test.ts` 验证历法、缓存与失败降级。
+
+首页浏览器验收覆盖 1440 / 768 / 390 / 320px、浅深色主题、时间数字稳定性、无横向溢出、后台恢复与路由离开后的计时器清理。生产构建检查须确认首页保留固定占位、无脚本提示与 canonical，hydration 无日期不匹配。

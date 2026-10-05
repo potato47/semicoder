@@ -33,9 +33,14 @@ for (const path of catalog.publicPaths) {
   if (!html.includes("新手程序员")) throw new Error(`预渲染缺少正文 ${path}`);
   if (!sitemap.includes(`<loc>https://semicoder.dev${path}</loc>`))
     throw new Error(`sitemap 缺少页面 ${path}`);
-  if (path !== "/" && !html.includes(`rel="canonical" href="https://semicoder.dev${path}"`))
+  if (!html.includes(`rel="canonical" href="https://semicoder.dev${path}"`))
     throw new Error(`canonical 不匹配 ${path}`);
 }
+const home = await readFile(join(root, "index.html"), "utf8");
+if (!home.includes("此时此刻") || !home.includes("等待本地时间") || !home.includes("<noscript>"))
+  throw new Error("首页缺少静态时间占位或无脚本说明");
+if (/<time[^>]*dateTime=|<time[^>]*datetime=|role="progressbar"|<progress[^>]*value=/.test(home))
+  throw new Error("首页将动态时间或进度固化到预渲染 HTML");
 for (const entry of entries) {
   const html = await readFile(join(root, entry.path, "index.html"), "utf8");
   if (!html.includes(entry.title) || !html.includes("data-pagefind-body"))

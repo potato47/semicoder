@@ -139,19 +139,6 @@ export function Shell({ children }: { children: ReactNode }) {
         {children}
       </main>
       <footer className={styles.footer}>
-        <div className={styles.footerTop}>
-          <div>
-            <Link to="/" className={styles.footerBrand}>
-              保持好奇，认真构建<span>↗</span>
-            </Link>
-            <p>代码是一种表达。这里记录思考，也分享过程。</p>
-          </div>
-          <a href="/rss.xml" className="button">
-            <Rss size={16} />
-            订阅更新
-            <ArrowUpRight size={15} />
-          </a>
-        </div>
         <div className={styles.footerBottom}>
           <span>© {new Date().getFullYear()} 新手程序员 · semicoder.dev</span>
           <div>
@@ -160,9 +147,11 @@ export function Shell({ children }: { children: ReactNode }) {
             <Link to="/rules">评论规则</Link>
             <Link to="/admin">管理</Link>
           </div>
-          <span className={styles.built}>
-            用热爱构建 <span>●</span>
-          </span>
+          <a href="/rss.xml" className={styles.subscribe}>
+            <Rss size={14} aria-hidden="true" />
+            订阅更新
+            <ArrowUpRight size={13} aria-hidden="true" />
+          </a>
         </div>
       </footer>
     </>

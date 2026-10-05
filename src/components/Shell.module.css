@@ -171,32 +171,13 @@
 }
 .footer {
   max-width: 1280px;
-  margin: 80px auto 0;
+  margin: 40px auto 0;
   padding: 0 48px;
 }
-.footerTop {
-  padding: 38px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.footerBrand {
-  font-size: 23px;
-  font-weight: 650;
-}
-.footerBrand span {
-  color: var(--accent);
-  margin-left: 14px;
-}
-.footerTop p {
-  font-size: 13px;
-  color: var(--muted);
-  margin: 12px 0 0;
-}
 .footerBottom {
-  padding: 25px 0 32px;
+  border-top: 1px solid var(--line);
+  align-items: center;
+  padding: 20px 0 28px;
   display: flex;
   justify-content: space-between;
   color: var(--muted);
@@ -206,11 +187,6 @@
 .footerBottom > div {
   display: flex;
   gap: 22px;
-}
-.built span {
-  color: var(--green);
-  margin-left: 6px;
-  font-size: 8px;
 }
 @media (max-width: 900px) {
   .header {
@@ -275,15 +251,34 @@
   .login svg {
     width: 17px;
   }
-  .footerTop {
-    align-items: flex-start;
-    gap: 20px;
-    flex-direction: column;
-  }
   .footerBottom {
     flex-wrap: wrap;
   }
-  .built {
-    display: none;
+  .footerBottom > span {
+    flex-basis: 100%;
   }
+  .footerBottom > div {
+    flex: 1;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+  }
+}
+
+.subscribe {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  padding: 7px 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  color: var(--ink);
+  background: transparent;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.subscribe:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
