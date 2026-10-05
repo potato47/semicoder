@@ -1,16 +1,31 @@
-import { useState, type ReactNode } from "react";
-import { Link, useMatches } from "@tanstack/react-router";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { Link, useMatches, useRouter } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { Search, Sun, Moon, Menu, X, ArrowUpRight, GitFork, Rss, LogOut } from "lucide-react";
+import {
+  Search,
+  Sun,
+  Moon,
+  Menu,
+  X,
+  ArrowUpRight,
+  GitFork,
+  Rss,
+  LogOut,
+  UserRound,
+  Settings,
+} from "lucide-react";
 import { authClient, signIn, useSessionInfo } from "../lib/client";
+import type { Actor } from "../server/auth";
 import styles from "./Shell.module.css";
 export function Shell({ children }: { children: ReactNode }) {
   const matches = useMatches();
   const inProject = matches.some((match) => match.routeId === "/$project");
-  const [open, setOpen] = useState(false),
+  const router = useRouter();
+  const focusLogin = useRef(false);
+  const [open, setOpen] = useState<"nav" | "account" | null>(null),
     [loginError, setLoginError] = useState("");
   const { data: session } = useSessionInfo();
-  const query = useQueryClient();
+  useEffect(() => router.subscribe("onBeforeNavigate", () => setOpen(null)), [router]);
   function toggleTheme() {
     const value = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = value;
@@ -38,14 +53,13 @@ export function Shell({ children }: { children: ReactNode }) {
           <span className={styles.logo}>
             s<span>_</span>
           </span>
-          <span>
-            <strong>
-              SEMICODER<span className={styles.dot}>.</span>
-            </strong>
-            <small>新手程序员</small>
-          </span>
+          <strong>新手程序员</strong>
         </Link>
-        <nav className={`${styles.nav} ${open ? styles.open : ""}`} aria-label="主导航">
+        <nav
+          id="primary-navigation"
+          className={`${styles.nav} ${open === "nav" ? styles.open : ""}`}
+          aria-label="主导航"
+        >
           {(
             [
               { to: "/", label: "首页" },
@@ -59,7 +73,7 @@ export function Shell({ children }: { children: ReactNode }) {
               to={n.to}
               className={n.to === "/projects" && inProject ? styles.active : undefined}
               aria-current={n.to === "/projects" && inProject ? "page" : undefined}
-              onClick={() => setOpen(false)}
+              onClick={() => setOpen(null)}
               activeOptions={{ exact: n.to === "/" }}
               activeProps={{ className: styles.active }}
             >
@@ -76,24 +90,25 @@ export function Shell({ children }: { children: ReactNode }) {
             <Moon className="moon" size={19} />
           </button>
           {session?.actor ? (
-            <>
-              <a className={styles.account} href={session.actor.admin ? "/admin" : "/about"}>
-                {session.actor.name}
-              </a>
-              <button
-                className={styles.login}
-                aria-label="退出登录"
-                onClick={async () => {
-                  await authClient.signOut();
-                  await query.invalidateQueries();
-                }}
-              >
-                <LogOut size={15} />
-                退出
-              </button>
-            </>
+            <AccountMenu
+              key={session.actor.id}
+              actor={session.actor}
+              open={open === "account"}
+              onToggle={() => setOpen(open === "account" ? null : "account")}
+              onClose={() => setOpen(null)}
+              onSignedOut={() => {
+                focusLogin.current = true;
+                setOpen(null);
+              }}
+            />
           ) : (
             <button
+              ref={(node) => {
+                if (node && focusLogin.current) {
+                  focusLogin.current = false;
+                  node.focus();
+                }
+              }}
               className={styles.login}
               onClick={login}
               aria-label="使用 GitHub 登录"
@@ -106,11 +121,12 @@ export function Shell({ children }: { children: ReactNode }) {
           )}
           <button
             className={`${styles.menu} iconButton`}
-            onClick={() => setOpen(!open)}
-            aria-label={open ? "关闭导航" : "打开导航"}
-            aria-expanded={open}
+            onClick={() => setOpen(open === "nav" ? null : "nav")}
+            aria-label={open === "nav" ? "关闭导航" : "打开导航"}
+            aria-expanded={open === "nav"}
+            aria-controls="primary-navigation"
           >
-            {open ? <X size={20} /> : <Menu size={20} />}
+            {open === "nav" ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </header>
@@ -150,5 +166,115 @@ export function Shell({ children }: { children: ReactNode }) {
         </div>
       </footer>
     </>
+  );
+}
+
+function AccountMenu({
+  actor,
+  open,
+  onToggle,
+  onClose,
+  onSignedOut,
+}: {
+  actor: Actor;
+  open: boolean;
+  onToggle: () => void;
+  onClose: () => void;
+  onSignedOut: () => void;
+}) {
+  const container = useRef<HTMLDivElement>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const panelId = useId();
+  const query = useQueryClient();
+  const [failedImage, setFailedImage] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState("");
+  const initial = Array.from(actor.name.trim())[0]?.toUpperCase();
+
+  useEffect(() => {
+    if (!open) return;
+    function dismiss(event: PointerEvent) {
+      if (event.target instanceof Node && !container.current?.contains(event.target)) onClose();
+    }
+    function escape(event: KeyboardEvent) {
+      if (event.key !== "Escape") return;
+      event.preventDefault();
+      onClose();
+      trigger.current?.focus();
+    }
+    document.addEventListener("pointerdown", dismiss);
+    document.addEventListener("keydown", escape);
+    return () => {
+      document.removeEventListener("pointerdown", dismiss);
+      document.removeEventListener("keydown", escape);
+    };
+  }, [open, onClose]);
+
+  async function logout() {
+    if (pending) return;
+    // Keep focus inside the disclosure before disabling its focused action.
+    trigger.current?.focus();
+    setPending(true);
+    setError("");
+    try {
+      const result = await authClient.signOut();
+      if (result.error) throw new Error("Sign out failed");
+    } catch {
+      setError("退出失败，请重试");
+      setPending(false);
+      return;
+    }
+    query.setQueryData<ReturnType<typeof useSessionInfo>["data"]>(["session"], (current) =>
+      current ? { ...current, actor: null } : current,
+    );
+    onSignedOut();
+    await query.invalidateQueries();
+  }
+
+  return (
+    <div
+      ref={container}
+      className={styles.account}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) onClose();
+      }}
+    >
+      <button
+        ref={trigger}
+        className={styles.avatar}
+        aria-label="账号菜单"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={onToggle}
+      >
+        {actor.image && actor.image !== failedImage ? (
+          <img src={actor.image} alt="" onError={() => setFailedImage(actor.image)} />
+        ) : initial ? (
+          <span aria-hidden="true">{initial}</span>
+        ) : (
+          <UserRound size={18} aria-hidden="true" />
+        )}
+      </button>
+      {open && (
+        <div id={panelId} className={styles.accountPanel}>
+          <p className={styles.accountName}>{actor.name.trim() || "当前用户"}</p>
+          {actor.admin && (
+            <Link to="/admin" className={styles.accountAction} onClick={onClose}>
+              <Settings size={16} />
+              管理后台
+            </Link>
+          )}
+          <button className={styles.accountAction} onClick={logout} disabled={pending}>
+            <LogOut size={16} />
+            {pending ? "正在退出…" : "退出登录"}
+          </button>
+          {error && (
+            <p className={styles.accountError} role="alert">
+              {error}
+            </p>
+          )}
+        </div>
+      )}
+    </div>
   );
 }

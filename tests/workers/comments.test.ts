@@ -12,9 +12,9 @@ const bindings = env as unknown as {
   TEST_MIGRATIONS: { name: string; queries: string[] }[];
 };
 const db = bindings.DB;
-const owner: Actor = { id: "owner", name: "管理员", admin: true };
-const alice: Actor = { id: "alice", name: "Alice", admin: false };
-const bob: Actor = { id: "bob", name: "Bob", admin: false };
+const owner: Actor = { id: "owner", name: "管理员", image: null, admin: true };
+const alice: Actor = { id: "alice", name: "Alice", image: null, admin: false };
+const bob: Actor = { id: "bob", name: "Bob", image: null, admin: false };
 const valid = async () => {};
 const settings: AppEnv = {
   DB: db,
@@ -182,8 +182,20 @@ describe("真实 Better Auth 会话与 D1 适配器", () => {
     const actor = await resolveActor(settings, h);
     expect(actor?.id).toBe("owner");
     expect(actor?.admin).toBe(true);
+    expect(actor?.image).toBeNull();
     const ordinary = await resolveActor({ ...settings, ADMIN_GITHUB_IDS: "someone-else" }, h);
     expect(ordinary?.admin).toBe(false);
+  });
+  it("会话返回用户头像且不改变权限判断", async () => {
+    const image = "https://avatars.githubusercontent.com/u/99?v=4";
+    await db.prepare("UPDATE user SET image=? WHERE id='owner'").bind(image).run();
+    const h = await headers();
+    expect(await resolveActor(settings, h)).toEqual({ ...owner, image });
+    expect(await resolveActor({ ...settings, ADMIN_GITHUB_IDS: "" }, h)).toEqual({
+      ...owner,
+      image,
+      admin: false,
+    });
   });
   it("过期和伪造会话不能认证", async () => {
     expect(await resolveActor(settings, await headers(Date.now() - 1000))).toBeNull();

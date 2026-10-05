@@ -11,3 +11,5 @@ Better Auth 使用 GitHub OAuth，认证入口 `/api/auth/*`。会话保存在 D
 所有写入进行 Origin 校验、Zod 校验、权限校验、D1 持久限流。创建和编辑还需 Turnstile Siteverify 校验 action/hostname，token 过期或重用不能通过。requestId 提供提交幂等性。审计不记录 OAuth token 或原始 IP。
 
 SQL 迁移提交 Git，使用 Wrangler 在指定环境执行。禁止生产 schema push。数据库默认使用主库一致读，不开启异地只读副本。评论批处理使用 D1 batch 原子执行。
+
+顶栏在客户端挂载后通过会话接口获取 `Actor` 的 `id`、`name`、`image` 和 `admin`；`image` 来自 Better Auth 的用户头像，为空时返回 `null`，复用现有 `user.image` 字段，无需数据库迁移。公开预渲染 HTML 不包含用户信息。已登录时只显示头像，点击展开用户名、管理员入口（仅管理员可见）和退出操作；头像缺失或加载失败时使用姓名首字符，空姓名使用用户图标。退出请求失败保留登录状态并提示重试，成功后清除客户端会话中的 actor 并刷新相关查询；后台接口继续独立验证权限。

@@ -34,6 +34,7 @@ export function getAuth(e: AppEnv) {
 export interface Actor {
   id: string;
   name: string;
+  image: string | null;
   admin: boolean;
 }
 export async function resolveActor(e: AppEnv, headers: Headers): Promise<Actor | null> {
@@ -51,5 +52,5 @@ export async function resolveActor(e: AppEnv, headers: Headers): Promise<Actor |
       .split(",")
       .map((s) => s.trim())
       .includes(linked.account_id);
-  return { id: result.user.id, name: result.user.name, admin };
+  return { id: result.user.id, name: result.user.name, image: result.user.image ?? null, admin };
 }
