@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { parse } from "jsonc-parser";
+import { verifyDeployment } from "./deployment-check";
 const target = process.argv[2];
 if (target !== "staging" && target !== "production")
   throw new Error("必须指定 staging 或 production");
@@ -24,4 +25,4 @@ await run(["bun", "run", "build"], { CLOUDFLARE_ENV: target });
 await run(["bun", "run", "build:check"]);
 await run(["bunx", "wrangler", "d1", "migrations", "apply", "DB", "--remote", "--env", target]);
 await run(["bunx", "wrangler", "deploy", "--env", target]);
-await run(["bun", "scripts/smoke.ts", config.vars.SITE_URL]);
+await verifyDeployment(() => run(["bun", "scripts/smoke.ts", config.vars.SITE_URL]));
