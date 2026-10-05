@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ProjectRouteImport } from './routes/$project'
-import { Route as AboutRouteImport } from './routes/about'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RulesRouteImport } from './routes/rules'
@@ -33,11 +32,6 @@ const IndexRoute = IndexRouteImport.update({
 const ProjectRoute = ProjectRouteImport.update({
   id: '/$project',
   path: '/$project',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -104,7 +98,6 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$project': typeof ProjectRouteWithChildren
-  '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/privacy': typeof PrivacyRoute
   '/rules': typeof RulesRoute
@@ -120,7 +113,6 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/privacy': typeof PrivacyRoute
   '/rules': typeof RulesRoute
@@ -137,7 +129,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$project': typeof ProjectRouteWithChildren
-  '/about': typeof AboutRoute
   '/admin': typeof AdminRoute
   '/privacy': typeof PrivacyRoute
   '/rules': typeof RulesRoute
@@ -156,7 +147,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$project'
-    | '/about'
     | '/admin'
     | '/privacy'
     | '/rules'
@@ -172,7 +162,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/about'
     | '/admin'
     | '/privacy'
     | '/rules'
@@ -188,7 +177,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$project'
-    | '/about'
     | '/admin'
     | '/privacy'
     | '/rules'
@@ -206,7 +194,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ProjectRoute: typeof ProjectRouteWithChildren
-  AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRoute
   PrivacyRoute: typeof PrivacyRoute
   RulesRoute: typeof RulesRoute
@@ -231,13 +218,6 @@ declare module '@tanstack/react-router' {
       path: '/$project'
       fullPath: '/$project'
       preLoaderRoute: typeof ProjectRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -357,7 +337,6 @@ const ProjectRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ProjectRoute: ProjectRouteWithChildren,
-  AboutRoute: AboutRoute,
   AdminRoute: AdminRoute,
   PrivacyRoute: PrivacyRoute,
   RulesRoute: RulesRoute,

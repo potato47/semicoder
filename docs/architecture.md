@@ -2,6 +2,8 @@
 
 单仓库、单 TanStack Start 应用、单 Cloudflare Worker。TanStack Router 提供类型化导航，TanStack Query 管理动态状态。CSS Modules 和 CSS 变量提供视觉系统。公开页面预渲染，动态会话和评论在 hydration 后读取。
 
+主导航在桌面与移动端统一提供首页、博客和项目入口。关于页面已移除，`/about` 返回 404，不再进入预渲染清单或 sitemap；`about` 仍为保留路径名，避免项目占用。
+
 内容从 `content/` 经构建脚本校验和编译 MDX，生成模块清单、HTML 搜索输入、RSS、sitemap 和重定向清单。生产生成阶段排除草稿；只有显式本地预览才包含草稿。Pagefind 索引由公开内容生成并作为静态资源部署。
 
 客户端通过 Start server functions 调用服务端，`src/server/` 封装会话、D1、审核和防刷。数据库访问不进入客户端包。公共 HTML 无会话信息，动态接口和后台使用 private/no-store。Worker 入口处理 canonical 域名、重定向、安全响应头和健康检查。

@@ -19,6 +19,7 @@ for (const path of [...catalog.publicPaths, "/rss.xml", "/sitemap.xml", "/health
 }
 for (const path of [
   "/this-page-does-not-exist",
+  "/about",
   "/projects/semicoder",
   "/docs/semicoder/getting-started",
   ...catalog.projects.map((project) => `${project.path}/docs/this-page-does-not-exist`),

@@ -65,7 +65,6 @@ export function Shell({ children }: { children: ReactNode }) {
               { to: "/", label: "首页" },
               { to: "/blog", label: "博客" },
               { to: "/projects", label: "项目" },
-              { to: "/about", label: "关于" },
             ] as const
           ).map((n) => (
             <Link

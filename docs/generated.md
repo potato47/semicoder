@@ -38,7 +38,6 @@
 - `/$project/docs`
 - `/$project/docs/`
 - `/$project/docs/$`
-- `/about`
 - `/admin`
 - `/api/auth/$`
 - `/blog/`

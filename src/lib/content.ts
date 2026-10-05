@@ -1,17 +1,10 @@
 import type { ContentCatalog, ContentKind, DocEntry } from "./site";
 
-export const staticPublicPaths = [
-  "/",
-  "/blog",
-  "/projects",
-  "/search",
-  "/about",
-  "/privacy",
-  "/rules",
-];
+export const staticPublicPaths = ["/", "/blog", "/projects", "/search", "/privacy", "/rules"];
 export const reservedSegments = [
   ...staticPublicPaths.filter((path) => path !== "/").map((path) => path.slice(1)),
   "docs",
+  "about",
   "admin",
   "api",
   "_serverFn",
