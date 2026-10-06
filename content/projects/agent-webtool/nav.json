@@ -1,0 +1,9 @@
+{
+  "groups": [
+    { "title": "开始使用", "items": ["docs-agent-webtool-installation"] },
+    {
+      "title": "使用指南",
+      "items": ["docs-agent-webtool-sdk", "docs-agent-webtool-cli", "docs-agent-webtool-mcp"]
+    }
+  ]
+}

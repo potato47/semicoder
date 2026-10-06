@@ -1,0 +1,36 @@
+---
+id: "project-agent-webtool"
+slug: "agent-webtool"
+title: "agent-webtool"
+description: "通过 SDK、命令行或 MCP，为 agent 提供网页抓取与多引擎搜索。"
+date: "2026-10-06"
+tags: ["Agent", "搜索", "MCP"]
+stack: ["TypeScript", "Node.js", "Bun"]
+status: "已发布"
+category: "Agent 工具"
+source: "https://github.com/potato47/agent-webtool"
+start: { "label": "安装与使用", "doc": "docs-agent-webtool-installation" }
+---
+
+## 让 agent 获取网页资料
+
+agent-webtool 提供两个操作：`web_fetch` 抓取网页并转换为 Markdown、纯文本或 HTML；`web_search` 并行查询百度、搜狗微信、头条和 DuckDuckGo，过滤不相关结果、按 URL 去重并合并排序。使用这些引擎不需要第三方搜索 API Key。
+
+你可以在 Node.js / Bun 后端中导入 SDK，在终端运行命令，或以 stdio MCP server 接入支持 MCP 的客户端。三种入口共用抓取与搜索实现。
+
+## 选择入口
+
+- [安装与快速开始](/agent-webtool/docs/installation)：准备运行环境，固定版本安装。
+- [JavaScript SDK](/agent-webtool/docs/sdk)：获取结构化结果、取消请求与管理引用来源。
+- [命令行](/agent-webtool/docs/cli)：抓取、搜索、输出格式和退出码。
+- [MCP 接入](/agent-webtool/docs/mcp)：启动服务并选择开放的工具。
+
+## 使用边界
+
+SDK 面向服务端，不是浏览器组件，也不包含模型或 agent loop。搜索可能遇到超时、验证码或页面结构变化；单个引擎失败时仍可返回其他引擎结果。离线测试通过不代表每个引擎在当前网络中都可访问。
+
+默认拒绝私网地址，限制重定向和响应大小。网页内容属于外部资料，应用仍需决定如何引用、展示和使用结果。
+
+## 版本
+
+本指南面向已发布的 npm **0.7.0**。该版本新增会话来源隔离 `SourceContext`、快照恢复和缓存容量修复，原有 SDK 调用与 CLI/MCP 参数保持兼容。查看 [0.7.0 更新说明](https://github.com/potato47/agent-webtool/releases/tag/v0.7.0)。

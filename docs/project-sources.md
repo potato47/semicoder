@@ -1,6 +1,8 @@
 # 项目资料与发布状态
 
-核对日期：2026-10-05。网站内容由本站维护，不在构建时复制外部工作区。以下分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
+工作区与同步规范核对：2026-10-06；下列 FIA / 麻辣烫公开发行证据沿用 2026-10-05，本轮未重新查询远端。网站内容由本站维护，不在构建时复制外部工作区。分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
+
+Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、Semicoder 和 agent-webtool 四个独立开发仓库；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
 
 ## FIA
 
@@ -19,26 +21,37 @@
 - [@semicoder/malatang-sdk 0.2.0](https://www.npmjs.com/package/@semicoder/malatang-sdk) 已通过用户 npm 登录首次正式发布；registry latest 为 0.2.0。公开归档与验收归档逐字节一致，SHA-1 `32d14881d97c71ffcef14cd3358305d6b7209bb5`；在 workspace 外直接安装 npm 版本后，模板 check/build/pack 全部通过。此次不是 OIDC 发布，后续 Trusted Publisher 及远端 OIDC 仍待单独验收，不推送重复版本的 SDK 发布标签。
 - CLI 创建项目继续内带 SDK 快照；SDK 0.1 插件需迁移并重建，模型配置、账号、同 ID 的 KV 与历史保留。Pi AI 仍为 1.0.2；本次不代表所有模型、真实令牌刷新或撤销均已验证。
 
+## agent-webtool
+
+- 2026-10-06 正式发布 [0.7.0](https://github.com/potato47/agent-webtool/releases/tag/v0.7.0)，tag 源码 `ec6a2afcea8a651d58ea9a4cec513a12089a27b3`。新增 `SourceContext` / `createSourceContext`、快照恢复、缓存命中登记与标题容量修复；现有调用兼容，未接入麻辣烫。
+- [三平台 CI 37424449550](https://github.com/potato47/agent-webtool/actions/runs/37424449550)、手动归档验收 37424738211 和 [正式 OIDC 发布 37424883345](https://github.com/potato47/agent-webtool/actions/runs/37424883345) 成功。Linux Node 20.18.1 / 24、macOS Node 24 均通过独立消费；Trusted Publisher 限定仓库、工作流与 `npm` 环境，本次环境只允许精确 `v0.7.0` 标签。
+- 公开归档 `https://registry.npmjs.org/agent-webtool/-/agent-webtool-0.7.0.tgz` 与正式 GitHub artifact 逐字节一致。SHA-256 `5d51d108d64121172f213e83821eea7daa06cff7c0a2994303165bc354d46d52`，SHA-1 `a411bcd8a50e252af53175dc30316c4230bb58ac`；registry 已附 SLSA provenance，发布日志透明索引 3103730359。
+- 使用全新临时目录及 npm 缓存按版本安装，Node ESM/CJS、TypeScript、两个 CLI、MCP 初始化/工具列表/筛选/非法 URL 错误返回通过；实际公开 SDK 的来源隔离、缓存登记、快照恢复和取消也通过。真实搜索引擎可用性未重新验收。
+- 本站新增 `content/projects/agent-webtool/`：介绍、安装、SDK、CLI、MCP，共 4 篇指南；默认固定已验证的 0.7.0，SDK 保留 0.6.0 迁移边界。内容随本站主干工作流部署，实际部署结果单独验收，不以本地内容代替上线证据。
+- 旧公开 npm 0.6.0 的 SHA-1 为 `4a9b5332511ffaa62cf1e59808616189fb5cb3c5`，不含 SourceContext；此前源码预览现由正式 0.7.0 指南替代。包名仍为 `agent-webtool`，0.7.0 package homepage 保留 GitHub README。
+
 ## 维护入口
 
-FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 7 篇指南位于 `content/projects/malatang/`。发布状态首先更新各自安装页，再同步项目介绍与版本说明。发布后的下载链接应使用真实 Release 及其附件，保留平台要求与安装步骤；不要将 CI artifact 或框架包伪装为正式应用。
+FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 7 篇指南位于 `content/projects/malatang/`；本站介绍和 2 篇指南位于 `content/projects/semicoder/`。agent-webtool 介绍及 4 篇指南位于 `content/projects/agent-webtool/`。发布状态首先更新各自安装页，再同步项目介绍与版本说明。发布后的下载链接应使用真实 Release 及其附件，保留平台要求与安装步骤；不要将 CI artifact 或框架包伪装为正式应用。
 
-本站只链接公开源码和包地址，不托管二进制，不发布 FIA 或麻辣烫。网站随主干既有工作流执行质量检查、预发布和生产发布。
+本站只链接公开源码和包地址，不托管二进制，不代替源项目发布框架、应用或 npm 包。网站随主干既有工作流执行质量检查、预发布和生产发布。
 
 ## 跨项目更新流程
 
-| 变化来源                                  | 本站核对位置                                                                           |
-| ----------------------------------------- | -------------------------------------------------------------------------------------- |
-| FIA API、原生能力、CLI、构建与平台要求    | FIA 项目介绍、shared-api / development / automation / installation / distribution 指南 |
-| 麻辣烫设置、模型/账号、插件安装与生命周期 | 麻辣烫项目介绍、getting-started / models / plugins / troubleshooting / automation 指南 |
-| SDK 包名、manifest、构建方式与方法        | plugin-development、项目介绍；与安装指南的源码版本保持一致                             |
-| 公开应用、npm SDK、固定 FIA 归档          | installation、plugin-development、本来源记录；核对 tag、文件、平台和 SHA-256           |
+| 变化来源                                                      | 本站核对位置                                                                           |
+| ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| FIA API、原生能力、CLI、构建与平台要求                        | FIA 项目介绍、shared-api / development / automation / installation / distribution 指南 |
+| 麻辣烫设置、模型/账号、插件安装与生命周期                     | 麻辣烫项目介绍、getting-started / models / plugins / troubleshooting / automation 指南 |
+| SDK 包名、manifest、构建方式与方法                            | plugin-development、项目介绍；与安装指南的源码版本保持一致                             |
+| agent-webtool 抓取/搜索、SDK/CLI/MCP、来源生命周期或 npm 发布 | agent-webtool 项目介绍、安装与使用指南、本来源记录；核对公开导出与本地未发布改动       |
+| Semicoder 自身使用与内容写作流程                              | `content/projects/semicoder/` 和相关工程文档；无用户文档影响时说明依据                 |
+| 公开应用、npm SDK、固定 FIA 归档                              | installation、plugin-development、本来源记录；核对 tag、文件、平台和 SHA-256           |
 
 1. 确认变更所属项目、源码提交、对应契约及已验证行为；框架或应用缺陷反馈源仓库修正，网站不创造新的 API 约定。
-2. 分开核对本地实现、公开可获取产物和网站部署版本；官网无需和源码同时升版，但默认安装路线必须完整可复现。只更新文案时不重打运行时归档。
+2. 每次项目版本发布必须同步本站对应文档、安装入口、迁移说明及版本证据。分开核对本地实现、公开可获取产物和网站部署版本；各项目无需同时升版，但默认安装路线必须完整可复现。先准备文档，公开产物验证后再切换默认路径；只更新文案时不重打运行时归档。
 3. 先改安装页及版本范围，再核对介绍、指南、导航、站内引用；发布状态或来源改变时记录日期、提交、归档/哈希和验证结果。没有变化的检查不制造新发布结论。
 4. 依据 `docs/impact.json` 同步工程文档。仅工程 Markdown 修改检查事实、链接、格式与 `docs:check`；公开 `content/` 正文变化须生成内容、执行 `content:check`、生产构建及 `build:check`。命令变化实际验证相应步骤，路由或代码变化依项目规范执行相关完整检查。
-5. 交付分别说明源项目、本站及 workspace 知识库的修改与待办。网站 `main` 推送会部署；应用 `v*` 与 SDK `sdk-v*` 发布在麻辣烫仓库，FIA npm `v*` 在 FIA 仓库，均不由本站操作代替。
+5. 交付分别说明源项目、本站及 workspace 知识库的修改与待办。页面缺失、公开产物未验或部署未获授权时，明确记录未完成项和完成条件。网站 `main` 推送会部署；麻辣烫应用 `v*`、SDK `sdk-v*`、FIA npm `v*` 及 agent-webtool npm 各自管理，均不由本站操作代替。agent-webtool 的 CI 与 0.7.0 OIDC 发布已验收；未来版本须核对环境标签规则并单独授权。
 
 `docs/impact.json` 只能发现本站仓库内的修改；相邻项目变更仍需在开发任务交付时主动核对。源码仓库不可用时保留已验证快照，记录缺少的来源，不猜测最新行为。麻辣烫更新源由应用的 GitHub Pages 发布流程维护，与本站内容部署独立，不能只因官网整合就改为本站域名。
 
