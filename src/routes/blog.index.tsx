@@ -12,14 +12,8 @@ function Blog() {
   const articles = entries.filter((x) => x.kind === "blog");
   const tags = ["全部", ...new Set(articles.flatMap((x) => x.tags))];
   return (
-    <>
-      <div className="pageIntro">
-        <span className="eyebrow">
-          <b>01 /</b> JOURNAL
-        </span>
-        <h1>写下来，让思考有迹可循。</h1>
-        <p>学习笔记、工程实践，还有那些值得分享的小发现。</p>
-      </div>
+    <div className="collectionPage">
+      <h1 className="visuallyHidden">博客</h1>
       <div className="row" style={{ marginBottom: 28 }}>
         {tags.map((t) => (
           <button
@@ -33,6 +27,6 @@ function Blog() {
         ))}
       </div>
       <ArticleList items={articles.filter((x) => tag === "全部" || x.tags.includes(tag))} />
-    </>
+    </div>
   );
 }

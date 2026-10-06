@@ -8,14 +8,8 @@ export const Route = createFileRoute("/projects/")({
 });
 function Projects() {
   return (
-    <>
-      <div className="pageIntro">
-        <span className="eyebrow">
-          <b>02 /</b> SELECTED WORK
-        </span>
-        <h1>想法，值得被实现。</h1>
-        <p>桌面框架、插件应用与这个网站。了解它们的设计，找到文档和安装入口。</p>
-      </div>
+    <div className="collectionPage">
+      <h1 className="visuallyHidden">项目</h1>
       <div
         style={{
           display: "grid",
@@ -29,6 +23,6 @@ function Projects() {
             <ProjectCard key={x.id} item={x} />
           ))}
       </div>
-    </>
+    </div>
   );
 }
