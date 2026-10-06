@@ -38,7 +38,7 @@ GitHub CLI 用户也可用 `gh secret set CLOUDFLARE_API_TOKEN --repo potato47/s
 
 ## 观察与费用
 
-当前使用 Workers / D1 / Turnstile 免费套餐，不自动升级。Worker 不设置自定义 `cpu_ms`，遵循免费版每请求 10ms CPU、账户共享每天 10 万次动态请求限制。静态页面与资源走 Assets；`run_worker_first` 仅列出动态路径，避免静态访问消耗额度。D1 账户共享每日 500 万行读取、10 万行写入，单库 500MB，总计 5GB；Time Travel 免费恢复窗口为 7 天。额度按账户共享，预发布与生产并非各一份。
+当前使用 Workers / D1 / Turnstile 免费套餐，不自动升级。Worker 不设置自定义 `cpu_ms`，遵循免费版每请求 10ms CPU、账户共享每天 10 万次动态请求限制。带构建哈希的 `/assets/*` 由 `public/_headers` 设置一年浏览器缓存（`public, max-age=31536000, immutable`），内容变更通过新文件名更新，避免每次访问重新验证。HTML、Pagefind、RSS 等无内容哈希的地址不使用这项长期缓存策略。静态页面与资源走 Assets；`run_worker_first` 仅列出动态路径，避免静态访问消耗额度。D1 账户共享每日 500 万行读取、10 万行写入，单库 500MB，总计 5GB；Time Travel 免费恢复窗口为 7 天。额度按账户共享，预发布与生产并非各一份。
 
 开启 Workers observability，关注错误率、CPU、D1 读写、请求量和 429；日志禁止写入密钥、会话、评论正文。免费额度耗尽会导致动态请求失败，不自动产生超额账单；正文和浏览器搜索应继续可用。上线需实测 OAuth 回调、会话、评论和审核，不能用本地测试推断 CPU 额度合格。需要付费扩容时另行确认。
 

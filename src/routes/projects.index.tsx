@@ -4,6 +4,8 @@ import { ProjectCard } from "../components/ContentCards";
 import { seo } from "../lib/seo";
 export const Route = createFileRoute("/projects/")({
   head: () => seo("项目", "从想法到作品，记录每一次动手构建。", "/projects"),
+  // These small, frequently used lists must not wait for a route chunk on first navigation.
+  codeSplitGroupings: [],
   component: Projects,
 });
 function Projects() {

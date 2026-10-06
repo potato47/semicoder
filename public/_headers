@@ -9,3 +9,6 @@ https://staging.semicoder.dev/*
 
 https://:worker.:account.workers.dev/*
   X-Robots-Tag: noindex, nofollow
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable

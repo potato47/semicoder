@@ -5,6 +5,8 @@ import { ArticleList } from "../components/ContentCards";
 import { seo } from "../lib/seo";
 export const Route = createFileRoute("/blog/")({
   head: () => seo("博客", "记录编程路上的思考、实践与学习笔记。", "/blog"),
+  // These small, frequently used lists must not wait for a route chunk on first navigation.
+  codeSplitGroupings: [],
   component: Blog,
 });
 function Blog() {
