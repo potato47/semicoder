@@ -68,6 +68,6 @@ bunx wrangler d1 execute DB --env staging --local --persist-to /private/tmp/semi
 
 ## 项目文档路由验收
 
-公开预渲染路径由内容生成的统一清单提供，包含项目主页、存在公开文档的项目文档首页和全部公开章节。部署仍采用 Assets 优先，不增加 Worker 优先路径或付费服务。生成器和草稿检查递归扫描项目内的文档子目录；项目本身是草稿时，其文档也必须从产物中隔离。
+公开预渲染路径由内容生成的统一清单提供，包含每个项目的 Home 和全部公开章节，不包含已移除的独立文档概览地址。部署仍采用 Assets 优先，不增加 Worker 优先路径或付费服务。生成器和草稿检查递归扫描项目内的文档子目录；项目本身是草稿时，其文档也必须从产物中隔离。
 
-本次 URL 直接切换，不部署旧详情页或兼容重定向。验证 `/semicoder`、`/semicoder/docs`、`/semicoder/docs/guides/writing` 返回完整静态正文和正确 canonical；旧 `/projects/semicoder`、`/docs/semicoder/getting-started` 以及不存在的项目/章节返回 404。`bun run build:check` 检查统一清单对应的静态 HTML、sitemap、目录锚点和中文项目筛选；浏览器验收还包括刷新、站内跳转、搜索状态保留、手机导航和浅深色主题。
+本次 URL 直接切换，不部署旧详情页或兼容重定向。验证 `/semicoder`、`/semicoder/docs/guides/writing` 返回完整静态正文和正确 canonical；旧 `/semicoder/docs` 概览、`/projects/semicoder`、`/docs/semicoder/getting-started` 以及不存在的项目/章节返回 404。所有项目的旧概览地址均由部署冒烟检查；Home 导航、相邻章节与项目评论关闭由构建检查覆盖。`bun run build:check` 检查统一清单对应的静态 HTML、sitemap、目录锚点和中文项目筛选；浏览器验收还包括刷新、站内跳转、搜索状态保留、手机导航和浅深色主题。

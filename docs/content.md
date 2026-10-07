@@ -6,7 +6,7 @@
 
 所有正文 frontmatter 必填 `id`、`title`、`description`、`slug`、`date`。ID 永久稳定，文件位置和 URL 可独立调整。博客和项目 slug 使用小写英文、数字与连字符；文档可使用 `guides/writing` 这样的多级 slug。项目可配置 `stack`、`status`、`source`、`demo`；示例内容必须标记 `sample: true`。不再接受文档 frontmatter 中的 `project`、`projectId` 或 `order`，项目关系由所属目录中的项目稳定 ID 注入。
 
-例如，目录 `content/projects/semicoder/` 中的项目 slug 为 `semicoder` 时，项目主页是 `/semicoder`，文档首页是 `/semicoder/docs`，文档 `slug: guides/writing` 的地址是 `/semicoder/docs/guides/writing`。目录名不决定 URL。项目不能使用 `blog`、`docs`、`projects`、`admin`、`api`、`healthz` 等功能路由或静态资源名称。
+例如，目录 `content/projects/semicoder/` 中的项目 slug 为 `semicoder` 时，项目介绍作为文档 Home，地址是 `/semicoder`；文档 `slug: guides/writing` 的地址是 `/semicoder/docs/guides/writing`。目录名不决定 URL。项目不能使用 `blog`、`docs`、`projects`、`admin`、`api`、`healthz` 等功能路由或静态资源名称。
 
 `nav.json` 示例：
 
@@ -19,7 +19,7 @@
 }
 ```
 
-`items` 引用文档稳定 ID，不引用路径。每篇公开文档必须且只能出现一次，不允许跨项目引用。分组及数组顺序决定侧栏、文档首页和上一篇／下一篇顺序。没有文档的项目可省略 `docs/` 与 `nav.json`，不生成文档入口。新增项目和章节不需要编写路由。
+`items` 引用文档稳定 ID，不引用路径。每篇公开文档必须且只能出现一次，不允许跨项目引用。分组及数组顺序决定侧栏及章节上一篇／下一篇顺序。没有章节的项目可省略 `docs/` 与 `nav.json`，仍生成 Home。侧栏首项 Home 由项目介绍生成，不加入 nav.json；原 `/<project>/docs` 概览地址返回 404。新增项目和章节不需要编写路由。
 
 ## 草稿与构建
 
@@ -31,15 +31,15 @@
 
 ## 阅读、搜索与讨论
 
-博客与项目默认 `comments: true`，文档默认关闭。评论始终关联内容 ID，调整项目 slug 不改变关联。资源使用 `public/` 下的绝对站内路径。MDX 只允许经过仓库审查的代码；访客评论只能使用安全 Markdown，不能执行 MDX 或 HTML。
+博客默认 `comments: true`，文档默认关闭。项目 Home 统一关闭评论，项目 frontmatter 的 comments 不会重新开启；生成清单让页面和服务端评论检查共同生效。历史项目评论保留，无数据库迁移。评论始终关联内容 ID，调整 slug 不改变历史关联。资源使用 `public/` 下的绝对站内路径。MDX 只允许经过仓库审查的代码；访客评论只能使用安全 Markdown，不能执行 MDX 或 HTML。
 
-全站导航与首页不再设置独立文档入口，读者从项目进入文档。文档提供项目选择、分组章节、本页目录和相邻章节。搜索 URL 使用 `q`、`type`、`projectId` 保存状态；`type` 可选 blog、projects、docs，省略表示全部。`projectId` 仅在 docs 类型有效，且必须属于有文档的公开项目。文档内的搜索入口默认当前项目，可以切换全部项目文档或全站。Pagefind 与中文静态备用索引采用相同项目筛选规则，不增加服务端搜索请求。
+全站导航与首页不再设置独立文档入口，读者从项目进入文档。项目 Home 与文档共用分组章节、本页目录和相邻章节，不显示项目选择或独立搜索工具栏。搜索 URL 使用 `q`、`type`、`projectId` 保存状态；`type` 可选 blog、projects、docs，省略表示全部。`projectId` 仅在 docs 类型有效，且必须属于有文档的公开项目。搜索从全站顶栏进入；搜索页可以限定项目文档或搜索全站。Home 保持 projects 搜索类型，章节保持 docs 类型。是否有可搜索章节从 navigation 判断，不再生成 docsPath。Pagefind 与中文静态备用索引采用相同项目筛选规则，不增加服务端搜索请求。
 
 内容修改通过 PR，构建后发布，无网页正文编辑器。构建不自动拉取或复制外部项目仓库；开发者依据 [来源与同步规范](project-sources.md) 核对上游变化并维护本站内容，网站可独立构建。
 
 ## 项目展示与安装入口
 
-项目可填写 `category`（项目类别）、`featured: true`（保留的推荐元数据，当前时间首页不消费）和 `start: { label, doc }`。`doc` 引用本项目的文档稳定 ID，不是 URL；构建要求目标在当前模式可见且已加入导航。项目卡片和主页用它生成安装／开始入口，修改文档 slug 不会使按钮失效。未配置的项目保留通用文档入口，卡片不推断项目开源状态。
+项目可填写 `category`（项目类别）、`featured: true`（保留的推荐元数据，当前时间首页不消费）和 `start: { label, doc }`。`doc` 引用本项目的文档稳定 ID，不是 URL；构建要求目标在当前模式可见且已加入导航。项目 Home 用它生成安装／开始入口，修改文档 slug 不会使按钮失效。项目列表按 category 分组，缺少类别时归入“个人项目”；卡片名称与“文档 →”都链接到 Home，不展示封面、状态、技术栈或底部双入口。卡片不推断项目开源状态。
 
 当前真实内容包含 FIA、麻辣烫、agent-webtool 与本站。FIA 和麻辣烫分别在 `content/projects/fia/`、`content/projects/malatang/` 维护，统一从项目集合页进入，时间首页不再展示项目推荐。资料、版本差异和跨项目同步流程见 [内容核对记录](project-sources.md)。各外部项目内容变更由 `docs/impact.json` 同时关联内容规范和来源记录；单纯文字修正无来源影响时按 PR 规则说明原因。麻辣烫官网固定为 `https://semicoder.dev/malatang`，统一安装入口为 `/malatang/docs/installation`；应用更新文件继续由独立更新源提供。新增正式安装包时先核实 Release、文件、平台与签名状态，再更新麻辣烫安装页；框架 `.tgz` 不能标为应用下载。网站不代理安装包，不在访问时请求 GitHub 或 npm。
 

@@ -35,8 +35,6 @@
 - `/`
 - `/$project`
 - `/$project/`
-- `/$project/docs`
-- `/$project/docs/`
 - `/$project/docs/$`
 - `/admin`
 - `/api/auth/$`

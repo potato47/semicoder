@@ -22,6 +22,7 @@ for (const path of [
   "/about",
   "/projects/semicoder",
   "/docs/semicoder/getting-started",
+  ...catalog.projects.map((project) => `${project.path}/docs`),
   ...catalog.projects.map((project) => `${project.path}/docs/this-page-does-not-exist`),
 ]) {
   const missing = await fetch(new URL(path, base), { redirect: "manual" });

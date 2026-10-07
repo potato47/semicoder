@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Search as SearchIcon, ArrowUpRight } from "lucide-react";
-import { projects, entries } from "../generated/catalog";
+import { catalog, projects, entries } from "../generated/catalog";
+import { projectDocuments } from "../lib/content";
 import { ContentLink } from "../components/ContentLink";
 import type { ContentKind } from "../lib/site";
 import { seo } from "../lib/seo";
@@ -38,7 +39,9 @@ export const Route = createFileRoute("/search")({
   validateSearch: (raw) =>
     parseSearch(
       raw,
-      projects.filter((project) => project.docsPath).map((project) => project.id),
+      projects
+        .filter((project) => projectDocuments(catalog, project.id).length)
+        .map((project) => project.id),
     ),
   head: () => seo("搜索", "搜索博客、项目和文档。", "/search"),
   component: Search,
@@ -162,7 +165,7 @@ function Search() {
           >
             <option value="">全部项目文档</option>
             {projects
-              .filter((project) => project.docsPath)
+              .filter((project) => projectDocuments(catalog, project.id).length)
               .map((project) => (
                 <option key={project.id} value={project.id}>
                   {project.title}

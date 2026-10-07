@@ -16,11 +16,9 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RulesRouteImport } from './routes/rules'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as ProjectIndexRouteImport } from './routes/$project.index'
-import { Route as ProjectDocsRouteImport } from './routes/$project.docs'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
-import { Route as ProjectDocsIndexRouteImport } from './routes/$project.docs.index'
 import { Route as ProjectDocsSplatRouteImport } from './routes/$project.docs.$'
 import { Route as ApiAuthSplatRouteImport } from './routes/api.auth.$'
 
@@ -59,11 +57,6 @@ const ProjectIndexRoute = ProjectIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ProjectRoute,
 } as any)
-const ProjectDocsRoute = ProjectDocsRouteImport.update({
-  id: '/docs',
-  path: '/docs',
-  getParentRoute: () => ProjectRoute,
-} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -79,15 +72,10 @@ const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
   path: '/projects/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectDocsIndexRoute = ProjectDocsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ProjectDocsRoute,
-} as any)
 const ProjectDocsSplatRoute = ProjectDocsSplatRouteImport.update({
-  id: '/$',
-  path: '/$',
-  getParentRoute: () => ProjectDocsRoute,
+  id: '/docs/$',
+  path: '/docs/$',
+  getParentRoute: () => ProjectRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
@@ -102,14 +90,12 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/rules': typeof RulesRoute
   '/search': typeof SearchRoute
-  '/$project/docs': typeof ProjectDocsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/$project/': typeof ProjectIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/$project/docs/$': typeof ProjectDocsSplatRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/$project/docs/': typeof ProjectDocsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -123,7 +109,6 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsIndexRoute
   '/$project/docs/$': typeof ProjectDocsSplatRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/$project/docs': typeof ProjectDocsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -133,14 +118,12 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/rules': typeof RulesRoute
   '/search': typeof SearchRoute
-  '/$project/docs': typeof ProjectDocsRouteWithChildren
   '/blog/$slug': typeof BlogSlugRoute
   '/$project/': typeof ProjectIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/$project/docs/$': typeof ProjectDocsSplatRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/$project/docs/': typeof ProjectDocsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -151,14 +134,12 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/rules'
     | '/search'
-    | '/$project/docs'
     | '/blog/$slug'
     | '/$project/'
     | '/blog/'
     | '/projects/'
     | '/$project/docs/$'
     | '/api/auth/$'
-    | '/$project/docs/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -172,7 +153,6 @@ export interface FileRouteTypes {
     | '/projects'
     | '/$project/docs/$'
     | '/api/auth/$'
-    | '/$project/docs'
   id:
     | '__root__'
     | '/'
@@ -181,14 +161,12 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/rules'
     | '/search'
-    | '/$project/docs'
     | '/blog/$slug'
     | '/$project/'
     | '/blog/'
     | '/projects/'
     | '/$project/docs/$'
     | '/api/auth/$'
-    | '/$project/docs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -255,13 +233,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectIndexRouteImport
       parentRoute: typeof ProjectRoute
     }
-    '/$project/docs': {
-      id: '/$project/docs'
-      path: '/docs'
-      fullPath: '/$project/docs'
-      preLoaderRoute: typeof ProjectDocsRouteImport
-      parentRoute: typeof ProjectRoute
-    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
@@ -283,19 +254,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$project/docs/': {
-      id: '/$project/docs/'
-      path: '/'
-      fullPath: '/$project/docs/'
-      preLoaderRoute: typeof ProjectDocsIndexRouteImport
-      parentRoute: typeof ProjectDocsRoute
-    }
     '/$project/docs/$': {
       id: '/$project/docs/$'
-      path: '/$'
+      path: '/docs/$'
       fullPath: '/$project/docs/$'
       preLoaderRoute: typeof ProjectDocsSplatRouteImport
-      parentRoute: typeof ProjectDocsRoute
+      parentRoute: typeof ProjectRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -307,28 +271,14 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface ProjectDocsRouteChildren {
-  ProjectDocsSplatRoute: typeof ProjectDocsSplatRoute
-  ProjectDocsIndexRoute: typeof ProjectDocsIndexRoute
-}
-
-const ProjectDocsRouteChildren: ProjectDocsRouteChildren = {
-  ProjectDocsSplatRoute: ProjectDocsSplatRoute,
-  ProjectDocsIndexRoute: ProjectDocsIndexRoute,
-}
-
-const ProjectDocsRouteWithChildren = ProjectDocsRoute._addFileChildren(
-  ProjectDocsRouteChildren,
-)
-
 interface ProjectRouteChildren {
-  ProjectDocsRoute: typeof ProjectDocsRouteWithChildren
   ProjectIndexRoute: typeof ProjectIndexRoute
+  ProjectDocsSplatRoute: typeof ProjectDocsSplatRoute
 }
 
 const ProjectRouteChildren: ProjectRouteChildren = {
-  ProjectDocsRoute: ProjectDocsRouteWithChildren,
   ProjectIndexRoute: ProjectIndexRoute,
+  ProjectDocsSplatRoute: ProjectDocsSplatRoute,
 }
 
 const ProjectRouteWithChildren =

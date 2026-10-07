@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import type { ReactNode } from "react";
 import { catalog, navigation } from "../generated/catalog";
 import { projectDocuments } from "../lib/content";
 import type { DocEntry, ProjectEntry } from "../lib/site";
@@ -16,28 +17,33 @@ export function DocsBreadcrumbs({ project, title }: { project: ProjectEntry; tit
         {project.title}
       </Link>
       <span>/</span>
-      <Link to="/$project/docs" params={{ project: project.slug }}>
-        文档
-      </Link>
-      <span>/</span>
       <span aria-current="page">{title}</span>
     </nav>
   );
 }
-export function DocPage({ project, entry }: { project: ProjectEntry; entry: DocEntry }) {
+export function DocPage({
+  project,
+  entry,
+  actions,
+}: {
+  project: ProjectEntry;
+  entry: DocEntry | ProjectEntry;
+  actions?: ReactNode;
+}) {
   const documents = projectDocuments(catalog, project.id);
+  const isHome = entry.kind === "projects";
   const index = documents.findIndex((doc) => doc.id === entry.id);
-  const previous = index >= 0 ? documents[index - 1] : undefined,
-    next = index >= 0 ? documents[index + 1] : undefined;
+  const previous = index === 0 ? project : index > 0 ? documents[index - 1] : undefined,
+    next = isHome ? documents[0] : index >= 0 ? documents[index + 1] : undefined;
   const group = (navigation[project.id] ?? []).find((item) =>
     item.items.some((doc) => doc.id === entry.id),
   );
   return (
-    <div className={styles.documentLayout}>
+    <div className={`${styles.documentLayout} ${entry.toc.length ? "" : styles.withoutToc}`}>
       <div className={styles.document}>
-        <DocsBreadcrumbs project={project} title={entry.title} />
+        <DocsBreadcrumbs project={project} title={isHome ? "Home" : entry.title} />
         <header className={styles.docHeading}>
-          <span className="eyebrow">{group?.title}</span>
+          <span className="eyebrow">{isHome ? "Home" : group?.title}</span>
           <h1>{entry.title}</h1>
           <p>{entry.description}</p>
           <ContentLabels entry={entry} />
@@ -48,30 +54,33 @@ export function DocPage({ project, entry }: { project: ProjectEntry; entry: DocE
             </time>{" "}
             · {entry.readingTime} 分钟阅读
           </small>
+          {actions && <div className={`row ${styles.docActions}`}>{actions}</div>}
         </header>
         <ContentBody entry={entry} />
-        <nav className={styles.pagination} aria-label="相邻章节">
-          {previous ? (
-            <ContentLink entry={previous}>
-              <small>
-                <ArrowLeft size={13} />
-                上一篇
-              </small>
-              {previous.title}
-            </ContentLink>
-          ) : (
-            <span />
-          )}
-          {next && (
-            <ContentLink entry={next}>
-              <small>
-                下一篇
-                <ArrowRight size={13} />
-              </small>
-              {next.title}
-            </ContentLink>
-          )}
-        </nav>
+        {(previous || next) && (
+          <nav className={styles.pagination} aria-label="相邻章节">
+            {previous ? (
+              <ContentLink entry={previous}>
+                <small>
+                  <ArrowLeft size={13} />
+                  上一篇
+                </small>
+                {previous.kind === "projects" ? "Home" : previous.title}
+              </ContentLink>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <ContentLink entry={next}>
+                <small>
+                  下一篇
+                  <ArrowRight size={13} />
+                </small>
+                {next.title}
+              </ContentLink>
+            )}
+          </nav>
+        )}
       </div>
       {entry.toc.length > 0 && (
         <aside className={styles.toc}>
@@ -105,42 +114,6 @@ export function DocPage({ project, entry }: { project: ProjectEntry; entry: DocE
           </details>
         </aside>
       )}
-    </div>
-  );
-}
-export function DocsOverview({ project }: { project: ProjectEntry }) {
-  const groups = navigation[project.id] ?? [];
-  const first = groups[0]?.items[0];
-  return (
-    <div className={styles.overview}>
-      <DocsBreadcrumbs project={project} title="概览" />
-      <header className={styles.docHeading}>
-        <span className="eyebrow">DOCUMENTATION</span>
-        <h1>{project.title} 文档</h1>
-        <p>{project.description}</p>
-        {first && (
-          <ContentLink className="button primary" entry={first}>
-            开始阅读
-            <ArrowRight size={16} />
-          </ContentLink>
-        )}
-      </header>
-      <div className={styles.groups}>
-        {groups.map((group) => (
-          <section key={group.title}>
-            <h2>{group.title}</h2>
-            {group.items.map((doc) => (
-              <ContentLink entry={doc} key={doc.id} className={styles.docCard}>
-                <h3>
-                  {doc.title}
-                  <ArrowRight size={16} />
-                </h3>
-                <p>{doc.description}</p>
-              </ContentLink>
-            ))}
-          </section>
-        ))}
-      </div>
     </div>
   );
 }

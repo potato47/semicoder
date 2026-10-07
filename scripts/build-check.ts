@@ -6,6 +6,7 @@ import { markdownFiles } from "./content-files.ts";
 import { searchLiteral } from "../src/lib/search.ts";
 import type { SearchRecord } from "../src/lib/search.ts";
 import type { ContentCatalog, ContentEntry } from "../src/lib/site.ts";
+import { projectDocuments } from "../src/lib/content.ts";
 
 const root = resolve("dist/client");
 const entries: ContentEntry[] = JSON.parse(await readFile("src/generated/manifest.json", "utf8"));
@@ -54,6 +55,42 @@ const sitemapPaths = [...sitemap.matchAll(/<loc>https:\/\/semicoder\.dev([^<]*)<
 );
 if (JSON.stringify([...sitemapPaths].sort()) !== JSON.stringify([...catalog.publicPaths].sort()))
   throw new Error("sitemap 包含过期路径");
+function navMarkup(html: string, label: string) {
+  return (
+    html.match(new RegExp(`<nav\\b[^>]*aria-label="${label}"[^>]*>([\\s\\S]*?)</nav>`))?.[1] ?? ""
+  );
+}
+for (const project of catalog.projects) {
+  if (catalog.publicPaths.includes(`${project.path}/docs`) || project.comments)
+    throw new Error(`项目 Home 元信息错误 ${project.path}`);
+  const html = await readFile(join(root, project.path, "index.html"), "utf8");
+  const chapters = navMarkup(html, "文档章节");
+  const homeLink = chapters.match(/<a\b[^>]*>Home<\/a>/)?.[0];
+  if (!homeLink?.includes(`href="${project.path}"`) || !homeLink.includes('aria-current="page"'))
+    throw new Error(`Home 未进入章节导航或未高亮 ${project.path}`);
+  if (html.includes('aria-label="评论"')) throw new Error(`项目仍显示评论 ${project.path}`);
+  const documents = projectDocuments(catalog, project.id);
+  const pagination = navMarkup(html, "相邻章节");
+  if (documents[0] && !pagination.includes(`href="${documents[0].path}"`))
+    throw new Error(`Home 未连接首篇章节 ${project.path}`);
+  for (const entry of [project, ...documents]) {
+    const page = await readFile(join(root, entry.path, "index.html"), "utf8");
+    if (!navMarkup(page, "文档章节") || (entry.toc.length && !navMarkup(page, "本页目录")))
+      throw new Error(`缺少共享章节或本页目录 ${entry.path}`);
+    if (
+      page.includes('id="docs-project"') ||
+      page.includes("搜索此项目") ||
+      page.includes("项目主页 ↗")
+    )
+      throw new Error(`旧项目工具栏仍存在 ${entry.path}`);
+  }
+  if (documents[0]) {
+    const first = await readFile(join(root, documents[0].path, "index.html"), "utf8");
+    const previous = navMarkup(first, "相邻章节");
+    if (!previous.includes(`href="${project.path}"`) || !previous.includes("Home"))
+      throw new Error(`首篇章节未返回 Home ${documents[0].path}`);
+  }
+}
 async function scan(directory: string): Promise<void> {
   for (const file of await readdir(directory, { withFileTypes: true })) {
     const path = join(directory, file.name);
@@ -137,4 +174,6 @@ try {
 } finally {
   await index.destroy();
 }
-console.log(`✓ ${catalog.publicPaths.length} 个静态页面、目录锚点、草稿隔离与项目搜索通过`);
+console.log(
+  `✓ ${catalog.publicPaths.length} 个静态页面、Home 导航、目录锚点、草稿隔离与项目搜索通过`,
+);

@@ -111,7 +111,7 @@ export async function loadCatalog(preview = false, root = ".") {
       ...data,
       path: contentPath(kind, { slug: data.slug, projectSlug: project?.slug }),
       file: relative(root, filename).split(sep).join("/"),
-      comments: data.comments ?? kind !== "docs",
+      comments: kind === "projects" ? false : (data.comments ?? kind === "blog"),
       toc,
       readingTime: Math.max(1, Math.ceil(body.length / 450)),
     };
@@ -212,15 +212,9 @@ export async function loadCatalog(preview = false, root = ".") {
       )
         throw new Error(`${project.file}: 开始入口必须引用本项目可见的文档`);
       catalog.navigation[project.id] = groups;
-      if (rows.some(({ entry }) => entry.kind === "docs" && entry.projectId === project.id))
-        project.docsPath = `${project.path}/docs`;
     }
   }
-  catalog.publicPaths = [
-    ...staticPublicPaths,
-    ...catalog.entries.map((entry) => entry.path),
-    ...catalog.projects.flatMap((project) => (project.docsPath ? [project.docsPath] : [])),
-  ];
+  catalog.publicPaths = [...staticPublicPaths, ...catalog.entries.map((entry) => entry.path)];
   const publicPaths = new Set([
     ...catalog.publicPaths,
     ...catalog.entries.flatMap((entry) => entry.aliases),

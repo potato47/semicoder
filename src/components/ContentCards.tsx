@@ -1,6 +1,4 @@
 import { ArrowUpRight, Code2, ArrowRight } from "lucide-react";
-import { catalog } from "../generated/catalog";
-import { projectDocuments } from "../lib/content";
 import type { ContentEntry, ProjectEntry } from "../lib/site";
 import { formatDate } from "../lib/site";
 import { ContentLink } from "./ContentLink";
@@ -41,57 +39,21 @@ export function ArticleList({ items }: { items: ContentEntry[] }) {
   );
 }
 export function ProjectCard({ item }: { item: ProjectEntry }) {
-  const start = projectDocuments(catalog, item.id).find((doc) => doc.id === item.start?.doc);
   return (
     <article className={styles.project}>
-      <div className={styles.visual} aria-hidden="true">
-        <div className={styles.windowBar}>
-          <span />
-          <span />
-          <span />
-          <small>{item.slug} / workspace</small>
-        </div>
-        <div className={styles.projectArt}>
-          <span>{item.category ?? "个人项目"}</span>
-          <strong>{item.title}</strong>
-          <small>{item.stack.join(" / ")}</small>
-        </div>
-      </div>
-      <div className={styles.projectBody}>
-        <div className={styles.projectMeta}>
-          <span className={styles.projectIcon}>
-            <Code2 size={20} />
-          </span>
-          <span className="tag">{item.status}</span>
-        </div>
+      <div className={styles.projectHeading}>
         <h3>
           <ContentLink entry={item}>
+            <Code2 size={28} aria-hidden="true" />
             {item.title}
-            <ArrowUpRight size={20} />
           </ContentLink>
         </h3>
-        <p>{item.description}</p>
-        <div className={styles.stack}>
-          {item.stack.map((x) => (
-            <span key={x}>{x}</span>
-          ))}
-        </div>
-        <div className={styles.projectFooter}>
-          {start ? (
-            <ContentLink entry={start}>
-              {item.start?.label}
-              <ArrowRight size={14} />
-            </ContentLink>
-          ) : item.sample ? (
-            <span className="sample">示例项目介绍</span>
-          ) : (
-            <span>{item.category ?? "个人项目"}</span>
-          )}
-          <ContentLink entry={item}>
-            查看项目 <ArrowRight size={14} />
-          </ContentLink>
-        </div>
+        <ContentLink entry={item} className={styles.projectDocs} aria-label={`${item.title} 文档`}>
+          文档 <ArrowRight size={15} aria-hidden="true" />
+        </ContentLink>
       </div>
+      <p>{item.description}</p>
+      {item.sample && <span className="sample">示例项目</span>}
     </article>
   );
 }

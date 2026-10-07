@@ -35,7 +35,6 @@ export interface ProjectEntry extends ContentBase {
   category?: string;
   featured?: boolean;
   start?: { label: string; doc: string };
-  docsPath?: string;
 }
 export interface DocEntry extends ContentBase {
   kind: "docs";

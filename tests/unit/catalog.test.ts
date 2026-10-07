@@ -61,7 +61,8 @@ describe("项目内容目录", () => {
     expect(findDoc(catalog, "project-alpha", "guides/write")?.path).toBe(
       "/alpha/docs/guides/write",
     );
-    expect(catalog.publicPaths).toContain("/alpha/docs");
+    expect(catalog.publicPaths.filter((path) => path === "/alpha")).toHaveLength(1);
+    expect(catalog.publicPaths).not.toContain("/alpha/docs");
     await write(
       root,
       "content/projects/alpha/index.mdx",
@@ -188,14 +189,44 @@ describe("项目内容目录", () => {
     );
     await expect(loadCatalog(false, root)).rejects.toThrow("无效站内链接");
   });
-  test("无文档的项目仍可发布，不生成文档首页", async () => {
+  test("无章节的项目仍有 Home，不生成旧概览地址", async () => {
     const root = await fixture();
     await rm(join(root, "content/projects/alpha/docs"), { recursive: true });
     await rm(join(root, "content/projects/alpha/nav.json"));
     const { catalog } = await loadCatalog(false, root);
-    expect(catalog.projects[0].docsPath).toBeUndefined();
+    expect(projectDocuments(catalog, "project-alpha")).toEqual([]);
     expect(catalog.publicPaths).not.toContain("/alpha/docs");
     expect(catalog.publicPaths).toContain("/alpha");
+  });
+  test("项目 Home 关闭评论，保留身份和项目搜索类型；博客评论仍可配置", async () => {
+    const root = await fixture();
+    await write(
+      root,
+      "content/projects/alpha/index.mdx",
+      markdown({ id: "project-alpha", slug: "alpha", comments: true }),
+    );
+    await write(root, "content/blog/default.md", markdown({ id: "blog-default", slug: "default" }));
+    await write(
+      root,
+      "content/blog/closed.md",
+      markdown({ id: "blog-closed", slug: "closed", comments: false }),
+    );
+    const { catalog } = await loadCatalog(false, root);
+    const home = findProject(catalog, "alpha");
+    expect(home?.id).toBe("project-alpha");
+    expect(home?.kind).toBe("projects");
+    expect(home?.comments).toBe(false);
+    expect(catalog.entries.find((entry) => entry.id === "blog-default")?.comments).toBe(true);
+    expect(catalog.entries.find((entry) => entry.id === "blog-closed")?.comments).toBe(false);
+  });
+  test("删除概览后拒绝正文继续引用旧概览地址", async () => {
+    const root = await fixture();
+    await write(
+      root,
+      "content/projects/alpha/index.mdx",
+      markdown({ id: "project-alpha", slug: "alpha" }, "[旧概览](/alpha/docs)"),
+    );
+    await expect(loadCatalog(false, root)).rejects.toThrow("无效站内链接");
   });
   test("安装入口跟随文档稳定 ID，并拒绝缺失、跨项目和未发布文档", async () => {
     const root = await fixture();
