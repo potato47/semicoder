@@ -7,8 +7,8 @@
 .chapters {
   align-self: start;
   position: sticky;
-  top: 25px;
-  max-height: calc(100vh - 50px);
+  top: calc(var(--header-height) + 25px);
+  max-height: calc(100vh - var(--header-height) - 50px);
   overflow-y: auto;
   padding-right: 20px;
   border-right: 1px solid var(--line);
@@ -94,7 +94,7 @@
 }
 .toc {
   position: sticky;
-  top: 28px;
+  top: calc(var(--header-height) + 28px);
   color: var(--muted);
   font-size: 11px;
   padding-top: 4px;

@@ -1,5 +1,6 @@
 @import url("/fonts.css");
 :root {
+  --header-height: 60px;
   --paper: #f8f7f3;
   --surface: #fffefa;
   --ink: #252724;
@@ -23,6 +24,7 @@
   -webkit-font-smoothing: antialiased;
   background: var(--paper);
   color: var(--ink);
+  scroll-padding-top: var(--header-height);
 }
 :root[data-theme="dark"] {
   --paper: #191c1a;
@@ -41,6 +43,7 @@
 }
 body {
   margin: 0;
+  padding-top: var(--header-height);
 }
 a {
   color: inherit;
@@ -345,6 +348,9 @@ a:hover {
   display: block;
 }
 @media (max-width: 650px) {
+  :root {
+    --header-height: 56px;
+  }
   .pageIntro {
     padding: 40px 0 28px;
   }
