@@ -65,8 +65,12 @@ for (const project of catalog.projects) {
     throw new Error(`项目 Home 元信息错误 ${project.path}`);
   const html = await readFile(join(root, project.path, "index.html"), "utf8");
   const chapters = navMarkup(html, "文档章节");
-  const homeLink = chapters.match(/<a\b[^>]*>Home<\/a>/)?.[0];
-  if (!homeLink?.includes(`href="${project.path}"`) || !homeLink.includes('aria-current="page"'))
+  const homeLink = chapters.match(/<a\b[^>]*>[\s\S]*?<\/a>/)?.[0];
+  if (
+    !homeLink?.includes(`href="${project.path}"`) ||
+    !homeLink.includes(`>${project.title}</a>`) ||
+    !homeLink.includes('aria-current="page"')
+  )
     throw new Error(`Home 未进入章节导航或未高亮 ${project.path}`);
   if (html.includes('aria-label="评论"')) throw new Error(`项目仍显示评论 ${project.path}`);
   const documents = projectDocuments(catalog, project.id);
@@ -87,7 +91,7 @@ for (const project of catalog.projects) {
   if (documents[0]) {
     const first = await readFile(join(root, documents[0].path, "index.html"), "utf8");
     const previous = navMarkup(first, "相邻章节");
-    if (!previous.includes(`href="${project.path}"`) || !previous.includes("Home"))
+    if (!previous.includes(`href="${project.path}"`) || !previous.includes(project.title))
       throw new Error(`首篇章节未返回 Home ${documents[0].path}`);
   }
 }

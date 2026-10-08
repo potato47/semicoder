@@ -14,7 +14,7 @@ export function DocsLayout({ project }: { project: ProjectEntry }) {
         activeOptions={{ exact: true }}
         activeProps={{ "aria-current": "page" }}
       >
-        Home
+        {project.title}
       </Link>
       {groups.map((group) => (
         <section key={group.title}>

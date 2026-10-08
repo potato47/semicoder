@@ -11,7 +11,7 @@ updated: 2026-10-07
 
 博客放在 `content/blog/`。每个项目在 `content/projects/` 下维护自己的目录：`index.mdx` 保存介绍，`docs/` 保存文档，`nav.json` 按文档 ID 配置分组和阅读顺序。每份内容需要标题、简介、日期、slug 和永久稳定的 ID。
 
-项目介绍是文档 Home：例如项目 slug 为 semicoder 时，Home 地址为 `/semicoder`，原 `/semicoder/docs` 概览地址已移除。侧栏自动把 Home 放在首项，nav.json 只配置章节。项目可填写 category，项目列表据此分组；不填写时归入“个人项目”。
+项目介绍是文档 Home：例如项目 slug 为 semicoder 时，Home 地址为 `/semicoder`，原 `/semicoder/docs` 概览地址已移除。侧栏首项自动显示项目名称并链接到项目介绍，nav.json 只配置章节。项目可填写 category，项目列表据此分组；不填写时归入“个人项目”。
 
 文档 slug 可包含多级路径，例如 `guides/writing`。项目关联由所属目录自动注入，不填写 project 或 order。新增项目和文档不需要编写路由。
 
