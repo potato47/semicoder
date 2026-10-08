@@ -13,6 +13,7 @@ Semicoder 是各自有项目统一的官网文档入口。当前工作区已更�
 
 ## 麻辣烫
 
+- 2026-10-08 本地未发布样式修复：麻辣烫 `c678460` 已按用户授权从 `codex/theme-popover-style` 快进合入本地 `main`，调整 `frontend/ThemeControl.tsx` 与 SDK `src/ui.tsx` / `src/ui.css`，主题浮层改在侧栏右侧展开并留出约 8px 间距，选择框焦点提示改为贴合边框的 1px 细线。SDK Popover 新增定位参数，尚未进入公开应用或 npm 0.2.0。已核对 getting-started、plugin-development、installation 与 troubleshooting：现有公开指南不承诺浮层位置或这些新参数，安装入口保持已发布 0.2.0；后续发行时更新来源和受影响指南。用户明确要求暂不推送或部署，本次只提交本地来源记录。
 - 正式版本 [v0.2.0 / Build 2](https://github.com/potato47/malatang/releases/tag/v0.2.0)，非 draft、非 prerelease；源码提交 `c82d6adebf0f1dfe81ded21ce15ef4b7c15040be`。统一 UI、SDK 0.2 / manifest 0.2、CSS Modules 与 notes/model 开发 CLI 已在这一发行中可用。
 - [Release Malatang 37289643139](https://github.com/potato47/malatang/actions/runs/37289643139) 成功，涵盖固定运行时、检查/测试、SDK 独立消费、签名、公证、镜像启动与退出、更新签名和 Pages 部署。SDK、应用 Release 和官网各自发布，不能互相代替验收。
 - 五项附件已匿名下载并与 GitHub digest 校验：DMG、SHA-256、DMG report、updates.tar.gz、latest.json。DMG 为 `Malatang-0.2.0-2-mac-arm64.dmg`，30,448,594 字节，SHA-256 `5d8171ab67748b5203f1abf8a3af9938edf474acf12e4441a3370899d34c03b5`。
