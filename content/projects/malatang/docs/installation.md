@@ -95,6 +95,10 @@ open dist/Malatang.app
 
 构建结果位于 `dist/Malatang.app`。开发实例与安装应用的数据各自独立，模型配置和插件不会自动迁移。开发插件可继续阅读 [插件开发](/malatang/docs/plugin-development)，本版本使用 `@semicoder/malatang-sdk`。
 
+这里的隔离指 `bun run dev`。上述 0.2.0 固定快照中的 `bun run run` 和直接打开 `dist/Malatang.app` 默认使用正式数据目录，与官网下载版并不隔离，同目录的第二个实例会被阻止启动。
+
+**本地源码预览，尚未发布：** 2026-10-08 的联合开发版本新增 `Malatang Dev`（黄色 `DEV`）和 `Malatang Preview`（蓝色 `PREV`），菜单栏与窗口标题也会标明环境。新 `bun run run` 使用 `.fia/preview/data` 保存独立的预览数据，并停用正式更新源；现有开发数据与按路径保存的登录项继续保留。这需要新的 FIA 运行时，尚未进入本页的固定归档或正式 DMG，不能仅更新应用源码获得。
+
 ## 后续更新
 
 稳定更新源已发布 0.2.0（Build 2）清单，可在「设置 → 应用更新」检查当前发行。0.2.0 更新了原生运行时，从 0.1.0 升级需要下载上方完整 DMG，退出应用后替换原应用。模型配置、账号、KV 和运行历史保留；SDK 0.1 插件需要迁移到 SDK 0.2 并重新构建，详见 [插件开发](/malatang/docs/plugin-development)。跨版本代码热更新仍未实测。

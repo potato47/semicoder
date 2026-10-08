@@ -6,12 +6,16 @@ Semicoder 是各自有项目统一的官网文档入口。当前工作区已更�
 
 ## FIA
 
-- 当前源码 `main` / `dd430c851192b2e32116d50973e452a6ff2f1b72`；新增 `agent.commands` 与原生交互等待修复。公开基础教程仍面向 npm `0.16.1`，本次没有发布 FIA npm。
+- 2026-10-08 本地未发布：FIA `410638dc950ffce18f412b90b4912f60ac3b3c7e` 已从 `codex/local-app-identity` 快进合入本地 `main`，新增 Dev / Preview 名称、独立 macOS Bundle ID、DEV/PREV Dock 与菜单栏标记、隔离 `fia run` 和 `fia agent --preview`。新 Host / CLI 已重建并在麻辣烫复制依赖中验证；逻辑 identifier、旧开发数据路径与 Keychain service 保持兼容，应用仍负责按数据路径区分凭据 key。公开 npm 与下方固定归档尚不含这些能力；FIA development 页面已标明版本边界，未替换默认安装路线。
+
+- 2026-10-05 已公开固定归档的源码为 `dd430c851192b2e32116d50973e452a6ff2f1b72`；新增 `agent.commands` 与原生交互等待修复。公开基础教程仍面向 npm `0.16.1`，本次没有发布 FIA npm。
 - [固定运行时 dd430c851192](https://github.com/potato47/malatang/releases/tag/fia-runtime-dd430c851192) 已公开，附件 `semicoder-fia-0.16.1.tgz` 的 SHA-256 为 `368e6ac1316bb130360817943788129bf544adc3f163aa614ac1a8d043e2184a`。独立下载与本地验证归档一致，麻辣烫 CI 已实际消费该锁定归档。
 - 该运行时作为构建依赖标记 prerelease，不是应用安装包；版本字符串与旧 npm 相同，内容不同。旧 `fia-runtime-8650f80f4a11` 不包含新命令，不改写旧归档或其能力记录。
 - FIA 源码仓库此前匿名访问返回 404，本站不要求克隆私有源码，不增加未经验证的源码按钮。
 
 ## 麻辣烫
+
+- 2026-10-08 本地未发布身份区分：麻辣烫 `31d05614dcc00bb799c61ed3a01addaff29aa84a` 已从 `codex/local-app-identity` 快进合入本地 `main`，接入新 FIA `app.mode`，窗口显示「麻辣烫 · 开发版 / 预览版」；`dev` 保留原开发数据，新的 `run` 使用 `.fia/preview/data`，停用正式更新源。三种实际应用同时运行，预览 KV 与开发/正式版隔离，正式数据文件哈希未变；未进行真实模型调用或重新登录。installation / troubleshooting 已补充旧归档与新预览的边界，当前下载保持 0.2.0；`release/runtime-lock.json` 仍指向旧公开归档，后续发行必须公开并验收新 runtime 后切换。网站文档由 `codex/local-app-identity-docs` 整合到本地主干，保留特性分支；按用户要求不推送或部署。
 
 - 2026-10-08 本地未发布样式修复：麻辣烫 `c678460` 已按用户授权从 `codex/theme-popover-style` 快进合入本地 `main`，调整 `frontend/ThemeControl.tsx` 与 SDK `src/ui.tsx` / `src/ui.css`，主题浮层改在侧栏右侧展开并留出约 8px 间距，选择框焦点提示改为贴合边框的 1px 细线。SDK Popover 新增定位参数，尚未进入公开应用或 npm 0.2.0。已核对 getting-started、plugin-development、installation 与 troubleshooting：现有公开指南不承诺浮层位置或这些新参数，安装入口保持已发布 0.2.0；后续发行时更新来源和受影响指南。用户明确要求暂不推送或部署，本次只提交本地来源记录。
 - 正式版本 [v0.2.0 / Build 2](https://github.com/potato47/malatang/releases/tag/v0.2.0)，非 draft、非 prerelease；源码提交 `c82d6adebf0f1dfe81ded21ce15ef4b7c15040be`。统一 UI、SDK 0.2 / manifest 0.2、CSS Modules 与 notes/model 开发 CLI 已在这一发行中可用。

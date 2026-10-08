@@ -59,3 +59,9 @@ bun run agent open --browser --url
 ## 已发布版本与固定构建
 
 本文基础能力面向 npm 0.16.1。麻辣烫使用的固定构建还增加了应用原生外观、系统浏览器 OAuth 回调、系统代理继承与钥匙串等待修复。它们属于较新的源码能力，使用前核对包内契约，见 [版本与分发](/fia/docs/distribution)。
+
+### 本地源码中的开发标记（尚未发布）
+
+2026-10-08 的本地源码新增开发身份区分：`fia dev` 显示 `Dev` 名称、黄色 `DEV` Dock 标记和菜单栏文字，macOS Bundle ID 追加 `.dev`。`fia run` 改为独立的 `Preview` 打包预览，使用蓝色 `PREV` 标记、`.preview` Bundle ID 和 `.fia/preview/data` 数据目录；`fia agent --preview` 控制该预览。两种本地模式均停用正式更新源。
+
+这些能力尚不包含在公开 npm 0.16.1 或麻辣烫当前固定 FIA 归档中，请勿把新 `run` 隔离行为套用于旧版本。开发数据继续沿用 `.fia/dev/data`；逻辑应用标识与 Keychain service 保持兼容，应用仍需按数据目录区分 Keychain key。正式 `build` 产物默认使用正式数据目录。
