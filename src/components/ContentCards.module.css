@@ -63,11 +63,16 @@
   gap: 24px;
 }
 .project {
+  display: block;
   min-width: 0;
   padding: 28px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--surface);
+}
+.project:hover,
+.project:focus-visible {
+  border-color: var(--accent);
 }
 .projectHeading {
   display: grid;
@@ -76,16 +81,14 @@
   gap: 16px;
 }
 .project h3 {
-  min-width: 0;
-  margin: 0;
-  font-size: 24px;
-  line-height: 1.4;
-}
-.project h3 a {
   display: flex;
   align-items: center;
   gap: 14px;
   overflow-wrap: anywhere;
+  min-width: 0;
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.4;
 }
 .project h3 svg {
   flex-shrink: 0;
@@ -102,7 +105,8 @@
   font-size: 12px;
   white-space: nowrap;
 }
-.projectDocs:hover {
+.project:hover .projectDocs,
+.project:focus-visible .projectDocs {
   color: var(--accent);
   background: var(--accent-soft);
 }
@@ -131,8 +135,6 @@
   }
   .project h3 {
     font-size: 20px;
-  }
-  .project h3 a {
     gap: 10px;
   }
   .project h3 svg {

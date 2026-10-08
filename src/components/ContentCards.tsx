@@ -40,20 +40,18 @@ export function ArticleList({ items }: { items: ContentEntry[] }) {
 }
 export function ProjectCard({ item }: { item: ProjectEntry }) {
   return (
-    <article className={styles.project}>
+    <ContentLink entry={item} className={styles.project} aria-label={`${item.title} 文档`}>
       <div className={styles.projectHeading}>
         <h3>
-          <ContentLink entry={item}>
-            <Code2 size={28} aria-hidden="true" />
-            {item.title}
-          </ContentLink>
+          <Code2 size={28} aria-hidden="true" />
+          {item.title}
         </h3>
-        <ContentLink entry={item} className={styles.projectDocs} aria-label={`${item.title} 文档`}>
+        <span className={styles.projectDocs} aria-hidden="true">
           文档 <ArrowRight size={15} aria-hidden="true" />
-        </ContentLink>
+        </span>
       </div>
       <p>{item.description}</p>
       {item.sample && <span className="sample">示例项目</span>}
-    </article>
+    </ContentLink>
   );
 }
