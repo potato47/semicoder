@@ -53,27 +53,14 @@
   font-size: 14px;
 }
 .nav a {
-  position: relative;
   color: var(--muted);
   display: flex;
   align-items: center;
   height: 100%;
   padding: 0 2px;
 }
-.nav a:hover,
-.nav .active {
+.nav a:hover {
   color: var(--ink);
-}
-.nav .active:after {
-  content: "";
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px;
-  height: 4px;
-  background: var(--accent);
-  border-radius: 50%;
 }
 .actions {
   display: flex;
@@ -243,9 +230,6 @@
   .nav a {
     height: auto;
     padding: 12px;
-  }
-  .nav .active:after {
-    bottom: 3px;
   }
   .login {
     font-size: 0;

@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { Link, useMatches, useRouter } from "@tanstack/react-router";
+import { Link, useRouter } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   Search,
@@ -18,8 +18,6 @@ import { authClient, signIn, useSessionInfo } from "../lib/client";
 import type { Actor } from "../server/auth";
 import styles from "./Shell.module.css";
 export function Shell({ children }: { children: ReactNode }) {
-  const matches = useMatches();
-  const inProject = matches.some((match) => match.routeId === "/$project");
   const router = useRouter();
   const focusLogin = useRef(false);
   const [open, setOpen] = useState<"nav" | "account" | null>(null),
@@ -62,20 +60,11 @@ export function Shell({ children }: { children: ReactNode }) {
         >
           {(
             [
-              { to: "/", label: "首页" },
               { to: "/blog", label: "博客" },
               { to: "/projects", label: "项目" },
             ] as const
           ).map((n) => (
-            <Link
-              key={n.to}
-              to={n.to}
-              className={n.to === "/projects" && inProject ? styles.active : undefined}
-              aria-current={n.to === "/projects" && inProject ? "page" : undefined}
-              onClick={() => setOpen(null)}
-              activeOptions={{ exact: n.to === "/" }}
-              activeProps={{ className: styles.active }}
-            >
+            <Link key={n.to} to={n.to} activeProps={{}} onClick={() => setOpen(null)}>
               {n.label}
             </Link>
           ))}
