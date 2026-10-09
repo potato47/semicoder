@@ -8,6 +8,7 @@ tags: ["桌面开发", "TypeScript", "Agent"]
 stack: ["Swift Host", "Bun", "React"]
 status: "已发布"
 category: "桌面应用框架"
+source: "https://github.com/potato47/fia"
 featured: true
 start: { "label": "安装 FIA", "doc": "docs-fia-installation" }
 ---
@@ -31,7 +32,7 @@ start: { "label": "安装 FIA", "doc": "docs-fia-installation" }
 支持 **macOS 14 及以上、Apple Silicon**。先安装 Bun，再创建项目：
 
 ```bash
-bunx @semicoder/fia@0.17.0 create my-app --yes
+bunx @semicoder/fia@0.18.0 create my-app --yes
 cd my-app
 bun run dev
 ```
@@ -44,6 +45,6 @@ bun run dev
 
 ## 版本说明
 
-FIA 4 表示架构代际，npm 包当前为 **0.17.0**。本站教程面向这个已发布版本，包含默认浏览器入口、原生外观、登录回调、应用子命令、隔离预览和 DMG 分发。麻辣烫 0.3.0 的固定框架归档与本次 npm 归档逐字节一致。见 [构建与分发](/fia/docs/distribution)。
+FIA 4 表示架构代际，npm 包当前为 **0.18.0**。本站教程面向这个已发布版本，新增原生标题栏置顶，包含默认浏览器入口、原生外观、登录回调、应用子命令、隔离预览和 DMG 分发。麻辣烫 0.4.0 使用同一份 FIA 0.18.0 公开归档，已接入置顶按钮。见 [构建与分发](/fia/docs/distribution)。
 
-截至 2026-10-09，已核实 [npm 包](https://www.npmjs.com/package/@semicoder/fia) 可用；FIA 源码仓库尚无可匿名访问的公开入口，因此本站暂不提供源码按钮。
+截至 2026-10-09，[源码仓库](https://github.com/potato47/fia) 已公开，正式包通过 [npm](https://www.npmjs.com/package/@semicoder/fia) 获取。

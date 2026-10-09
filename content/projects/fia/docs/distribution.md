@@ -10,11 +10,11 @@ date: "2026-10-09"
 
 核对日期：2026-10-09。
 
-| 产物                  | 获取方式                                                                               | 范围                                                                         |
-| --------------------- | -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| FIA npm 0.17.0        | [npm](https://www.npmjs.com/package/@semicoder/fia)                                    | 默认浏览器界面、隔离预览、应用子命令和 DMG 分发；预编译 Apple Silicon 运行时 |
-| 麻辣烫固定 FIA 0.17.0 | [框架归档](https://github.com/potato47/malatang/releases/tag/fia-runtime-4689c707913c) | 源码 `4689c707913c`，与本次公开 npm 归档逐字节一致                           |
-| 麻辣烫应用            | [下载与安装说明](/malatang/docs/installation)                                          | 0.3.0 / Build 3 正式 DMG，macOS 14+ / Apple Silicon                          |
+| 产物                  | 获取方式                                                         | 范围                                                                    |
+| --------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| FIA npm 0.18.0        | [npm](https://www.npmjs.com/package/@semicoder/fia)              | 新增原生标题栏置顶；包含默认浏览器界面、隔离预览、应用子命令和 DMG 分发 |
+| 麻辣烫固定 FIA 0.18.0 | [框架归档](https://github.com/potato47/fia/releases/tag/v0.18.0) | 源码 `85206f6f5322`，与公开 npm 0.18.0 和 Actions artifact 逐字节一致   |
+| 麻辣烫应用            | [下载与安装说明](/malatang/docs/installation)                    | 0.4.0 / Build 4 正式 DMG，macOS 14+ / Apple Silicon                     |
 
 框架归档 `.tgz` 是开发依赖，不是双击安装的应用。FIA 4 的“4”也不是 npm 版本号。
 
@@ -31,7 +31,7 @@ bun run build
 
 FIA 0.17.0 的 `fia build --dmg` 创建本机测试镜像；`fia release` 对应用和 DMG 签名、公证，并检查镜像内应用，输出 DMG、SHA-256 与报告。配置 `signing.releaseIdentity` 与 `signing.notarizationProfile` 后执行项目中的 `bun run release`。签名身份为 Developer ID Application；证书、公证凭据由发布者准备，不进入仓库。
 
-历史 npm 0.16.1 的 `fia release` 输出 ZIP；新教程以 0.17.0 为准。已有应用升级至新原生宿主须通过完整安装包交付。
+历史 npm 0.16.1 的 `fia release` 输出 ZIP；当前 0.18.0 教程保留上述 DMG 行为。已有应用升级至新原生宿主须通过完整安装包交付。
 
 ## 签名代码更新
 

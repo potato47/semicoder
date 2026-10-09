@@ -1,12 +1,19 @@
 # 项目资料与发布状态
 
-公开发行核对：2026-10-09；FIA 0.17.0、麻辣烫 0.3.0 / build 3、SDK 0.2.1 均已实际发布并验证。网站内容由本站维护，不在构建时复制外部工作区。分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
+公开发行核对：2026-10-09；FIA 0.18.0、麻辣烫 0.4.0 / build 4、SDK 0.2.1 均已实际发布并验证。网站内容由本站维护，不在构建时复制外部工作区。分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
 
 Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、Semicoder 和 agent-webtool 四个独立开发仓库；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
 
 ## FIA
 
-### 当前发行（2026-10-09）
+### 当前发行：0.18.0（2026-10-09）
+
+- [公开源码与 v0.18.0](https://github.com/potato47/fia/tree/v0.18.0) 固定 `85206f6f532242fb2dfcfdf2a4b608f131726bf5`，新建公开仓库已匿名核实。新增每个原生网页窗口的置顶图标，默认模板自动包含；点击切换普通/浮动层级，隐藏/后端重连保留，窗口销毁/退出后重置。已有应用需完整重建分发。
+- [手动验收 37887494256](https://github.com/potato47/fia/actions/runs/37887494256) 与 [正式标签 OIDC 发布 37887890823](https://github.com/potato47/fia/actions/runs/37887890823) 成功，覆盖版本校验、macos-26 arm64 运行时、73 CLI / 48 Swift 测试、归档校验及 artifact 传递。npm Environment 仅允许精确 v0.18.0；Trusted Publisher 限定仓库/工作流/环境，未使用长期 npm token。
+- registry latest 为 0.18.0，公开 tarball 与正式 Actions artifact 逐字节一致，SHA-256 `faf196b9408cc2fa4b9edfb0145c592a9a87b6fbc0b0245ad6b89c6c0e7ff4e2`。在 workspace 外通过公开 npm 创建默认应用，检查、构建、启动验收通过；置顶/取消置顶的原生交互已验证。
+- 麻辣烫 0.4.0 已切换同一官方固定 FIA 0.18.0 归档并接入置顶，SDK 仍为 0.2.1。本站安装入口、介绍、开发指南和分发说明同步；网站部署证据另行记录。
+
+### 0.17.0 发行（2026-10-09，历史）
 
 - 公开 npm `@semicoder/fia@0.17.0`，registry latest 已核实为 0.17.0；源码 / 本地 v0.17.0 标签为 `4689c707913ca31f93b03cfe4deb61466c9e69f2`。默认浏览器标题栏入口、短期会话、Native 白名单、文件选择连接修复、隔离 Dev / Preview 均已发布，也包括此前固定归档的外观、OAuth、代理、DMG 和应用子命令能力。
 - [固定 FIA 归档](https://github.com/potato47/malatang/releases/tag/fia-runtime-4689c707913c) 与公开 npm tarball、唯一验收包逐字节一致，SHA-256 `521a07c387efa5b2c7ddbb76807b5c613b5b26cdf6e9c84fb965d27a5dd536b6`。本次固定归档为 prerelease / 非 latest，不是应用安装包。
@@ -26,7 +33,15 @@ Semicoder 是各自有项目统一的官网文档入口。当前工作区已更�
 
 ## 麻辣烫
 
-### 当前发行（2026-10-09）
+### 当前发行：0.4.0（2026-10-09）
+
+- 正式 [v0.4.0 / Build 4](https://github.com/potato47/malatang/releases/tag/v0.4.0)，源码 `620d19a450578ca98c58c3ae1b7e13b524e57368`。[主干 CI 37888908778](https://github.com/potato47/malatang/actions/runs/37888908778) 与 [正式发布 37888912203](https://github.com/potato47/malatang/actions/runs/37888912203) 成功；实际消费 FIA 官方 v0.18.0 同一 npm artifact，冻结安装、69 测试、签名、公证、镜像运行与 Pages 部署通过。
+- 五项公开附件匿名下载并核对 digest。`Malatang-0.4.0-4-mac-arm64.dmg` 为 30,513,939 字节，SHA-256 `8aca60752d1e25a28e50dbd122b03b505ed40088408d73bab0ab7077617ffef7`。独立 hdiutil / stapler / Gatekeeper DMG 与 app / codesign、安装包与签名更新逐文件比对通过。
+- 公网 latest.json 与 Release 一致，Ed25519 签名及 33 个在线文件大小 / SHA-256 通过。runtimeId `9cd13e79576bff74bb3ca30f659e0cd1e40a9d407b3b0102dd9f2895ee63dbf4`。从 0.3.0 或更早版本升级须完整 DMG，账号、模型、KV 和历史保留；跨版本代码热更新未实测。
+- 原生 Dev / Preview 和公开正式 DMG 均实际点击置顶 / 取消置顶并验证反馈。正式包在临时独立数据目录运行，未操作用户正式数据或调用真实模型。置顶归 FIA 管理，麻辣烫没有重复实现；SDK 仍为 0.2.1，manifest 兼容版本仍为 0.2，插件开发契约未改变。
+- github-pages 仅新增精确 v0.4.0 tag 规则，其他保护保留。官网安装、介绍、首次使用与常见问题按公开产物同步；网站部署单独验收。
+
+### 0.3.0 发行（2026-10-09，历史）
 
 - 正式 [v0.3.0 / Build 3](https://github.com/potato47/malatang/releases/tag/v0.3.0)，非 draft / prerelease，源码 `7c0f237986728d13063fd25e38e0a826738af213`。[主干 CI 37868718881](https://github.com/potato47/malatang/actions/runs/37868718881) 与 [正式发布 37868966391](https://github.com/potato47/malatang/actions/runs/37868966391) 成功；固定 FIA 下载、冻结安装、检查 / 69 测试、SDK 归档消费、签名 / 公证 / 镜像启动、更新校验与 Pages 部署通过。
 - 已匿名下载五项正式附件并核对 GitHub digest。`Malatang-0.3.0-3-mac-arm64.dmg` 为 30,516,155 字节，SHA-256 `8784f623d3a97fbf2f7acc7f2e00fa098154f939209aca5503b33d35fc589145`；hdiutil、stapler、Gatekeeper DMG / app、codesign 均通过，只读挂载内应用与签名更新逐文件一致。
