@@ -3,12 +3,12 @@ id: "docs-malatang-plugin-development"
 slug: "plugin-development"
 title: "开发第一个插件"
 description: "用麻辣烫 CLI 创建独立插件项目，共享宿主组件、模型与本地存储。"
-date: "2026-10-05"
+date: "2026-10-09"
 ---
 
 ## 准备开发环境
 
-本页适用于 **麻辣烫 0.2.0 / SDK 0.2**。先完成 [安装](/malatang/docs/installation)，从应用菜单安装 CLI，并安装 [Bun](https://bun.sh/docs/installation) 1.4.2 或以上。普通应用用户不需要 Bun。
+本页适用于 **麻辣烫 0.3.0 / SDK 0.2.1（manifest 兼容版本 0.2）**。先完成 [安装](/malatang/docs/installation)，从应用菜单安装 CLI，并安装 [Bun](https://bun.sh/docs/installation) 1.4.2 或以上。普通应用用户不需要 Bun。
 
 插件项目可以放在任意目录。CLI 会复制随应用提供、经过验证的 SDK 归档，以相对 `file:./vendor/malatang-sdk.tgz` 依赖引用，不要求克隆麻辣烫源码，也不依赖 SDK npm 安装成功。
 
@@ -70,11 +70,15 @@ export default function Notes() {
 }
 ```
 
-React、JSX、ReactDOM 和公共 UI 实现由宿主共享。插件不直接引入 Radix，不打包自己的 React 或 UI 实现。Button、Input、Select 等控件支持 sm/md 两档（28px/36px）；Field 关联标签、提示和错误；Menu、Popover、Dialog、Tooltip 统一键盘和焦点行为。完整接口见 [SDK 文档](https://github.com/potato47/malatang/blob/v0.2.0/packages/sdk/README.md)。
+React、JSX、ReactDOM 和公共 UI 实现由宿主共享。插件不直接引入 Radix，不打包自己的 React 或 UI 实现。Button、Input、Select 等控件支持 sm/md 两档（28px/36px）；Field 关联标签、提示和错误；Menu、Popover、Dialog、Tooltip 统一键盘和焦点行为。完整接口见 [SDK 文档](https://github.com/potato47/malatang/blob/v0.3.0/packages/sdk/README.md)。
 
 业务样式使用 CSS Modules 和 `--m-*` 语义 token。检查会拒绝全局 reset、根主题覆盖、公共 token 重定义和宿主私有类依赖，不能使用 `.m-page` 等私有类代替组件。品牌或数据颜色可在 package.json 顶层 `malatangStyleExceptions` 按样式文件注明理由。
 
 CSS 的相对 url 由构建器处理；JS 导入图片后使用 `new URL(asset, import.meta.url).href`。构建自动输出 JS、统一 CSS 和引用资源，不手工遗漏资源文件。
+
+SDK 0.2.1 的 `Popover` 支持 `side`、`align`、`sideOffset` 和 `collisionPadding`，需要麻辣烫 0.3.0 及以上宿主。默认 bottom/center、6px 触发器间距和 12px 视口留白；侧栏主题浮层在右侧展开。manifest 仍为 0.2，已有 0.2 插件可继续使用。
+
+[SDK 0.2.1 已独立发布 npm](https://www.npmjs.com/package/@semicoder/malatang-sdk)；CLI 模板继续优先使用随应用提供的固定归档。
 
 ## 清单与数据
 
@@ -107,7 +111,7 @@ malatang plugin create ./my-model --template model
 
 model 模板演示宿主模型选择、空模型状态、流式输出、取消及错误。模型配置来自「设置 → 模型服务」，插件不单独收集密钥。模板通过事件通知读取完整快照，重连时重新读取，卸载时取消订阅；切页不会自动取消后台模型运行。
 
-需要后端时，用 `definePlugin` 和 `defineMethod` 默认导出方法，增加 `src/backend.ts` 和 manifest 的 `backend: "dist/backend.js"`。输入由 schema 校验。可参考 [内置译文](https://github.com/potato47/malatang/tree/v0.2.0/plugins/translate)。
+需要后端时，用 `definePlugin` 和 `defineMethod` 默认导出方法，增加 `src/backend.ts` 和 manifest 的 `backend: "dist/backend.js"`。输入由 schema 校验。可参考 [内置译文](https://github.com/potato47/malatang/tree/v0.3.0/plugins/translate)。
 
 ## 打包安装与旧插件迁移
 
@@ -120,4 +124,4 @@ malatang call plugins.jobs --json '{}'
 
 安装返回任务，需检查最终状态。项目创建和打包不会自动安装插件。当前不提供热更新或自动发布流程。
 
-SDK 0.1 插件不能直接用于 0.2 宿主：迁移公共组件与 CSS Modules、更新 manifest 并重新构建安装，原有 ID 对应的 KV/历史保留。旧版开发资料仍可在 [v0.1.0 的 SDK 文档](https://github.com/potato47/malatang/blob/v0.1.0/packages/sdk/README.md) 查看。
+SDK 0.1 插件不能直接用于要求 SDK 0.2 的宿主：迁移公共组件与 CSS Modules、更新 manifest 并重新构建安装，原有 ID 对应的 KV/历史保留。旧版开发资料仍可在 [v0.1.0 的 SDK 文档](https://github.com/potato47/malatang/blob/v0.1.0/packages/sdk/README.md) 查看。

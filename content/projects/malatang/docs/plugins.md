@@ -3,7 +3,7 @@ id: "docs-malatang-plugins"
 slug: "plugins"
 title: "安装与管理插件"
 description: "通过应用中心或 CLI 安装预构建插件，了解启停、升级和数据保留。"
-date: "2026-10-05"
+date: "2026-10-09"
 ---
 
 ## 先从内置示例开始
@@ -24,7 +24,7 @@ date: "2026-10-05"
 
 ## 兼容版本
 
-麻辣烫 0.2.0 要求插件 manifest 的 `sdkVersion` 为 `"0.2"`。旧版插件会提示重新构建；保持相同插件 ID，迁移到公共组件和 CSS Modules 后重新安装，原有 KV 与运行历史保留。
+麻辣烫 0.2.0 及以上版本要求插件 manifest 的 `sdkVersion` 为 `"0.2"`。旧版插件会提示重新构建；保持相同插件 ID，迁移到公共组件和 CSS Modules 后重新安装，原有 KV 与运行历史保留。
 
 ## 信任与执行
 

@@ -1,10 +1,21 @@
 # 项目资料与发布状态
 
-工作区与同步规范核对：2026-10-06；下列 FIA / 麻辣烫公开发行证据沿用 2026-10-05，本轮未重新查询远端。网站内容由本站维护，不在构建时复制外部工作区。分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
+公开发行核对：2026-10-09；FIA 0.17.0、麻辣烫 0.3.0 / build 3、SDK 0.2.1 均已实际发布并验证。网站内容由本站维护，不在构建时复制外部工作区。分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
 
 Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、Semicoder 和 agent-webtool 四个独立开发仓库；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
 
 ## FIA
+
+### 当前发行（2026-10-09）
+
+- 公开 npm `@semicoder/fia@0.17.0`，registry latest 已核实为 0.17.0；源码 / 本地 v0.17.0 标签为 `4689c707913ca31f93b03cfe4deb61466c9e69f2`。默认浏览器标题栏入口、短期会话、Native 白名单、文件选择连接修复、隔离 Dev / Preview 均已发布，也包括此前固定归档的外观、OAuth、代理、DMG 和应用子命令能力。
+- [固定 FIA 归档](https://github.com/potato47/malatang/releases/tag/fia-runtime-4689c707913c) 与公开 npm tarball、唯一验收包逐字节一致，SHA-256 `521a07c387efa5b2c7ddbb76807b5c613b5b26cdf6e9c84fb965d27a5dd536b6`。本次固定归档为 prerelease / 非 latest，不是应用安装包。
+- runtime 构建、完整 check（73 CLI / 47 Swift）与 smoke 通过；从公开 npm 在 workspace 外执行 `bunx @semicoder/fia@0.17.0 create`，默认模板 check / 生产 build 通过。先前本地 Chromium / Safari 覆盖授权、刷新、Worker 恢复、撤销、资源、Native 文件选择和计数器共享；真实发布应用检查单独见下方。
+- 本次经维护者本机 npm 认证发布；FIA 目标源码仓库仍返回 404，本地未配置 remote，未新建仓库、未验证 GitHub OIDC。源码入口仍不对读者提供。旧应用升级 Host 须完整安装包。
+
+### 历史核对（下列未发布边界已由 0.17.0 替代）
+
+- 2026-10-09 本地未发布浏览器能力：`codex/browser-access` 基于 FIA `410638d`；源文件 `browser-sessions.ts` / `browser-assets.ts` / `gateway.ts`、Native `Runtime.swift` / `Windows.swift` / `FIAApplication.swift` 和模板新增默认入口、独立标签页会话、Service Worker 与 WS 握手票据、撤销及权限白名单。官网 development 新增明确未发布段落，旧 npm 与固定归档安装路线保持不变。此次 Host 变更需未来完整应用安装包。
 
 - 2026-10-08 本地未发布：FIA `410638dc950ffce18f412b90b4912f60ac3b3c7e` 已从 `codex/local-app-identity` 快进合入本地 `main`，新增 Dev / Preview 名称、独立 macOS Bundle ID、DEV/PREV Dock 与菜单栏标记、隔离 `fia run` 和 `fia agent --preview`。新 Host / CLI 已重建并在麻辣烫复制依赖中验证；逻辑 identifier、旧开发数据路径与 Keychain service 保持兼容，应用仍负责按数据路径区分凭据 key。公开 npm 与下方固定归档尚不含这些能力；FIA development 页面已标明版本边界，未替换默认安装路线。
 
@@ -14,6 +25,20 @@ Semicoder 是各自有项目统一的官网文档入口。当前工作区已更�
 - FIA 源码仓库此前匿名访问返回 404，本站不要求克隆私有源码，不增加未经验证的源码按钮。
 
 ## 麻辣烫
+
+### 当前发行（2026-10-09）
+
+- 正式 [v0.3.0 / Build 3](https://github.com/potato47/malatang/releases/tag/v0.3.0)，非 draft / prerelease，源码 `7c0f237986728d13063fd25e38e0a826738af213`。[主干 CI 37868718881](https://github.com/potato47/malatang/actions/runs/37868718881) 与 [正式发布 37868966391](https://github.com/potato47/malatang/actions/runs/37868966391) 成功；固定 FIA 下载、冻结安装、检查 / 69 测试、SDK 归档消费、签名 / 公证 / 镜像启动、更新校验与 Pages 部署通过。
+- 已匿名下载五项正式附件并核对 GitHub digest。`Malatang-0.3.0-3-mac-arm64.dmg` 为 30,516,155 字节，SHA-256 `8784f623d3a97fbf2f7acc7f2e00fa098154f939209aca5503b33d35fc589145`；hdiutil、stapler、Gatekeeper DMG / app、codesign 均通过，只读挂载内应用与签名更新逐文件一致。
+- 公网 latest.json 与 Release 字节一致，Ed25519 签名与全部 33 个在线文件大小 / SHA-256 通过。runtimeId `2f469910b09105865dc6df75930f16b39c8fa707ebddc31ef8a35844a259f22d`，与 0.2.0 不同，须完整 DMG 升级；账号、模型、KV 和历史保留。跨版本代码热更新不据此视为实测。
+- SDK npm `@semicoder/malatang-sdk@0.2.1` 已独立发布，latest 为 0.2.1，SHA-256 `711f7f2d39cfd3b51ed937b45cf44b136f2708b54c10de6c8490630edc5ae93f`（公开 tarball 与验收包一致）。从 registry 在 workspace 外安装，create 回执 0.2.1、notes check / build / pack 通过。本次本机 npm 认证，未执行 SDK OIDC，不推送重复版本的 sdk 标签。
+- manifest 兼容版本保持 0.2；Popover 新定位参数需要宿主 0.3.0 和 SDK 0.2.1。SDK 0.1 插件仍须迁移重建。Pi AI 保持 1.0.2，不代表全部真实模型或登录刷新均已验收。
+- `github-pages` 仅增加精确 `v0.3.0` tag 规则，其余保护保留。官网安装、指南与版本证据按这些公开产物同步；网站部署按本次 main 工作流单独验收。
+
+### 历史核对（下列本地未发布边界已由 0.3.0 替代）
+
+- 2026-10-09 麻辣烫 `codex/browser-access` 基于 `31d0561` 接入本地重建 FIA，沿用空应用标题栏，由框架提供入口；同步 getting-started / installation / troubleshooting。公开 0.2.0、SDK npm 和 `release/runtime-lock.json` 的 dd430c851192 不变。下次发行须公开、验收新 FIA 固定归档后切换 lock，再同步安装入口。本任务未推送、发布或部署。
+- 同日文件选择问题修复：FIA `vite.ts` 按实际 SDK 文件内容使同版本 `file:` 更新的 Vite 缓存失效；麻辣烫 troubleshooting 记录开发重启与旧缓存排查。仅修复已有文件对话框能力的连接，不扩大浏览器 Native 权限，仍未发布。
 
 - 2026-10-08 本地未发布身份区分：麻辣烫 `31d05614dcc00bb799c61ed3a01addaff29aa84a` 已从 `codex/local-app-identity` 快进合入本地 `main`，接入新 FIA `app.mode`，窗口显示「麻辣烫 · 开发版 / 预览版」；`dev` 保留原开发数据，新的 `run` 使用 `.fia/preview/data`，停用正式更新源。三种实际应用同时运行，预览 KV 与开发/正式版隔离，正式数据文件哈希未变；未进行真实模型调用或重新登录。installation / troubleshooting 已补充旧归档与新预览的边界，当前下载保持 0.2.0；`release/runtime-lock.json` 仍指向旧公开归档，后续发行必须公开并验收新 runtime 后切换。网站文档由 `codex/local-app-identity-docs` 整合到本地主干，保留特性分支；按用户要求不推送或部署。
 

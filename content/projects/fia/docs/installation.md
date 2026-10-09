@@ -3,7 +3,7 @@ id: "docs-fia-installation"
 slug: "installation"
 title: "安装与快速开始"
 description: "准备 macOS 与 Bun，创建第一个同时支持桌面和 CLI 的应用。"
-date: "2026-10-04"
+date: "2026-10-09"
 ---
 
 ## 环境要求
@@ -22,12 +22,12 @@ date: "2026-10-04"
 以下使用已公开的固定 npm 版本，便于重现：
 
 ```bash
-bunx @semicoder/fia@0.16.1 create my-app --yes
+bunx @semicoder/fia@0.17.0 create my-app --yes
 cd my-app
 bun run dev
 ```
 
-创建命令生成项目并安装依赖。`--yes` 使用默认配置；需要自己选择时可去掉它。开发命令会启动原生窗口、Bun 后端与 Vite。初始页面是一个持久化共享计数器。
+创建命令生成项目并安装依赖。`--yes` 使用默认配置；需要自己选择时可去掉它。开发命令会启动原生窗口、Bun 后端与 Vite。初始页面是一个持久化共享计数器。点击原生标题栏最右侧“在浏览器中打开”，即可在本机浏览器使用同一界面；原生窗口继续保留。
 
 ## 验证同一份业务
 
@@ -38,7 +38,7 @@ bun run agent call counter.get --json '{}'
 bun run agent call counter.increment --json '{"by":1}'
 ```
 
-计数会同步到桌面页面。这两个入口都由 `backend/index.ts` 处理，没有另写一份 CLI 业务逻辑。
+计数会同步到桌面和已授权的浏览器页面。这些入口都由 `backend/index.ts` 处理，没有另写一份 CLI 业务逻辑。
 
 ## 项目结构
 

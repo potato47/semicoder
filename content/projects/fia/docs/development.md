@@ -3,7 +3,7 @@ id: "docs-fia-development"
 slug: "development"
 title: "开发与原生能力"
 description: "了解进程分工、窗口生命周期和真实宿主上的浏览器调试。"
-date: "2026-10-04"
+date: "2026-10-09"
 ---
 
 ## 三个部分如何协作
@@ -56,12 +56,26 @@ bun run agent open --browser --url
 
 用户数据使用 `context.app.dataDirectory`。开发实例与安装应用的数据和连接相互独立，切换到生产包不会自动搬运开发数据。
 
-## 已发布版本与固定构建
+## 适用版本
 
-本文基础能力面向 npm 0.16.1。麻辣烫使用的固定构建还增加了应用原生外观、系统浏览器 OAuth 回调、系统代理继承与钥匙串等待修复。它们属于较新的源码能力，使用前核对包内契约，见 [版本与分发](/fia/docs/distribution)。
+本文面向 npm 0.17.0，包含应用原生外观、系统浏览器 OAuth 回调、系统代理继承与钥匙串等待修复。完整契约随包分发，见 [版本与分发](/fia/docs/distribution)。
 
-### 本地源码中的开发标记（尚未发布）
+### 开发与预览标记（0.17.0）
 
-2026-10-08 的本地源码新增开发身份区分：`fia dev` 显示 `Dev` 名称、黄色 `DEV` Dock 标记和菜单栏文字，macOS Bundle ID 追加 `.dev`。`fia run` 改为独立的 `Preview` 打包预览，使用蓝色 `PREV` 标记、`.preview` Bundle ID 和 `.fia/preview/data` 数据目录；`fia agent --preview` 控制该预览。两种本地模式均停用正式更新源。
+从 0.17.0 开始，`fia dev` 显示 `Dev` 名称、黄色 `DEV` Dock 标记和菜单栏文字，macOS Bundle ID 追加 `.dev`。`fia run` 改为独立的 `Preview` 打包预览，使用蓝色 `PREV` 标记、`.preview` Bundle ID 和 `.fia/preview/data` 数据目录；`fia agent --preview` 控制该预览。两种本地模式均停用正式更新源。
 
-这些能力尚不包含在公开 npm 0.16.1 或麻辣烫当前固定 FIA 归档中，请勿把新 `run` 隔离行为套用于旧版本。开发数据继续沿用 `.fia/dev/data`；逻辑应用标识与 Keychain service 保持兼容，应用仍需按数据目录区分 Keychain key。正式 `build` 产物默认使用正式数据目录。
+npm 0.16.1 和麻辣烫 0.2.0 的旧固定归档不含此行为，请勿把新 `run` 隔离规则套用于旧版本。开发数据继续沿用 `.fia/dev/data`；逻辑应用标识与 Keychain service 保持兼容，应用仍需按数据目录区分 Keychain key。正式 `build` 产物默认使用正式数据目录。
+
+### 完整浏览器界面（0.17.0）
+
+FIA 0.17.0 把完整浏览器界面作为默认能力，覆盖开发、预览与正式构建；`fia create` 新应用也自带入口。每个网页窗口标题栏最右侧提供“在浏览器中打开”按钮，打开该窗口配置的应用内页面，保留原生窗口。框架按钮不受应用 `setTitlebar([])` 影响。
+
+应用 CLI 支持 `open --browser`，默认打开主窗口；开发使用 `fia agent open --browser`，预览使用 `fia agent --preview open --browser`。普通操作不打印凭证，显式追加 `--url` 才输出 60 秒单次授权链接。
+
+浏览器和原生窗口共享后端与持久数据，各自保留未保存的页面状态。授权仅限当前后端运行期间，刷新可恢复；后端重启、更新或应用 / 托盘菜单“断开浏览器连接”后，页面提示重新从标题栏进入并停止无效重连。
+
+服务仍只监听本机，裸 IP 与端口不授予 API 权限。浏览器使用独立的标签页会话与按客户端绑定的 Service Worker，保护 API、动态插件模块、CSS、SSE 和资源。业务 WebSocket 应使用 `@semicoder/fia/client` 的 `await openWebSocket("/api/stream", protocols)`，由框架交换短效握手票据。
+
+文件对话框、剪贴板、窗口、外观、通知和更新等可用；直接调用钥匙串、CLI 管理、退出、全局快捷键、屏幕捕获及未知原生方法被拒绝。`native.capabilities()` 反映当前权限。浏览器 `ready()` 不能代替原生窗口完成更新健康验证。
+
+该能力随 FIA 0.17.0 发布，麻辣烫 0.3.0 已接入。由于原生 Host 改变，已有应用需要重新分发完整安装包；只更新业务代码无法增加标题栏入口。

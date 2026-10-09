@@ -3,7 +3,7 @@ id: "project-fia"
 slug: "fia"
 title: "FIA"
 description: "用一套 TypeScript API，构建人和 agent 都能使用的 macOS 应用。"
-date: "2026-10-04"
+date: "2026-10-09"
 tags: ["桌面开发", "TypeScript", "Agent"]
 stack: ["Swift Host", "Bun", "React"]
 status: "已发布"
@@ -14,7 +14,7 @@ start: { "label": "安装 FIA", "doc": "docs-fia-installation" }
 
 ## 一份能力，多种入口
 
-桌面上的按钮、终端里的命令、agent 执行的脚本，应当调用同一份业务逻辑。FIA 从共享 API 出发，为应用同时提供桌面界面、CLI、TypeScript 脚本 SDK 和随应用更新的 skill。
+桌面上的按钮、终端里的命令、agent 执行的脚本，应当调用同一份业务逻辑。FIA 从共享 API 出发，为应用同时提供桌面与浏览器界面、CLI、TypeScript 脚本 SDK 和随应用更新的 skill。
 
 你用 React 编写界面，用 TypeScript 实现业务；预编译 Swift Host 提供原生窗口和系统能力，Bun 运行后端。应用开发不需要维护 Swift 工程。
 
@@ -22,7 +22,7 @@ start: { "label": "安装 FIA", "doc": "docs-fia-installation" }
 
 - **一次声明，共同使用**：Zod schema 描述输入、输出和事件，界面、CLI 与脚本共享类型和运行时校验。
 - **原生桌面外壳**：WKWebView、窗口、菜单栏、剪贴板、文件对话框和钥匙串等能力通过 Native SDK 调用。
-- **熟悉的开发体验**：React + Vite 热更新、受控后端重启，以及连接真实宿主的浏览器调试。
+- **熟悉的开发体验**：React + Vite 热更新、受控后端重启，以及连接同一宿主的完整浏览器界面。
 - **独立运行的应用**：构建产物自带 Bun，使用者无需安装 Node.js 或 Bun。
 - **可确认、可回退的更新**：前后端代码一起签名分发，用户确认后切换，启动失败恢复上一版代码。
 
@@ -31,7 +31,7 @@ start: { "label": "安装 FIA", "doc": "docs-fia-installation" }
 支持 **macOS 14 及以上、Apple Silicon**。先安装 Bun，再创建项目：
 
 ```bash
-bunx @semicoder/fia@0.16.1 create my-app --yes
+bunx @semicoder/fia@0.17.0 create my-app --yes
 cd my-app
 bun run dev
 ```
@@ -44,6 +44,6 @@ bun run dev
 
 ## 版本说明
 
-FIA 4 表示架构代际，npm 包当前为 **0.16.1**。本站的基础教程面向这个已发布版本；麻辣烫使用的固定框架构建另含原生外观、登录回调和 DMG 等改进，不能仅凭相同版本号认定功能一致。差异见 [构建与分发](/fia/docs/distribution)。
+FIA 4 表示架构代际，npm 包当前为 **0.17.0**。本站教程面向这个已发布版本，包含默认浏览器入口、原生外观、登录回调、应用子命令、隔离预览和 DMG 分发。麻辣烫 0.3.0 的固定框架归档与本次 npm 归档逐字节一致。见 [构建与分发](/fia/docs/distribution)。
 
-截至 2026-10-04，已核实 [npm 包](https://www.npmjs.com/package/@semicoder/fia) 可用；FIA 源码仓库尚无可匿名访问的公开入口，因此本站暂不提供源码按钮。
+截至 2026-10-09，已核实 [npm 包](https://www.npmjs.com/package/@semicoder/fia) 可用；FIA 源码仓库尚无可匿名访问的公开入口，因此本站暂不提供源码按钮。

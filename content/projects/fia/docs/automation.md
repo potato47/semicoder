@@ -3,7 +3,7 @@ id: "docs-fia-automation"
 slug: "automation"
 title: "CLI、脚本与 agent"
 description: "让应用可发现、可调用，并把业务流程交给外部 agent。"
-date: "2026-10-04"
+date: "2026-10-09"
 ---
 
 ## 开发时操作应用
@@ -25,11 +25,12 @@ bun run agent status --json
 ```bash
 my-app call counter.get --json '{}'
 my-app open
+my-app open --browser
 my-app status --json
 my-app quit
 ```
 
-CLI 可以在后台冷启动应用；`open` 才显示窗口。移动 `.app` 后重新安装 CLI，以修复入口路径。
+CLI 可以在后台冷启动应用；`open` 显示窗口，`open --browser` 打开主窗口的浏览器界面。只有显式 `--url` 才输出 60 秒单次授权链接，普通打开不打印凭证。移动 `.app` 后重新安装 CLI，以修复入口路径。
 
 ## TypeScript 脚本
 
@@ -60,10 +61,10 @@ my-app skill install --dir ~/.agents/skills
 
 skill 随应用生效的代码版本更新和回退；不要把工作区内部笔记、账号信息或凭证写入公开说明。
 
-## 固定运行时中的应用子命令
+## 应用子命令
 
-FIA 固定运行时 dd430c851192 新增 `agent.commands`：以命令名称为键，声明 description 与项目内 entry 模块。名称不得覆盖 FIA 内置命令。入口默认导出函数，接收 args、cwd、assetsDirectory，返回 void 或 0–255 退出码；构建将入口编译到应用代码产物，并加入 help 与 agent 使用说明。
+FIA 0.17.0 提供 `agent.commands`：以命令名称为键，声明 description 与项目内 entry 模块。名称不得覆盖 FIA 内置命令。入口默认导出函数，接收 args、cwd、assetsDirectory，返回 void 或 0–255 退出码；构建将入口编译到应用代码产物，并加入 help 与 agent 使用说明。
 
 执行从当前生效代码加载，沿用应用实例连接、后台启动和脚本进程监督机制；Ctrl-C 清理子进程，运行期间阻止代码更新。开发与安装入口分别为 `bun run agent <命令>`、`<应用命令> <命令>`。应用可声明额外开发依赖，例如麻辣烫插件开发命令要求开发者 Bun。
 
-[固定运行时 dd430c851192](https://github.com/potato47/malatang/releases/tag/fia-runtime-dd430c851192) 已公开，并由麻辣烫 0.2.0 使用。公开 npm 0.16.1 与此前固定归档不包含这一能力。CLI 改变 runtimeId，因此已有应用需要新的完整安装包；不能用相同 npm 版本号推断能力一致。
+此能力已包含在 npm 0.17.0 和麻辣烫 0.3.0 的固定归档中；历史上首次随麻辣烫 0.2.0 固定运行时提供。npm 0.16.1 不支持。已有应用升级原生 CLI 需要新的完整安装包。

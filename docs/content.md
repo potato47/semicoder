@@ -43,8 +43,10 @@
 
 当前真实内容包含 FIA、麻辣烫、agent-webtool 与本站。FIA 和麻辣烫分别在 `content/projects/fia/`、`content/projects/malatang/` 维护，统一从项目集合页进入，时间首页不再展示项目推荐。资料、版本差异和跨项目同步流程见 [内容核对记录](project-sources.md)。各外部项目内容变更由 `docs/impact.json` 同时关联内容规范和来源记录；单纯文字修正无来源影响时按 PR 规则说明原因。麻辣烫官网固定为 `https://semicoder.dev/malatang`，统一安装入口为 `/malatang/docs/installation`；应用更新文件继续由独立更新源提供。新增正式安装包时先核实 Release、文件、平台与签名状态，再更新麻辣烫安装页；框架 `.tgz` 不能标为应用下载。网站不代理安装包，不在访问时请求 GitHub 或 npm。
 
-麻辣烫安装页默认提供已核验的 0.2.0 正式 DMG，同时保留 v0.2.0 固定提交与对应 FIA 归档的源码构建路线。模型指南统一为 Pi AI 1.0.2，插件指南统一为已独立发布的 `@semicoder/malatang-sdk@0.2.0`；npm 发布状态与应用 DMG 状态分别核实。
+麻辣烫安装页默认提供已核验的 0.3.0 正式 DMG，同时保留 v0.3.0 固定提交与对应 FIA 归档的源码构建路线。模型指南统一为 Pi AI 1.0.2，插件指南统一为已独立发布的 `@semicoder/malatang-sdk@0.2.1`；npm 发布状态与应用 DMG 状态分别核实。
 
 agent-webtool 的介绍和安装/SDK/CLI/MCP 指南在 `content/projects/agent-webtool/`，默认使用已独立验证的公开 npm 0.7.0，包含 `SourceContext` 和 0.6.0 升级说明。项目的 CI 与 OIDC 发布已验收；网站内容和部署继续独立验证，不自动发布 npm 包。
 
 主操作按钮悬停使用强调背景与深色前景 `--on-accent`，避免浅深色模式下白字与橙色背景对比不足。
+
+2026-10-09：FIA 0.17.0、麻辣烫 0.3.0 / build 3 与 SDK 0.2.1 的公开产物核验后，默认安装与指南切换到新版本，补充浏览器授权、文件选择、隔离预览、SDK 定位参数和完整 DMG 升级说明。沿用现有路由；来源及各发行渠道证据见 `project-sources.md`。
