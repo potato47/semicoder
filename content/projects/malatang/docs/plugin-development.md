@@ -3,7 +3,7 @@ id: "docs-malatang-plugin-development"
 slug: "plugin-development"
 title: "开发第一个插件"
 description: "用麻辣烫 CLI 创建独立插件项目，共享宿主组件、模型与本地存储。"
-date: "2026-10-09"
+date: "2026-10-10"
 ---
 
 ## 准备开发环境
@@ -125,3 +125,39 @@ malatang call plugins.jobs --json '{}'
 安装返回任务，需检查最终状态。项目创建和打包不会自动安装插件。当前不提供热更新或自动发布流程。
 
 SDK 0.1 插件不能直接用于要求 SDK 0.2 的宿主：迁移公共组件与 CSS Modules、更新 manifest 并重新构建安装，原有 ID 对应的 KV/历史保留。旧版开发资料仍可在 [v0.1.0 的 SDK 文档](https://github.com/potato47/malatang/blob/v0.1.0/packages/sdk/README.md) 查看。
+
+## 下一开发契约：Base UI 与 Tailwind CSS 4（未发布）
+
+2026-10-10 的本地开发源码采用 Base UI 1.9 和 Tailwind CSS 4.3，manifest `sdkVersion` 为 `0.3`。它尚未进入公开 DMG 或 npm；上面的稳定版安装与教程仍适用于已发布版本。本地包版本字符串暂未变化，不表示与公开归档内容相同。
+
+新界面保留 48px 图标侧栏，以统一的浅色／深色语义颜色、14px 界面文字和 28／36／40px 控件升级设置、翻译、应用中心与笔记。公共组件新增搜索选择、数字输入、滑块、标签页、折叠区、设置行、确认对话框、上下文菜单、通知、进度和骨架屏。
+
+开发版本的组件采用组合式 API：DialogTrigger／DialogContent／DialogTitle／DialogDescription／DialogFooter，SelectTrigger／SelectContent／SelectItem 等。用 `render` 组合触发元素，选择组件使用 `value/onValueChange`，复选框与开关使用 `checked/onCheckedChange`。模型选择支持搜索和服务商分组。
+
+```tsx
+import {
+  Button,
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  DialogClose,
+} from "@semicoder/malatang-sdk/ui";
+
+<Dialog>
+  <DialogTrigger render={<Button />}>打开</DialogTrigger>
+  <DialogContent>
+    <DialogTitle>示例</DialogTitle>
+    <DialogDescription>组合式公共组件。</DialogDescription>
+    <DialogFooter>
+      <DialogClose render={<Button />}>关闭</DialogClose>
+    </DialogFooter>
+  </DialogContent>
+</Dialog>;
+```
+
+插件使用完整静态的 `p:` Tailwind 类名，如 `p:flex p:gap-4 p:bg-surface p:text-foreground`。模板入口 `src/styles.css` 只导入 SDK 的 `tailwind.css` 主题映射，由 CLI 编译；复杂局部样式仍支持 CSS Modules。编译后的选择器、动画和内部变量按插件隔离，Portal 继承相同作用域。宿主统一加载公共样式和 reset，插件不直接导入 Base UI 或全局主题。
+
+需要体验时使用包含本轮源码的开发宿主及其 `plugin create` 内置快照。新契约没有旧 API 兼容层；账号、模型配置、KV 和历史数据保留。新文档将在实际发行并验收后成为默认教程。

@@ -4,6 +4,14 @@
 
 Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、Semicoder 和 agent-webtool 四个开发项目；FIA 活跃源码已迁入麻辣烫，原独立仓库保留历史；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
 
+## 2026-10-10 本地 UI / SDK 重构（未发布）
+
+麻辣烫实现提交 `ad9a587`，基线 `5bf293f`，本次源码采用 @base-ui/react 1.9.0、Tailwind CSS 4.3.3 和 SDK manifest 0.3。来源包括 packages/sdk/src/ui、theme.css、styles.ts、build.ts、frontend 和内置插件；包版本与应用 build 未调整。SDK 归档独立消费已本地验证，完整 UI 验收由 workspace 会话记录归档。
+
+用户随后要求收尾并合入本地主干：麻辣烫 `main` 已快进至 `7290479`（实现 `ad9a587`，后续只补待发布来源），保留 `codex/base-ui-refresh`。本站本轮说明随 `codex/base-ui-docs` 一并合入本地 `main`，特性分支保留；合并不代表公开发行或网站部署。
+
+本站插件开发、开始使用、模型和插件管理指南增加明确未发布说明，保留公开应用 0.4.0 / SDK 0.2.1 的默认安装和代码示例；未推送或部署。无 FIA 契约、网站运行时或安装入口变动。
+
 ## 2026-10-10 本地共仓重构（未发布）
 
 用户确认麻辣烫是 FIA 第一个正式项目，先在应用仓库共同开发，稳定后拆出框架。麻辣烫 `codex/fia-integration` 以不压缩 subtree 导入 FIA `0a319af8619578f3a3c99a34d389886499166d9d`，来源应用基线 `c766a05db213f673a2e74bb7373aeee8fb3ffde9`；活跃框架路径为 `framework/fia/`，顶层原 FIA 仓库保留历史。
@@ -149,3 +157,11 @@ FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 7 �
 - 本地特性分支：FIA codex/app-cli-commands（基于 ff9aa2c），麻辣烫 codex/plugin-ui-cli（基于 d9b128c）；网站 codex/plugin-ui-cli-docs。来源为 FIA config.ts / agent-artifacts.ts / agent-cli.ts / agent-server.ts 与麻辣烫 packages/sdk、commands/plugin.ts、scripts/sdk-snapshot.ts。
 - 新增 SDK 0.2.0 / manifest 0.2、宿主共享 UI 与 CSS Modules、notes/model 模板和 plugin create/check/build/pack。官网只追加明确标注的预览段落；SDK 0.1 的正式教程与已核实 v0.1.0 安装入口保留。
 - 新 FIA CLI / 原生启动等待修复需要新的 runtimeId 和固定归档；旧公开归档不支持新命令。未推送、发布 npm/Release、切换 CI 远端下载锁或部署。最终本地验证和归档哈希由工作区交付记录维护，不能把本地构建状态当作线上状态。
+
+## 2026-10-10 自定义配色补充（未发布）
+
+麻辣烫 `ad9a587` 新增 `shared/theme.ts`、`backend/appearance.ts`、`frontend/AppearanceSettings.tsx` 与主题 Provider：明暗模式控制原生标题栏，默认 / GitHub / 自定义配色只作用于内容区，SDK token 和 Portal 继承。第一次使用指南追加预览、保存、取消、恢复与版本边界。未修改公开安装入口，无 FIA 框架变更，无版本调整或部署。
+
+## 2026-10-10 标题栏样式核对（未发布）
+
+本地麻辣烫 `ad9a587` 中的 FIA `Sources/FIA/Windows.swift` 将框架置顶与浏览器按钮改为无边框、中性图标色，保留实心置顶、悬停反馈、明暗模式与可访问名称。已核对 FIA 安装/窗口指南及麻辣烫第一次使用/常见问题：现有正文按位置、图标与行为描述，无边框或蓝色依赖，无需修改公开操作教程。API、安装入口及公开发行事实保持不变；原生 Host 已改变，未来发行须完整安装包。本轮不发布、不部署。

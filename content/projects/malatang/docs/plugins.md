@@ -49,3 +49,7 @@ bun run agent call plugins.list --json '{}'
 `plugins.install` 返回安装任务，接受任务不表示安装成功。继续通过 `plugins.jobs` 查看终态。安装正式应用的 CLI 后，命令前缀可替换为 `malatang`。
 
 准备自己的包见 [插件开发](/malatang/docs/plugin-development)。
+
+## 本地 UI 开发版本（未发布）
+
+本地开发源码已统一明暗主题和公共组件：保留图标侧栏，设置采用分组布局，模型选择增加搜索，应用中心采用紧凑列表与卸载确认。公开安装包暂不包含这些界面；开发接口及版本边界见[插件开发指南](/malatang/docs/plugin-development#下一开发契约base-ui-与-tailwind-css-4未发布)。账号、模型、KV 和历史数据保留。
