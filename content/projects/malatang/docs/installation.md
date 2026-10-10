@@ -113,6 +113,6 @@ open dist/Malatang.app
 
 维护中的共仓重构将 FIA 完整源码放入麻辣烫的 `framework/fia/`，与应用一起构建；麻辣烫稳定后会再独立拆出框架。本次改动尚未推送或发布，上面的 v0.4.0 固定源码及归档教程仍是公开可复现路径。
 
-已取得本次开发源码的维护者需要 Apple Silicon macOS、Bun 1.4.2 和 Swift 6 工具链，在应用仓库根运行 `bun install --frozen-lockfile --ignore-scripts`，再执行 `bun run dev`。命令自动准备 FIA；框架 TypeScript 或原生修改会重建并重启开发实例，源码构建无需先发布框架或安装相邻 FIA 仓库。应用前端仍使用 HMR。重启会清除未保存的页面状态并使浏览器授权失效，持久数据保留。
+已取得本次开发源码的维护者需要 Apple Silicon macOS、Bun 1.4.3 和 Swift 6 工具链，在应用仓库根运行 `bun install --frozen-lockfile --ignore-scripts`，再执行 `bun run dev`。命令自动准备 FIA；框架 TypeScript 或原生修改会重建并重启开发实例，源码构建无需先发布框架或安装相邻 FIA 仓库。应用前端仍使用 HMR。重启会清除未保存的页面状态并使浏览器授权失效，持久业务数据保留；本地源码不迁移旧钥匙串登录，需重新登录并添加订阅模型，见[凭证文件说明](/malatang/docs/models#本地凭证文件存储未发布)。公开 v0.4.0 的固定源码快照和安装包仍沿用原 Bun 运行时。
 
 `run`、`build`、`check` 也会准备匹配的框架；`framework:check`、`framework:pack`、`framework:verify` 分别检查框架、验证归档和验证仓库外独立消费。依赖或维护工具变化时需按终端提示重新安装或重启。此工具链要求只针对开发源码，安装正式 DMG 的用户无需安装 Swift。

@@ -4,6 +4,14 @@
 
 Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、Semicoder 和 agent-webtool 四个开发项目；FIA 活跃源码已迁入麻辣烫，原独立仓库保留历史；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
 
+## 2026-10-10 本地凭证文件存储（未发布）
+
+麻辣烫 `codex/file-credentials` 工作树以 `758e5ed` 为基线，将 `backend/index.ts` 的 ChatGPT Keychain 接入替换为 `backend/chatgpt-storage.ts`；凭证文件为 `app.dataDirectory/chatgpt-auth.json`，沿用账号与 token 的 version 1 结构。数据目录 0700、文件 0600，独占临时文件写入及同步后原子替换；普通模型 API Key 和设置仍由 `platform.json` 保存。应用不读取、迁移、删除或回退到旧钥匙串，需重新登录并重新添加订阅模型；原有模型和历史保留。
+
+模型与排障指南增加未发布版本说明。公开 v0.4.0 仍使用 Keychain，公开下载入口、FIA/SDK 契约、版本与 build 均不变。本次不推送、发布或部署；最终验证记录见 workspace `docs/agent/sessions/2026-10-10-file-credentials.md`。
+
+用户追加要求升级 Bun 1.4.3：FIA `packages/cli/src/metadata.ts::BUNDLED_BUN_VERSION`、共仓与框架工作流及开发说明同步，内置 Bun 从构建进程复制并重新生成 runtime manifest。官网仅更新未发布共仓开发段落；已发布 FIA 0.18.0、麻辣烫 0.4.0 的 Bun 1.4.2 快照继续保留，普通插件开发的最低 Bun 要求不变。未来发行需完整安装包，实际产物与独立消费验证由同一会话记录归档。
+
 ## 2026-10-10 本地 UI / SDK 重构（未发布）
 
 麻辣烫实现提交 `ad9a587`，基线 `5bf293f`，本次源码采用 @base-ui/react 1.9.0、Tailwind CSS 4.3.3 和 SDK manifest 0.3。来源包括 packages/sdk/src/ui、theme.css、styles.ts、build.ts、frontend 和内置插件；包版本与应用 build 未调整。SDK 归档独立消费已本地验证，完整 UI 验收由 workspace 会话记录归档。
