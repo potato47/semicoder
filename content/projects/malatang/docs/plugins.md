@@ -3,12 +3,12 @@ id: "docs-malatang-plugins"
 slug: "plugins"
 title: "安装与管理插件"
 description: "通过应用中心或 CLI 安装预构建插件，了解启停、升级和数据保留。"
-date: "2026-10-09"
+date: "2026-10-10"
 ---
 
 ## 先从内置示例开始
 
-在「应用中心」点击随手记卡片上的「安装示例插件」，安装后即可使用。随手记通过宿主 KV 存储，不依赖模型，是验证插件安装流程的最短路径。
+在「应用中心」点击随手记条目的「安装示例插件」，安装后即可使用。随手记通过宿主 KV 存储，不依赖模型，是验证插件安装流程的最短路径。
 
 ## 支持的来源
 
@@ -24,7 +24,7 @@ date: "2026-10-09"
 
 ## 兼容版本
 
-麻辣烫 0.2.0 及以上版本要求插件 manifest 的 `sdkVersion` 为 `"0.2"`。旧版插件会提示重新构建；保持相同插件 ID，迁移到公共组件和 CSS Modules 后重新安装，原有 KV 与运行历史保留。
+麻辣烫 **0.4.1** 要求插件 manifest 的 `sdkVersion` 为 `"0.3"`。SDK 0.2 及更早插件需迁移到 SDK 0.3 的组合式组件和新构建流程，再重新构建安装；保持相同 ID 可以继续使用 KV 与历史，见[插件迁移](/malatang/docs/plugin-development#打包安装与旧插件迁移)。仅修改 manifest 不能完成迁移。历史 0.2.0–0.4.0 宿主仍使用 manifest 0.2。
 
 ## 信任与执行
 
@@ -49,7 +49,3 @@ bun run agent call plugins.list --json '{}'
 `plugins.install` 返回安装任务，接受任务不表示安装成功。继续通过 `plugins.jobs` 查看终态。安装正式应用的 CLI 后，命令前缀可替换为 `malatang`。
 
 准备自己的包见 [插件开发](/malatang/docs/plugin-development)。
-
-## 本地 UI 开发版本（未发布）
-
-本地开发源码已统一明暗主题和公共组件：保留图标侧栏，设置采用分组布局，模型选择增加搜索，应用中心采用紧凑列表与卸载确认。公开安装包暂不包含这些界面；开发接口及版本边界见[插件开发指南](/malatang/docs/plugin-development#下一开发契约base-ui-与-tailwind-css-4未发布)。账号、模型、KV 和历史数据保留。

@@ -1,10 +1,20 @@
 # 项目资料与发布状态
 
-公开发行核对：2026-10-09；FIA 0.18.0、麻辣烫 0.4.0 / build 4、SDK 0.2.1 均已实际发布并验证。网站内容由本站维护，不在构建时复制外部工作区。分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
+公开发行核对：2026-10-11；麻辣烫 0.4.1 / build 5 和 SDK 0.3.0 已实际发布并验证，FIA 独立 npm 保持 0.18.0。网站内容由本站维护，不在构建时复制外部工作区。分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
 
 Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、Semicoder 和 agent-webtool 四个开发项目；FIA 活跃源码已迁入麻辣烫，原独立仓库保留历史；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
 
-## 2026-10-10 本地凭证文件存储（未发布）
+## 2026-10-11 应用 0.4.1 / SDK 0.3.0 发布
+
+应用 [v0.4.1 / build 5](https://github.com/potato47/malatang/releases/tag/v0.4.1) 固定 `4e222972c1de39a4e241cc3c0b8a2ba8af15fce0`。[主干 CI 38069368438](https://github.com/potato47/malatang/actions/runs/38069368438)、[签名手动验收 38069379373](https://github.com/potato47/malatang/actions/runs/38069379373) 和 [正式发布 38070028805](https://github.com/potato47/malatang/actions/runs/38070028805) 均成功，包含同提交 FIA 构建、框架独立消费及安装包启动退出。公开五附件经匿名 digest / 大小校验；DMG 为 35,652,251 字节，SHA-256 `17c486c7dd4b9132eb784847813aa6090047bb440da8be58c8b709684cc0201f`。本机 hdiutil、公证票据、Gatekeeper DMG / app、应用签名及安装包与更新逐文件比对通过；公开正式 app 在临时数据目录启动、ready、退出和进程清理通过，未操作用户账号或模型。
+
+更新源与 Release 清单一致，Ed25519 签名及全部 35 个在线文件大小 / SHA-256 通过；runtimeId `ec123685665929a602e6a12b173814d31699ff1d921332dfd1927a4e7d85fdbf`。共仓框架指纹 `6adf4f197a6dd795933c9b4e06ffc7e4ab9882660c4661aac2c074f461375186`，内置 Bun 实测 `1.4.3+c6da4a4d3`。原生 Host / Bun 变化需完整 DMG；ChatGPT 登录不迁移，重新登录及添加订阅模型，旧插件更新重建。普通密钥、插件记录、KV、外观和历史保留；跨版本代码热更新、真实 OAuth 刷新 / 撤销未在本轮实测。
+
+用户确认一起发布应用 0.4.1 / build 5、SDK 0.3.0 和官网，FIA 独立 npm 继续暂停。SDK `sdk-v0.3.0` 固定 `1a66de5cca8c59267add5dfab9223679ac2eeb00`，[OIDC 发布 38068339338](https://github.com/potato47/malatang/actions/runs/38068339338) 成功。公开 latest 为 0.3.0，tarball 与 Actions 验收归档逐字节一致，SHA-256 `1434489308c6fcd22942a4ff1fd497edf413d87a1e86881773361b642a4b3375`；[npm provenance](https://registry.npmjs.org/-/npm/v1/attestations/@semicoder%2fmalatang-sdk@0.3.0) 已生成。新缓存独立目录从 registry 安装、两种插件 create / check / build / pack、runtime / UI 及独立插件构建通过，未使用本机 publish 或长期 token。
+
+本次 SDK 为 manifest 0.3 / Base UI / Tailwind CSS 4 的破坏性 UI 更新，要求应用 0.4.1；旧插件须更新重建，ID / KV / 历史保留。内嵌 Bun 快照与 npm 包归档格式不同，但展开的 43 个文件逐字节一致。应用初次正式流程在测试阶段失败且无公开产物；用户明确允许修复后更新未发布应用标签，重新验收通过，SDK 标签保持不动。新版安装入口、模型 / 排障、主题及插件指南现按公开产物同步，网站部署单独验收。下方 10-10 的「未发布」为初次实施阶段历史，不代表当前发行状态。
+
+## 2026-10-10 本地凭证文件存储（实施阶段历史）
 
 麻辣烫 `codex/file-credentials` 工作树以 `758e5ed` 为基线，将 `backend/index.ts` 的 ChatGPT Keychain 接入替换为 `backend/chatgpt-storage.ts`；凭证文件为 `app.dataDirectory/chatgpt-auth.json`，沿用账号与 token 的 version 1 结构。数据目录 0700、文件 0600，独占临时文件写入及同步后原子替换；普通模型 API Key 和设置仍由 `platform.json` 保存。应用不读取、迁移、删除或回退到旧钥匙串，需重新登录并重新添加订阅模型；原有模型和历史保留。
 
@@ -12,7 +22,7 @@ Semicoder 是各自有项目统一的官网文档入口。当前工作区已更�
 
 用户追加要求升级 Bun 1.4.3：FIA `packages/cli/src/metadata.ts::BUNDLED_BUN_VERSION`、共仓与框架工作流及开发说明同步，内置 Bun 从构建进程复制并重新生成 runtime manifest。官网仅更新未发布共仓开发段落；已发布 FIA 0.18.0、麻辣烫 0.4.0 的 Bun 1.4.2 快照继续保留，普通插件开发的最低 Bun 要求不变。未来发行需完整安装包，实际产物与独立消费验证由同一会话记录归档。
 
-## 2026-10-10 本地 UI / SDK 重构（未发布）
+## 2026-10-10 本地 UI / SDK 重构（实施阶段历史）
 
 麻辣烫实现提交 `ad9a587`，基线 `5bf293f`，本次源码采用 @base-ui/react 1.9.0、Tailwind CSS 4.3.3 和 SDK manifest 0.3。来源包括 packages/sdk/src/ui、theme.css、styles.ts、build.ts、frontend 和内置插件；包版本与应用 build 未调整。SDK 归档独立消费已本地验证，完整 UI 验收由 workspace 会话记录归档。
 
@@ -20,7 +30,7 @@ Semicoder 是各自有项目统一的官网文档入口。当前工作区已更�
 
 本站插件开发、开始使用、模型和插件管理指南增加明确未发布说明，保留公开应用 0.4.0 / SDK 0.2.1 的默认安装和代码示例；未推送或部署。无 FIA 契约、网站运行时或安装入口变动。
 
-## 2026-10-10 本地共仓重构（未发布）
+## 2026-10-10 本地共仓重构（实施阶段历史）
 
 用户确认麻辣烫是 FIA 第一个正式项目，先在应用仓库共同开发，稳定后拆出框架。麻辣烫 `codex/fia-integration` 以不压缩 subtree 导入 FIA `0a319af8619578f3a3c99a34d389886499166d9d`，来源应用基线 `c766a05db213f673a2e74bb7373aeee8fb3ffde9`；活跃框架路径为 `framework/fia/`，顶层原 FIA 仓库保留历史。
 
@@ -57,7 +67,7 @@ Semicoder 是各自有项目统一的官网文档入口。当前工作区已更�
 
 ## 麻辣烫
 
-### 当前发行：0.4.0（2026-10-09）
+### 0.4.0 发行（2026-10-09，历史）
 
 - 正式 [v0.4.0 / Build 4](https://github.com/potato47/malatang/releases/tag/v0.4.0)，源码 `620d19a450578ca98c58c3ae1b7e13b524e57368`。[主干 CI 37888908778](https://github.com/potato47/malatang/actions/runs/37888908778) 与 [正式发布 37888912203](https://github.com/potato47/malatang/actions/runs/37888912203) 成功；实际消费 FIA 官方 v0.18.0 同一 npm artifact，冻结安装、69 测试、签名、公证、镜像运行与 Pages 部署通过。
 - 五项公开附件匿名下载并核对 digest。`Malatang-0.4.0-4-mac-arm64.dmg` 为 30,513,939 字节，SHA-256 `8aca60752d1e25a28e50dbd122b03b505ed40088408d73bab0ab7077617ffef7`。独立 hdiutil / stapler / Gatekeeper DMG 与 app / codesign、安装包与签名更新逐文件比对通过。
@@ -166,10 +176,10 @@ FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 7 �
 - 新增 SDK 0.2.0 / manifest 0.2、宿主共享 UI 与 CSS Modules、notes/model 模板和 plugin create/check/build/pack。官网只追加明确标注的预览段落；SDK 0.1 的正式教程与已核实 v0.1.0 安装入口保留。
 - 新 FIA CLI / 原生启动等待修复需要新的 runtimeId 和固定归档；旧公开归档不支持新命令。未推送、发布 npm/Release、切换 CI 远端下载锁或部署。最终本地验证和归档哈希由工作区交付记录维护，不能把本地构建状态当作线上状态。
 
-## 2026-10-10 自定义配色补充（未发布）
+## 2026-10-10 自定义配色补充（实施阶段历史）
 
 麻辣烫 `ad9a587` 新增 `shared/theme.ts`、`backend/appearance.ts`、`frontend/AppearanceSettings.tsx` 与主题 Provider：明暗模式控制原生标题栏，默认 / GitHub / 自定义配色只作用于内容区，SDK token 和 Portal 继承。第一次使用指南追加预览、保存、取消、恢复与版本边界。未修改公开安装入口，无 FIA 框架变更，无版本调整或部署。
 
-## 2026-10-10 标题栏样式核对（未发布）
+## 2026-10-10 标题栏样式核对（实施阶段历史）
 
 本地麻辣烫 `ad9a587` 中的 FIA `Sources/FIA/Windows.swift` 将框架置顶与浏览器按钮改为无边框、中性图标色，保留实心置顶、悬停反馈、明暗模式与可访问名称。已核对 FIA 安装/窗口指南及麻辣烫第一次使用/常见问题：现有正文按位置、图标与行为描述，无边框或蓝色依赖，无需修改公开操作教程。API、安装入口及公开发行事实保持不变；原生 Host 已改变，未来发行须完整安装包。本轮不发布、不部署。
