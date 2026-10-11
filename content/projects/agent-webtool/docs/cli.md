@@ -8,7 +8,7 @@ date: "2026-10-06"
 
 ## 抓取网页
 
-以下示例基于已安装的 0.7.0：
+以下示例基于已安装的 0.7.1：
 
 ```sh
 webtool fetch https://example.com

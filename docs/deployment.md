@@ -32,7 +32,7 @@ GitHub Actions 工作流为 [`.github/workflows/ci.yml`](../.github/workflows/ci
 4. 确认 `wrangler.jsonc` 中两个环境的 D1 ID、域名和 Turnstile site key 都是已创建资源，且对应 Worker 已设置本文“环境”一节列出的运行时 secrets。工作流不会创建 OAuth App 或自动填充运行时密钥；`/healthz` 冒烟会阻止未就绪服务被视为发布成功。
 5. 将新站代码与工作流合入 `main` 后，在 Actions 查看 **Quality checks → Deploy staging → Deploy production**。生产有审核保护时，选择 **Review deployments** 批准后继续。需要重试时可对 `main` 手动运行，保持相同检查与预发布验证流程。
 
-GitHub CLI 用户也可用 `gh secret set CLOUDFLARE_API_TOKEN --repo potato47/semicoder --env staging` 交互式录入；分别替换 secret 名与环境完成四项设置，不把 token 放在命令参数、日志或 PR 中。详细规则见 [GitHub environment 文档](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments)。
+GitHub CLI 用户也可用 `gh secret set CLOUDFLARE_API_TOKEN --repo semicoder-dev/semicoder --env staging` 交互式录入；分别替换 secret 名与环境完成四项设置，不把 token 放在命令参数、日志或 PR 中。详细规则见 [GitHub environment 文档](https://docs.github.com/en/actions/how-tos/deploy/configure-and-manage-deployments/manage-environments)。
 
 登录密钥通过 Cloudflare 预先配置，不传入构建。上线前用真实 GitHub 账号验证登录、评论、审批、封禁与注销。确认自动部署接通必须以 GitHub 中对应 commit 的实际运行和线上冒烟结果为准，只有本地检查或工作流文件并不代表已经发布。
 
@@ -71,3 +71,7 @@ bunx wrangler d1 execute DB --env staging --local --persist-to /private/tmp/semi
 公开预渲染路径由内容生成的统一清单提供，包含每个项目的 Home 和全部公开章节，不包含已移除的独立文档概览地址。部署仍采用 Assets 优先，不增加 Worker 优先路径或付费服务。生成器和草稿检查递归扫描项目内的文档子目录；项目本身是草稿时，其文档也必须从产物中隔离。
 
 本次 URL 直接切换，不部署旧详情页或兼容重定向。验证 `/semicoder`、`/semicoder/docs/guides/writing` 返回完整静态正文和正确 canonical；旧 `/semicoder/docs` 概览、`/projects/semicoder`、`/docs/semicoder/getting-started` 以及不存在的项目/章节返回 404。所有项目的旧概览地址均由部署冒烟检查；Home 导航、相邻章节与项目评论关闭由构建检查覆盖。`bun run build:check` 检查统一清单对应的静态 HTML、sitemap、目录锚点和中文项目筛选；浏览器验收还包括刷新、站内跳转、搜索状态保留、手机导航和浅深色主题。
+
+## GitHub 组织迁移
+
+源码与 Actions 使用 `semicoder-dev/semicoder`。预发布和生产 OAuth App 转入同一组织，保留现有 Client ID、回调地址和 Cloudflare 运行时配置；转移后逐环境验证真实登录及管理员身份。Worker、D1、域名和个人 GitHub 数字 ID 不随仓库归属改变。Environment secrets、审核规则及 main 部署许可应与迁移前清单逐项核对。

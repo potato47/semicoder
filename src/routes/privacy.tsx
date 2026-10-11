@@ -29,7 +29,7 @@ export const Route = createFileRoute("/privacy")({
         <h2>数据请求</h2>
         <p>
           你可删除自己的评论或退出登录。如需处理账号数据，请通过{" "}
-          <a href="https://github.com/potato47/semicoder/issues">项目问题反馈</a>{" "}
+          <a href="https://github.com/semicoder-dev/semicoder/issues">项目问题反馈</a>{" "}
           发起不含个人敏感信息的联系请求，再通过合适的私密渠道核实身份。
         </p>
       </article>

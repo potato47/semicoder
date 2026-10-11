@@ -12,7 +12,7 @@ updated: 2026-10-04
 安装 Bun 1.4.2 和 Node.js 24，克隆仓库后安装锁定的依赖。
 
 ```bash
-git clone https://github.com/potato47/semicoder.git
+git clone https://github.com/semicoder-dev/semicoder.git
 cd semicoder
 bun install --frozen-lockfile
 bun run prepare

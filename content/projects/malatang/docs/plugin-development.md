@@ -8,7 +8,7 @@ date: "2026-10-11"
 
 ## 准备开发环境
 
-本手册适用于 **麻辣烫 0.4.2 / SDK 0.3.1 / manifest 0.3**。先完成[安装](/malatang/docs/installation)，从应用菜单安装 CLI，并安装 Bun 1.4.2 或以上。普通应用用户不需要 Bun；宿主源码开发固定使用 1.4.3。
+本手册适用于 **麻辣烫 0.4.3 / SDK 0.3.2 / manifest 0.3**。先完成[安装](/malatang/docs/installation)，从应用菜单安装 CLI，并安装 Bun 1.4.2 或以上。普通应用用户不需要 Bun；宿主源码开发固定使用 1.4.3。
 
 插件是独立 React 小应用。宿主提供模型、运行记录、KV、UI 和可选后端方法；插件不需要克隆宿主源码。CLI 将随应用提供的 SDK 归档复制到 `vendor/malatang-sdk.tgz`，项目通过相对 `file:` 依赖使用它，可移动到任意目录。
 
@@ -140,6 +140,6 @@ bun run pack
 
 SDK 0.3 使用 Base UI 1.9 与 Tailwind CSS 4.3。组合式组件使用 Trigger / Content 和 `render`，选择类组件使用 `value/onValueChange`。对应示例已集中到 [UI 手册](/malatang/docs/plugin-ui)，避免在入门页重复维护接口。
 
-## 市场分发与 SDK 0.3.1
+## 市场分发与 SDK 0.3.2
 
-SDK 0.3.1 已公开；CLI 默认使用随应用提供的归档。官方翻译、随手记 0.1.0 仍使用固定 SDK 0.3.0，模型、KV、UI 与 manifest 0.3 契约兼容。0.3.1 的管理类型变化及市场分发见[构建与分发](/malatang/docs/plugin-distribution)。
+SDK 0.3.2 已公开，仓库与可信发布迁入组织，模型、KV、UI 与 manifest 0.3 契约保持不变；CLI 默认使用随应用提供的归档。0.3.1 起的管理类型变化及市场分发见[构建与分发](/malatang/docs/plugin-distribution)。
