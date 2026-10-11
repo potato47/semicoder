@@ -13,7 +13,7 @@ Semicoder 是各自有项目统一的官网文档入口。当前工作区已更�
 - SDK [OIDC 38117101769](https://github.com/semicoder-dev/malatang/actions/runs/38117101769) 成功，公开 npm 0.3.2 SHA-256 `901b4ee1a5b8cbf8607645689129fd72ad05bde4dc3ee7972f3fe2d58f53fd7f` 与 CI 逐字节一致，组织 provenance、新缓存独立消费、notes/model 模板和 runtime/UI/前后端构建通过。manifest 保持 0.3。
 - agent-webtool `v0.7.1` 固定 `19455496011284608f7742c45ae7a6361ec3d323`，[OIDC 38116631403](https://github.com/semicoder-dev/agent-webtool/actions/runs/38116631403) 成功，公开归档 SHA-256 `b23caa32610e41ba767740df348c577b88004d1d82413135a51401c9f5f2d8c0` 与 CI 一致。组织 provenance、新缓存 SDK ESM/CJS/TypeScript、CLI 与 MCP 验收通过，API 不变。
 - 插件源码 `a6a949134703b6c88d43641261888bd75a1a5d97` 固定 SDK 0.3.2。翻译 0.1.1 SHA-256 `d42181bd290f938170dd7209dd6358f731017c6ac5e05cafaa4262e706a45077`；随手记 0.1.1 `fcfd8422211093d17fa9cdcc7ced2a06785cc93bcea28337ee9c877b41916da6`。公开归档和索引经 PR #5/#6 验证后上架，插件 ID 与数据命名空间不变。
-- npm 包名保持不变。两个活跃包的 Trusted Publisher 均已重建并显示 Valid；FIA 旧连接已移除，独立 npm 工作流停用，npm 保持 0.18.0。官网与 Cloudflare Worker/D1/域名不搬迁，个人身份链接保留。两环境 OAuth 转移、真实登录和本次网站部署结果单独记录。
+- npm 包名保持不变。两个活跃包的 Trusted Publisher 均已重建并显示 Valid；FIA 旧连接已移除，独立 npm 工作流停用，npm 保持 0.18.0。官网与 Cloudflare Worker/D1/域名不搬迁，个人身份链接保留。预发布 OAuth App 3870528 与生产 3870529 已由组织接收，Client ID、回调地址及应用配置与迁移基线一致；两站真实登录均成功回到 `/admin` 并显示管理员后台。未调整 Cloudflare 运行时密钥或 D1；本次网站部署另按工作流结果验收。
 
 ## 2026-10-11 插件开发手册
 
