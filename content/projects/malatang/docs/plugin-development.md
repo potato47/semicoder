@@ -8,7 +8,7 @@ date: "2026-10-10"
 
 ## 准备开发环境
 
-本页适用于 **麻辣烫 0.4.1 / SDK 0.3.0（manifest 兼容版本 0.3）**。先完成 [安装](/malatang/docs/installation)，从应用菜单安装 CLI，并安装 [Bun](https://bun.sh/docs/installation) 1.4.2 或以上；源码宿主开发固定使用 1.4.3。普通应用用户不需要 Bun。
+本页适用于 **麻辣烫 0.4.2 / SDK 0.3.1（manifest 兼容版本 0.3）**。先完成 [安装](/malatang/docs/installation)，从应用菜单安装 CLI，并安装 [Bun](https://bun.sh/docs/installation) 1.4.2 或以上；源码宿主开发固定使用 1.4.3。普通应用用户不需要 Bun。
 
 插件项目可以放在任意目录。CLI 会复制随应用提供、经过验证的 SDK 归档，以相对 `file:./vendor/malatang-sdk.tgz` 依赖引用，不要求克隆麻辣烫源码，也不依赖 SDK npm 安装成功。
 
@@ -70,7 +70,7 @@ export default function Notes() {
 }
 ```
 
-React、JSX、ReactDOM 和公共 UI 实现由宿主共享，底层采用 Base UI 1.9 与 Tailwind CSS 4.3。插件不直接依赖 Base UI、Radix、Lucide 或宿主私有实现，不打包另一份共享运行时；图标也从 SDK UI 导入。Field 关联标签、提示和错误，交互组件提供统一键盘和焦点行为。完整接口见 [SDK 文档](https://github.com/potato47/malatang/blob/sdk-v0.3.0/packages/sdk/README.md)。
+React、JSX、ReactDOM 和公共 UI 实现由宿主共享，底层采用 Base UI 1.9 与 Tailwind CSS 4.3。插件不直接依赖 Base UI、Radix、Lucide 或宿主私有实现，不打包另一份共享运行时；图标也从 SDK UI 导入。Field 关联标签、提示和错误，交互组件提供统一键盘和焦点行为。完整接口见 [SDK 文档](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/README.md)。
 
 业务样式使用完整静态的 `p:` Tailwind 类名，如 `p:flex p:gap-4 p:bg-surface p:text-foreground`。模板入口 `src/styles.css` 导入 SDK 的 `tailwind.css` 主题映射，由 CLI 编译；复杂样式仍可使用 CSS Modules 和 `--m-*` 语义 token。宿主统一加载公共样式与 reset；插件不导入全局主题或重复 Preflight。选择器、动画、内部变量和 `@property` 按插件隔离，Portal 继承同一作用域。
 
@@ -80,7 +80,7 @@ CSS 的相对 url 由构建器处理；JS 导入图片后使用 `new URL(asset, 
 
 SDK 0.3 的 Dialog、Select、Popover、Menu 等采用 Trigger / Content 和配套子组件；用 `render` 组合触发元素，选择组件使用 `value/onValueChange`，复选框与开关使用 `checked/onCheckedChange`，原生输入保留表单事件。
 
-[SDK 0.3.0 已独立发布 npm](https://www.npmjs.com/package/@semicoder/malatang-sdk/v/0.3.0)；CLI 模板继续优先使用随应用提供的固定归档。
+[SDK 0.3.1 已独立发布 npm](https://www.npmjs.com/package/@semicoder/malatang-sdk/v/0.3.1)；CLI 模板继续优先使用随应用提供的固定归档。
 
 ## 清单与数据
 
@@ -113,24 +113,24 @@ malatang plugin create ./my-model --template model
 
 model 模板演示宿主模型选择、空模型状态、流式输出、取消及错误。模型配置来自「设置 → 模型服务」，插件不单独收集密钥。模板通过事件通知读取完整快照，重连时重新读取，卸载时取消订阅；切页不会自动取消后台模型运行。
 
-需要后端时，用 `definePlugin` 和 `defineMethod` 默认导出方法，增加 `src/backend.ts` 和 manifest 的 `backend: "dist/backend.js"`。输入由 schema 校验。可参考 [内置译文](https://github.com/potato47/malatang/tree/v0.4.1/plugins/translate)。
+需要后端时，用 `definePlugin` 和 `defineMethod` 默认导出方法，增加 `src/backend.ts` 和 manifest 的 `backend: "dist/backend.js"`。输入由 schema 校验。可参考 [官方译文](https://github.com/potato47/malatang-plugins/tree/translate-v0.1.0/plugins/translate)。
 
 ## 打包安装与旧插件迁移
 
-`pack` 生成如 `my-notes-0.1.0.tgz` 的归档。通过「应用中心 → 选择本地包」安装，或调用现有安装 API：
+`pack` 生成如 `my-notes-0.1.0.tgz` 的归档。通过「应用中心 → 从地址安装 → 选择本地包」安装，或调用现有安装 API：
 
 ```bash
 malatang call plugins.install --json '{"source":"/absolute/path/my-notes-0.1.0.tgz"}'
 malatang call plugins.jobs --json '{}'
 ```
 
-安装返回任务，需检查最终状态。项目创建和打包不会自动安装插件。当前不提供热更新或自动发布流程。
+安装返回任务，需检查最终状态。项目创建和打包不会自动安装插件。可通过 `plugins.update` 提供更高版本的手动来源，或发布到市场后由用户点击更新。插件发布不会自动更新用户安装。
 
-**SDK 0.2 及更早插件不能直接用于麻辣烫 0.4.1。** 更新组合式组件 API、样式入口、manifest `sdkVersion: "0.3"` 和 CLI SDK 快照，用 SDK 0.3.0 重新构建安装；不能只改 manifest 而不重建。保持原 ID 可继续使用 KV / 历史，无旧 API 兼容层。旧宿主资料保留在 [v0.4.0 SDK 文档](https://github.com/potato47/malatang/blob/v0.4.0/packages/sdk/README.md)。
+**SDK 0.2 及更早插件不能直接用于麻辣烫 0.4.2。** 更新组合式组件 API、样式入口、manifest `sdkVersion: "0.3"` 和 CLI SDK 快照，用 SDK 0.3.1 重新构建安装；不能只改 manifest 而不重建。保持原 ID 可继续使用 KV / 历史，无旧 API 兼容层。旧宿主资料保留在 [v0.4.0 SDK 文档](https://github.com/potato47/malatang/blob/v0.4.0/packages/sdk/README.md)。
 
 ## Base UI 与 Tailwind CSS 4
 
-麻辣烫 0.4.1 与 SDK 0.3.0 使用 Base UI 1.9 和 Tailwind CSS 4.3，manifest `sdkVersion` 为 `0.3`，下列组合式示例与本页教程适用于该契约。
+麻辣烫 0.4.2 与 SDK 0.3.1 使用 Base UI 1.9 和 Tailwind CSS 4.3，manifest `sdkVersion` 为 `0.3`，下列组合式示例与本页教程适用于该契约。
 
 新界面保留 48px 图标侧栏，以统一的浅色／深色语义颜色、14px 界面文字和 28／36／40px 控件升级设置、翻译、应用中心与笔记。公共组件新增搜索选择、数字输入、滑块、标签页、折叠区、设置行、确认对话框、上下文菜单、通知、进度和骨架屏。
 
@@ -162,4 +162,10 @@ import {
 
 插件使用完整静态的 `p:` Tailwind 类名，如 `p:flex p:gap-4 p:bg-surface p:text-foreground`。模板入口 `src/styles.css` 只导入 SDK 的 `tailwind.css` 主题映射，由 CLI 编译；复杂局部样式仍支持 CSS Modules。编译后的选择器、动画和内部变量按插件隔离，Portal 继承相同作用域。宿主统一加载公共样式和 reset，插件不直接导入 Base UI 或全局主题。
 
-使用 0.4.1 宿主的 `plugin create` 内置快照创建项目。新契约没有旧 API 兼容层；普通模型配置、插件记录、KV 和历史保留，ChatGPT 凭证升级按[安装指南](/malatang/docs/installation#后续更新)重新登录。
+使用 0.4.2 宿主的 `plugin create` 内置快照创建项目。新契约没有旧 API 兼容层；普通模型配置、KV 和历史保留；旧安装记录需升级前卸载，详情见[安装指南](/malatang/docs/installation#后续更新)。
+
+## 市场分发与 SDK 0.3.1
+
+SDK 0.3.1 删除 PluginInfo 的 `builtin`，增加市场来源；安装任务增加操作类型和目标版本。manifest 仍为 0.3，已有 SDK 0.3.0 插件的模型、KV、UI 契约不变。官方插件固定使用公开 SDK 0.3.0 独立构建，宿主不依赖其源码。
+
+市场包须包含完整资源，条目身份、版本、SDK 与包内清单一致。归档上传到固定 HTTPS 地址并验收 SHA-256 后，才更新索引。首版不支持降级、批量更新、私有源认证或签名体系，参见[市场管理](/malatang/docs/plugins)。

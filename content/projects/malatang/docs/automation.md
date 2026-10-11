@@ -20,7 +20,7 @@ bun run agent call plugins.list --json '{}'
 
 ## 调用译文插件
 
-从 `models.list` 选出实际可用的模型 ID，再替换下面的占位值：
+先从市场安装译文，再从 `models.list` 选出实际可用的模型 ID，再替换下面的占位值：
 
 ```bash
 bun run agent call plugins.invoke --json '{"pluginId":"translate","method":"translate","input":{"text":"Hello","target":"简体中文","modelId":"实际模型 ID"}}'
@@ -53,3 +53,17 @@ bun run agent call appearance.set --json '{"theme":"dark"}'
 ## 插件开发命令（0.2.0 起）
 
 麻辣烫 0.2.0 增加 `malatang plugin create/check/build/pack`，开发入口为 `bun run agent plugin …`，需要开发者 Bun >=1.4.2；v0.1.0 不支持；所有子命令提供 --help/--json。命令沿用实例连接、进程取消和更新占用规则，保留调用目录、参数和退出码。插件安装仍走已有 plugins.install。用法与版本边界见 [插件开发](/malatang/docs/plugin-development)。
+
+## 市场与更新（0.4.2 起）
+
+`marketplaces.list/add/update/remove/refresh/catalog` 管理来源和分页目录；`plugins.installFromMarket` 安装选定来源，`plugins.update` 更新原市场版本或显式手动来源。安装任务增加 `operation/targetVersion`，插件信息使用可空 `market`。`plugins.installExample` 和 `builtin` 已删除，无旧接口兼容层。
+
+```bash
+bun run agent call marketplaces.refresh --json '{}'
+bun run agent call marketplaces.catalog --json '{"offset":0,"limit":20}'
+bun run agent call plugins.installFromMarket --json '{"marketId":"official","pluginId":"translate"}'
+bun run agent call plugins.jobs --json '{}'
+bun run agent call plugins.update --json '{"pluginId":"translate"}'
+```
+
+市场事件只通知变化，订阅和重连后重新读取快照；安装任务接受不表示成功，须检查终态。
