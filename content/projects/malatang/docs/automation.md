@@ -67,3 +67,5 @@ bun run agent call plugins.update --json '{"pluginId":"translate"}'
 ```
 
 市场事件只通知变化，订阅和重连后重新读取快照；安装任务接受不表示成功，须检查终态。
+
+插件内调用宿主能力使用[前端 API](/malatang/docs/plugin-client-api)，自定义业务方法使用[后端 API](/malatang/docs/plugin-backend-api)。这些接口与本页的宿主管理 CLI 分开；制作市场索引见[构建与分发](/malatang/docs/plugin-distribution)。

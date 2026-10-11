@@ -62,3 +62,5 @@ malatang call plugins.install --json '{"source":"/absolute/path/plugin.tgz"}'
 市场使用静态 JSON v1，包含 `schemaVersion/name/plugins`；条目包含 `id/packageName/name/description/icon/color/version/sdkVersion/url/sha256`。只列当前稳定版本，索引与归档使用 HTTPS，无需专门市场服务。
 
 参考[官方仓库](https://github.com/potato47/malatang-plugins)及[宿主协议](https://github.com/potato47/malatang/blob/v0.4.2/docs/plugin-marketplace.md)。官方插件分别打标签、上传归档，验收公开下载哈希后通过索引 PR 上架。
+
+制作自己的插件可从[第一个插件](/malatang/docs/plugin-development)开始；归档、市场索引与更新规则见[构建与分发](/malatang/docs/plugin-distribution)。

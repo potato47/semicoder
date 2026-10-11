@@ -4,6 +4,14 @@
 
 Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、Semicoder 和 agent-webtool 四个开发项目；FIA 活跃源码已迁入麻辣烫，原独立仓库保留历史；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
 
+## 2026-10-11 插件开发手册
+
+- 依据应用 v0.4.2 / SDK sdk-v0.3.1 的固定提交 `b107dee8ae5c6237593f84be8904a9916566a9ec`，本地 `975c60b` 的 SDK、shared/api.ts、shared/marketplace.ts 与相关插件/模型/存储实现相对标签无差异。
+- 官网 plugin-development 保留入门及原锚点，新增 plugin-manifest、plugin-client-api、plugin-backend-api、plugin-ui、plugin-ui-overlays、plugin-styling、plugin-distribution，覆盖全部公开 SDK 导入入口和 UI 导出；内部辅助函数不视为插件 API。
+- 按实现修正原教程中的过时发布叙述，明确 SelectContent/ComboboxContent 不开放浮层定位参数、前后端 KV 返回类型不同、管理 CLI 不属于 createPluginClient。SDK README 的历史标题及“未发布”说明不作为当前版本状态证据。
+- 验证使用公开 npm 0.3.1 归档（SHA-256 `a9972f930035fa6d6c2792211f88ad42dda8ef1b7e7ac92ed48dcf4e31f99f5a`）和从官网正文提取的代码。四个独立示例工程的 check/build/pack、完整网站 check、38 静态页面的生产 build/build:check、桌面/手机导航与搜索验收通过；追加发布前 51 项单元测试和 12 项 Workers 测试通过；真实模型调用与应用安装本轮未验证，远端部署以本次提交的 Actions 结果为准。
+- 本次只变更官网内容及知识文档，不修改应用、SDK 或 FIA 契约/版本。用户随后明确授权发布上线，沿用 main 推送后的质量、预发布、生产审核和冒烟流程；网站构建仍可脱离 workspace 运行。
+
 ## 2026-10-11 应用 0.4.2、SDK 0.3.1 与官方市场
 
 应用和 SDK 标签固定 `b107dee8ae5c6237593f84be8904a9916566a9ec`。[应用 v0.4.2](https://github.com/potato47/malatang/releases/tag/v0.4.2) / build 6 的签名公证、Gatekeeper、隔离启动退出、安装包与更新文件一致性已通过。公开 DMG 为 35436992 字节，SHA-256 `e92d4cdd0ca4865f1592178e732201c00a756d129bf7c11e9a974cd590b223b0`；更新源签名及 30 个文件逐一验收，runtimeId `14d936e9e1127d21408150977e041bc2637c9c45d0b368a3bd3673242bc471ba`。主干 CI 38111323784、签名候选 38111324000 通过，正式发行流程见 GitHub Actions。
@@ -127,7 +135,7 @@ SDK [0.3.1](https://www.npmjs.com/package/@semicoder/malatang-sdk/v/0.3.1) 经 O
 
 ## 维护入口
 
-FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 7 篇指南位于 `content/projects/malatang/`；本站介绍和 2 篇指南位于 `content/projects/semicoder/`。agent-webtool 介绍及 4 篇指南位于 `content/projects/agent-webtool/`。发布状态首先更新各自安装页，再同步项目介绍与版本说明。发布后的下载链接应使用真实 Release 及其附件，保留平台要求与安装步骤；不要将 CI artifact 或框架包伪装为正式应用。
+FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 14 篇指南位于 `content/projects/malatang/`；本站介绍和 2 篇指南位于 `content/projects/semicoder/`。agent-webtool 介绍及 4 篇指南位于 `content/projects/agent-webtool/`。发布状态首先更新各自安装页，再同步项目介绍与版本说明。发布后的下载链接应使用真实 Release 及其附件，保留平台要求与安装步骤；不要将 CI artifact 或框架包伪装为正式应用。
 
 本站只链接公开源码和包地址，不托管二进制，不代替源项目发布框架、应用或 npm 包。网站随主干既有工作流执行质量检查、预发布和生产发布。
 
@@ -137,7 +145,7 @@ FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 7 �
 | ------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | FIA API、原生能力、CLI、构建与平台要求                        | FIA 项目介绍、shared-api / development / automation / installation / distribution 指南 |
 | 麻辣烫设置、模型/账号、插件安装与生命周期                     | 麻辣烫项目介绍、getting-started / models / plugins / troubleshooting / automation 指南 |
-| SDK 包名、manifest、构建方式与方法                            | plugin-development、项目介绍；与安装指南的源码版本保持一致                             |
+| SDK 包名、manifest、构建方式与方法                            | plugin-development 及 plugin-* 开发手册、项目介绍；与安装指南的源码版本保持一致        |
 | agent-webtool 抓取/搜索、SDK/CLI/MCP、来源生命周期或 npm 发布 | agent-webtool 项目介绍、安装与使用指南、本来源记录；核对公开导出与本地未发布改动       |
 | Semicoder 自身使用与内容写作流程                              | `content/projects/semicoder/` 和相关工程文档；无用户文档影响时说明依据                 |
 | 公开应用、npm SDK、固定 FIA 归档                              | installation、plugin-development、本来源记录；核对 tag、文件、平台和 SHA-256           |
