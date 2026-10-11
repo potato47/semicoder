@@ -4,6 +4,12 @@
 
 Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、Semicoder 和 agent-webtool 四个开发项目；FIA 活跃源码已迁入麻辣烫，原独立仓库保留历史；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
 
+## 2026-10-11 主题切换入口统一（本地未发布）
+
+麻辣烫实现提交 `f74b85b`（`codex/settings-theme-only`，基于 `181f5d6`）已按用户追加授权合入本地 main，移除 `frontend/App.tsx` 的侧栏主题按钮、`frontend/ThemeControl.tsx` 及专用样式，保留 `frontend/AppearanceSettings.tsx` 的明暗模式与配色设置。本站第一次使用指南同步唯一入口，并明确公开 0.4.1 仍有快捷按钮；安装、SDK、FIA 契约与版本均无变化。本次未推送、发布或部署。
+
+应用 check、85 项测试、build 与 ego-browser 的三种主题 / 刷新持久化验收通过。本站 content / docs / 变更文件格式检查、生产 build 和 31 个静态页面检查通过；官网说明与本条随 `codex/settings-theme-docs` 一并提交，由用户授权整合到本地 main。
+
 ## 2026-10-11 应用 0.4.1 / SDK 0.3.0 发布
 
 应用 [v0.4.1 / build 5](https://github.com/potato47/malatang/releases/tag/v0.4.1) 固定 `4e222972c1de39a4e241cc3c0b8a2ba8af15fce0`。[主干 CI 38069368438](https://github.com/potato47/malatang/actions/runs/38069368438)、[签名手动验收 38069379373](https://github.com/potato47/malatang/actions/runs/38069379373) 和 [正式发布 38070028805](https://github.com/potato47/malatang/actions/runs/38070028805) 均成功，包含同提交 FIA 构建、框架独立消费及安装包启动退出。公开五附件经匿名 digest / 大小校验；DMG 为 35,652,251 字节，SHA-256 `17c486c7dd4b9132eb784847813aa6090047bb440da8be58c8b709684cc0201f`。本机 hdiutil、公证票据、Gatekeeper DMG / app、应用签名及安装包与更新逐文件比对通过；公开正式 app 在临时数据目录启动、ready、退出和进程清理通过，未操作用户账号或模型。

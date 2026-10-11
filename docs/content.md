@@ -2,6 +2,8 @@
 
 ## 按项目维护内容
 
+2026-10-11 麻辣烫第一次使用指南同步主题入口统一的本地改动：设置页作为操作入口，注明公开 0.4.1 仍保留侧栏快捷按钮，默认安装版本不变。来源见 [项目资料](project-sources.md)。
+
 博客放在 `content/blog/`。每个项目使用 `content/projects/<目录名>/index.mdx` 保存项目介绍和元信息；文档放在该项目的 `docs/` 下，支持递归子目录；`nav.json` 保存文档分组与阅读顺序。工程说明只放在仓库根目录的 `docs/`，不参与网站内容发布。
 
 所有正文 frontmatter 必填 `id`、`title`、`description`、`slug`、`date`。ID 永久稳定，文件位置和 URL 可独立调整。博客和项目 slug 使用小写英文、数字与连字符；文档可使用 `guides/writing` 这样的多级 slug。项目可配置 `stack`、`status`、`source`、`demo`；示例内容必须标记 `sample: true`。不再接受文档 frontmatter 中的 `project`、`projectId` 或 `order`，项目关系由所属目录中的项目稳定 ID 注入。
