@@ -45,9 +45,9 @@
 
 当前真实内容包含 FIA、麻辣烫、agent-webtool 与本站。FIA 和麻辣烫分别在 `content/projects/fia/`、`content/projects/malatang/` 维护，统一从项目集合页进入，时间首页不再展示项目推荐。资料、版本差异和跨项目同步流程见 [内容核对记录](project-sources.md)。各外部项目内容变更由 `docs/impact.json` 同时关联内容规范和来源记录；单纯文字修正无来源影响时按 PR 规则说明原因。麻辣烫官网固定为 `https://semicoder.dev/malatang`，统一安装入口为 `/malatang/docs/installation`；应用更新文件继续由独立更新源提供。新增正式安装包时先核实 Release、文件、平台与签名状态，再更新麻辣烫安装页；框架 `.tgz` 不能标为应用下载。网站不代理安装包，不在访问时请求 GitHub 或 npm。
 
-麻辣烫安装页默认提供已核验的 0.4.2 / build 6 正式 DMG；插件开发手册面向公开 SDK 0.3.1 / manifest 0.3。npm、应用 DMG 与网站部署状态分别核实。
+麻辣烫安装页默认提供已核验的 0.4.3 / build 7 正式 DMG；插件开发手册面向公开 SDK 0.3.2 / manifest 0.3。npm、应用 DMG 与网站部署状态分别核实。
 
-agent-webtool 的介绍和安装/SDK/CLI/MCP 指南在 `content/projects/agent-webtool/`，默认使用已独立验证的公开 npm 0.7.0，包含 `SourceContext` 和 0.6.0 升级说明。项目的 CI 与 OIDC 发布已验收；网站内容和部署继续独立验证，不自动发布 npm 包。
+agent-webtool 的介绍和安装/SDK/CLI/MCP 指南在 `content/projects/agent-webtool/`，默认使用已独立验证的公开 npm 0.7.1，包含 `SourceContext` 和 0.6.0 升级说明。项目的 CI 与 OIDC 发布已验收；网站内容和部署继续独立验证，不自动发布 npm 包。
 
 主操作按钮悬停使用强调背景与深色前景 `--on-accent`，避免浅深色模式下白字与橙色背景对比不足。
 
@@ -64,3 +64,7 @@ FIA 0.18 的标题栏置顶说明沿用现有 development 章节和稳定路径�
 2026-10-11：插件内容扩展为 8 篇开发章节，保留 plugin-development 的稳定 ID、URL 和原有章节锚点；新增清单、前端 API、后端 API、基础 UI、浮层反馈、样式主题、构建分发。麻辣烫共 14 篇指南，导航按开始使用、使用指南、插件开发、UI 与样式、自动化分组。项目 Home 提供站内直达入口。
 
 代码示例作为静态 Markdown 代码块展示，不在网站执行，不导入 SDK 或相邻工作区；组件与 API 以固定发行源码核对，代码提取到独立临时插件工程验证。更新 SDK 时按公开导出核对全手册，同时维护版本边界、来源记录、站内链接、搜索与构建结果。
+
+## 组织资源与迁移说明
+
+项目源码、发行和问题入口统一使用 `semicoder-dev`；个人介绍与个人账号链接保持原义。更新当前指南和固定版本源码链接时，历史来源记录继续保留当时地址。麻辣烫更新站为 `https://semicoder-dev.github.io/malatang/updates/latest.json`，官网仍只提供安装说明和已核验 Release 链接。0.4.3 的旧用户须完整 DMG 安装，并手动替换已有旧市场源；新数据目录默认使用组织官方索引。官方翻译、随手记 0.1.1 固定 SDK 0.3.2，ID 和数据命名空间不变。
