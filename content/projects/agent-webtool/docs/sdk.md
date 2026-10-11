@@ -6,7 +6,7 @@ description: "抓取网页、读取结构化搜索结果，并理解来源编号
 date: "2026-10-06"
 ---
 
-## 抓取与搜索（0.7.0）
+## 抓取与搜索（0.7.1）
 
 ```ts
 import { webFetch, webSearch } from "agent-webtool";

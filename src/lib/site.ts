@@ -3,7 +3,7 @@ export const site = {
   domain: "semicoder.dev",
   url: "https://semicoder.dev",
   description: "保持好奇，认真构建。记录编程路上的思考、实践与作品。",
-  repository: "https://github.com/potato47/semicoder",
+  repository: "https://github.com/semicoder-dev/semicoder",
 };
 export type ContentKind = "blog" | "projects" | "docs";
 interface ContentBase {

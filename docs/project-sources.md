@@ -1,8 +1,19 @@
 # 项目资料与发布状态
 
-公开发行核对：2026-10-11；麻辣烫 0.4.2 / build 6、SDK 0.3.1 和官方插件市场已实际发布并验证，FIA 独立 npm 保持 0.18.0。网站内容由本站维护，不在构建时复制外部工作区。分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
+公开发行核对：2026-10-11；麻辣烫 0.4.3 / build 7、SDK 0.3.2、agent-webtool 0.7.1 和官方插件 0.1.1 已实际发布并验证，FIA 独立 npm 保持 0.18.0。网站内容由本站维护，不在构建时复制外部工作区。分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
 
-Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、Semicoder 和 agent-webtool 四个开发项目；FIA 活跃源码已迁入麻辣烫，原独立仓库保留历史；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
+Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、malatang-plugins、Semicoder 和 agent-webtool 五个开发项目；FIA 活跃源码已迁入麻辣烫，原独立仓库保留历史；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
+
+## 2026-10-11 组织迁移与首次发行
+
+五个仓库通过原生 Transfer 迁入 `semicoder-dev`，保留仓库 ID、原有标签和 42 个 Release 附件的 ID/size/digest；根知识仓库继续仅本地维护，参考项目未涉及。当前资源链接使用组织地址；下方历史记录保留当时的个人仓库地址。
+
+- 应用 `v0.4.3` / build 7 与 SDK `sdk-v0.3.2` 固定 `34faa9890eed6475516dfa823d664d92181966f5`。应用 [正式工作流 38117729757](https://github.com/semicoder-dev/malatang/actions/runs/38117729757) 成功；DMG SHA-256 `b83c7fb57aee9829d8adc09086821d8e2eb3cb773fffc554f975c117e16b575f`，35437084 字节。签名、公证、Gatekeeper、安装包与更新文件一致性、Bun 1.4.3、隔离启动退出通过。全新数据目录从新默认市场安装两个 0.1.1 插件并激活、KV 读写通过；本轮不重复真实模型调用。
+- 新更新站 `https://semicoder-dev.github.io/malatang/updates/latest.json` 使用独立 `updates-site` 分支，从空历史初始化；签名和 30 个在线文件大小/哈希验收通过，更新下载禁止重定向。runtimeId `ee666cda40041089e002b7e202ac69aecc68eca3034208d4346bee27df129a84`。旧 `gh-pages` 和附件原样保留，不重签名，不提供旧地址回退或自动迁移。
+- SDK [OIDC 38117101769](https://github.com/semicoder-dev/malatang/actions/runs/38117101769) 成功，公开 npm 0.3.2 SHA-256 `901b4ee1a5b8cbf8607645689129fd72ad05bde4dc3ee7972f3fe2d58f53fd7f` 与 CI 逐字节一致，组织 provenance、新缓存独立消费、notes/model 模板和 runtime/UI/前后端构建通过。manifest 保持 0.3。
+- agent-webtool `v0.7.1` 固定 `19455496011284608f7742c45ae7a6361ec3d323`，[OIDC 38116631403](https://github.com/semicoder-dev/agent-webtool/actions/runs/38116631403) 成功，公开归档 SHA-256 `b23caa32610e41ba767740df348c577b88004d1d82413135a51401c9f5f2d8c0` 与 CI 一致。组织 provenance、新缓存 SDK ESM/CJS/TypeScript、CLI 与 MCP 验收通过，API 不变。
+- 插件源码 `a6a949134703b6c88d43641261888bd75a1a5d97` 固定 SDK 0.3.2。翻译 0.1.1 SHA-256 `d42181bd290f938170dd7209dd6358f731017c6ac5e05cafaa4262e706a45077`；随手记 0.1.1 `fcfd8422211093d17fa9cdcc7ced2a06785cc93bcea28337ee9c877b41916da6`。公开归档和索引经 PR #5/#6 验证后上架，插件 ID 与数据命名空间不变。
+- npm 包名保持不变。两个活跃包的 Trusted Publisher 均已重建并显示 Valid；FIA 旧连接已移除，独立 npm 工作流停用，npm 保持 0.18.0。官网与 Cloudflare Worker/D1/域名不搬迁，个人身份链接保留。两环境 OAuth 转移、真实登录和本次网站部署结果单独记录。
 
 ## 2026-10-11 插件开发手册
 

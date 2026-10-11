@@ -6,7 +6,7 @@ description: "使用语义 Tailwind 类、CSS Modules 与宿主主题，处理�
 date: "2026-10-11"
 ---
 
-本页适用于 **麻辣烫 0.4.2 / SDK 0.3.1**。宿主统一提供主题、公共组件 CSS 与 reset；插件只维护自己的业务布局和样式。
+本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**。宿主统一提供主题、公共组件 CSS 与 reset；插件只维护自己的业务布局和样式。
 
 ## 样式入口与静态类名
 
@@ -116,4 +116,4 @@ export function PluginIllustration() {
 
 例外只允许该样式文件使用固定颜色，不允许全局规则、公共 token 重定义或私有类依赖；文件必须存在且理由非空。没有必要时不声明。
 
-来源：[主题 token](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/theme.css)、[Tailwind 映射](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/tailwind.css)、[样式检查器](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/style-check.ts)。
+来源：[主题 token](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/theme.css)、[Tailwind 映射](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/tailwind.css)、[样式检查器](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/style-check.ts)。

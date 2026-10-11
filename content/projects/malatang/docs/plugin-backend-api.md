@@ -6,7 +6,7 @@ description: "定义带 schema 的插件方法，使用后端模型和 KV 上下
 date: "2026-10-11"
 ---
 
-本页适用于 **麻辣烫 0.4.2 / SDK 0.3.1**。后端在宿主 Bun 进程运行，适合业务校验、数据整理和调用宿主模型。纯前端笔记插件不需要后端。
+本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**。后端在宿主 Bun 进程运行，适合业务校验、数据整理和调用宿主模型。纯前端笔记插件不需要后端。
 
 ## 定义与调用
 
@@ -140,4 +140,4 @@ export default function BackendNotes() {
 | 返回结果失败       | 是否为 JSON、是否超过 256 KiB、是否遗漏 return   |
 | 激活失败           | backend 默认导出、清单入口、模块初始化异常       |
 
-类型来源：[runtime.ts](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/runtime.ts)、[types.ts](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/types.ts)。宿主最终执行校验见[插件实现](https://github.com/potato47/malatang/blob/v0.4.2/backend/plugins.ts)。
+类型来源：[runtime.ts](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/runtime.ts)、[types.ts](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/types.ts)。宿主最终执行校验见[插件实现](https://github.com/semicoder-dev/malatang/blob/v0.4.3/backend/plugins.ts)。

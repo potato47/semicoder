@@ -6,7 +6,7 @@ description: "SDK 公共组件、布局、输入、选择控件、模型选择�
 date: "2026-10-11"
 ---
 
-本页适用于 **麻辣烫 0.4.2 / SDK 0.3.1**。所有示例组件从 `@semicoder/malatang-sdk/ui` 导入，在 CLI 创建的插件页面中使用。宿主共享 React、ReactDOM 与公共 UI，不直接导入 Base UI、Radix、Lucide 或宿主源码。
+本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**。所有示例组件从 `@semicoder/malatang-sdk/ui` 导入，在 CLI 创建的插件页面中使用。宿主共享 React、ReactDOM 与公共 UI，不直接导入 Base UI、Radix、Lucide 或宿主源码。
 
 ## 公共约定
 
@@ -298,4 +298,4 @@ export function ComboboxExample() {
 
 `UIProvider` 接受 children（必填）、visible（默认 true）、pluginId（可选）。宿主已经包裹插件页面，提供 Tooltip、Toast、可见性和带插件作用域的 Portal，**普通插件不要再嵌套 Provider**。Provider 的导出用于宿主集成等场景，不会让 createPluginClient 在普通网页中可用。
 
-后续阅读：[浮层与反馈](/malatang/docs/plugin-ui-overlays)、[样式与主题](/malatang/docs/plugin-styling)。来源：[UI 导出](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/ui.tsx)、[组件实现](https://github.com/potato47/malatang/tree/sdk-v0.3.1/packages/sdk/src/ui)。
+后续阅读：[浮层与反馈](/malatang/docs/plugin-ui-overlays)、[样式与主题](/malatang/docs/plugin-styling)。来源：[UI 导出](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/ui.tsx)、[组件实现](https://github.com/semicoder-dev/malatang/tree/sdk-v0.3.2/packages/sdk/src/ui)。

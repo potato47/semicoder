@@ -6,7 +6,7 @@ description: "通过应用中心或 CLI 安装预构建插件，了解启停、�
 date: "2026-10-10"
 ---
 
-本页适用于麻辣烫 **0.4.2**。应用不内置插件，所有插件由用户安装；旧版本升级请先阅读[升级说明](/malatang/docs/installation#后续更新)。
+本页适用于麻辣烫 **0.4.3**。应用不内置插件，所有插件由用户安装；旧版本升级请先阅读[升级说明](/malatang/docs/installation#后续更新)。
 
 ## 从插件市场安装
 
@@ -16,7 +16,7 @@ date: "2026-10-10"
 
 ## 管理市场源
 
-默认配置[官方市场](https://github.com/potato47/malatang-plugins)。在「管理市场源」添加名称与 HTTPS 索引地址，也可重命名、启停和删除。官方源同样可以停用或删除，重启后不会恢复；修改地址请删除后重新添加。
+默认配置[官方市场](https://github.com/semicoder-dev/malatang-plugins)。在「管理市场源」添加名称与 HTTPS 索引地址，也可重命名、启停和删除。官方源同样可以停用或删除，重启后不会恢复；修改地址请删除后重新添加。
 
 不同源的同 ID 条目分别显示来源。已安装插件固定使用原市场更新，不跨来源替换；来源被删后插件仍可运行。手动安装不自动关联市场，如需市场更新，先卸载再从选定市场安装相同 ID。
 
@@ -61,6 +61,6 @@ malatang call plugins.install --json '{"source":"/absolute/path/plugin.tgz"}'
 
 市场使用静态 JSON v1，包含 `schemaVersion/name/plugins`；条目包含 `id/packageName/name/description/icon/color/version/sdkVersion/url/sha256`。只列当前稳定版本，索引与归档使用 HTTPS，无需专门市场服务。
 
-参考[官方仓库](https://github.com/potato47/malatang-plugins)及[宿主协议](https://github.com/potato47/malatang/blob/v0.4.2/docs/plugin-marketplace.md)。官方插件分别打标签、上传归档，验收公开下载哈希后通过索引 PR 上架。
+参考[官方仓库](https://github.com/semicoder-dev/malatang-plugins)及[宿主协议](https://github.com/semicoder-dev/malatang/blob/v0.4.3/docs/plugin-marketplace.md)。官方插件分别打标签、上传归档，验收公开下载哈希后通过索引 PR 上架。
 
 制作自己的插件可从[第一个插件](/malatang/docs/plugin-development)开始；归档、市场索引与更新规则见[构建与分发](/malatang/docs/plugin-distribution)。

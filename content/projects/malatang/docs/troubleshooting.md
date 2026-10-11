@@ -56,13 +56,13 @@ SDK 0.2 及更早插件不能在 0.4.1 宿主直接运行，需要开发者按 [
 
 ## 更新与安装包
 
-请从 [官网下载安装页](/malatang/docs/installation) 下载麻辣烫 0.4.2 正式 DMG，并查看 SHA-256 校验方法。Releases 中的 `fia-runtime-*` `.tgz` 仅供历史源码构建，普通安装无需下载；0.4.1 源码从同仓构建 FIA。更新状态以应用「设置 → 应用更新」和安装页为准。
+请从 [官网下载安装页](/malatang/docs/installation) 下载麻辣烫 0.4.3 正式 DMG，并查看 SHA-256 校验方法。Releases 中的 `fia-runtime-*` `.tgz` 仅供历史源码构建，普通安装无需下载；0.4.1 源码从同仓构建 FIA。更新状态以应用「设置 → 应用更新」和安装页为准。
 
 更新时，有模型、插件或登录任务会延迟切换。代码失败回退不恢复旧数据；原生运行时改变时需重新安装完整应用。
 
 ## 反馈问题
 
-在 [GitHub Issues](https://github.com/potato47/malatang/issues) 提供系统版本、芯片、应用版本、复现步骤与脱敏后的错误。不要附带模型 API Key、授权链接、完整个人输入或账号数据。
+在 [GitHub Issues](https://github.com/semicoder-dev/malatang/issues) 提供系统版本、芯片、应用版本、复现步骤与脱敏后的错误。不要附带模型 API Key、授权链接、完整个人输入或账号数据。
 
 ## 浏览器界面提示连接已结束
 

@@ -6,7 +6,7 @@ description: "对话框、菜单、提示、通知、标签页、折叠区和反
 date: "2026-10-11"
 ---
 
-本页适用于 **麻辣烫 0.4.2 / SDK 0.3.1**，沿用 [UI 公共约定](/malatang/docs/plugin-ui#公共约定)。下面组件统一从 `@semicoder/malatang-sdk/ui` 导入；由宿主 UIProvider 提供 Portal、主题和页面可见性。
+本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**，沿用 [UI 公共约定](/malatang/docs/plugin-ui#公共约定)。下面组件统一从 `@semicoder/malatang-sdk/ui` 导入；由宿主 UIProvider 提供 Portal、主题和页面可见性。
 
 ## 浮层组合与焦点
 
@@ -368,4 +368,4 @@ export function ToastExample() {
 
 公开 `Toast` 是已加样式的底层 Root，需传通知对象 `toast`，用于定制展示；SDK 没有导出完整 Toast 子组件集合，普通插件使用 useToast，由 UIProvider 渲染现成通知区。切页隐藏时宿主会关闭该页面的通知。不要额外创建 Provider 或重复绘制同一通知。
 
-来源：[浮层](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/ui/overlays.tsx)、[布局](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/ui/layout.tsx)、[Provider](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/ui/provider.tsx)。
+来源：[浮层](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/ui/overlays.tsx)、[布局](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/ui/layout.tsx)、[Provider](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/ui/provider.tsx)。

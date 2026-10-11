@@ -130,7 +130,7 @@ export function Shell({ children }: { children: ReactNode }) {
         <div className={styles.footerBottom}>
           <span>© {new Date().getFullYear()} 新手程序员 · semicoder.dev</span>
           <div>
-            <a href="https://github.com/potato47/semicoder">GitHub ↗</a>
+            <a href="https://github.com/semicoder-dev/semicoder">GitHub ↗</a>
             <Link to="/privacy">隐私</Link>
             <Link to="/rules">评论规则</Link>
             <Link to="/admin">管理</Link>

@@ -6,7 +6,7 @@ description: "模型、运行记录、KV、后端调用，以及事件订阅和�
 date: "2026-10-11"
 ---
 
-本页适用于 **麻辣烫 0.4.2 / SDK 0.3.1**。客户端只在宿主加载的插件页面中使用，不是独立网页或服务端 HTTP SDK。
+本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**。客户端只在宿主加载的插件页面中使用，不是独立网页或服务端 HTTP SDK。
 
 ## 创建客户端
 
@@ -283,4 +283,4 @@ export default function ModelPage() {
 
 BackendPlugin、PluginMethod、PluginContext 见[后端 API](/malatang/docs/plugin-backend-api)；PluginManifest 见[清单](/malatang/docs/plugin-manifest)。插件安装、市场配置和模型管理使用[宿主 CLI](/malatang/docs/automation)，不能写成 `client.plugins.install` 或 `client.marketplaces`。
 
-来源：[client.ts](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/client.ts)、[types.ts](https://github.com/potato47/malatang/blob/sdk-v0.3.1/packages/sdk/src/types.ts)、[宿主校验](https://github.com/potato47/malatang/blob/v0.4.2/shared/api.ts)。
+来源：[client.ts](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/client.ts)、[types.ts](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/types.ts)、[宿主校验](https://github.com/semicoder-dev/malatang/blob/v0.4.3/shared/api.ts)。
