@@ -122,7 +122,7 @@ function Search() {
           onChange={(e) =>
             void navigate({ search: { ...search, q: e.target.value || undefined }, replace: true })
           }
-          placeholder="试试「FIA」「麻辣烫」或「安装」"
+          placeholder="试试「FIA」「fn」或「安装」"
           type="search"
         />
       </div>

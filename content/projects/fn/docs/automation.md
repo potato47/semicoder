@@ -1,14 +1,16 @@
 ---
-id: "docs-malatang-automation"
+id: "docs-fn-automation"
 slug: "automation"
 title: "CLI 与自动化"
 description: "查询模型、安装插件、调用插件方法，并跟踪任务结果。"
 date: "2026-10-04"
 ---
 
+> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+
 ## 选择正确实例
 
-开发时，在已启动 `bun run dev` 的项目目录使用 `bun run agent`。安装应用后从应用菜单安装 CLI，再使用 `malatang`。这两个实例的数据独立，命令不会自动共享模型配置。
+开发时，在已启动 `bun run dev` 的项目目录使用 `bun run agent`。安装应用后从应用菜单安装 CLI，再使用 `fn`。这两个实例的数据独立，命令不会自动共享模型配置。
 
 ```bash
 bun run agent schema --json
@@ -46,13 +48,13 @@ bun run agent call appearance.set --json '{"theme":"dark"}'
 
 ## 交给外部 agent
 
-安装生产 CLI 后，可运行 `malatang skill install` 安装随应用生成的使用说明。FIA 提供发现与调用机制，麻辣烫提供业务方法；这不表示应用内已经实现通用 agent loop。
+安装生产 CLI 后，可运行 `fn skill install` 安装随应用生成的使用说明。FIA 提供发现与调用机制，fn 提供业务方法；这不表示应用内已经实现通用 agent loop。
 
 需要用脚本组合多次调用时，参阅 [FIA 的脚本说明](/fia/docs/automation)。
 
 ## 插件开发命令（0.2.0 起）
 
-麻辣烫 0.2.0 增加 `malatang plugin create/check/build/pack`，开发入口为 `bun run agent plugin …`，需要开发者 Bun >=1.4.2；v0.1.0 不支持；所有子命令提供 --help/--json。命令沿用实例连接、进程取消和更新占用规则，保留调用目录、参数和退出码。插件安装仍走已有 plugins.install。用法与版本边界见 [插件开发](/malatang/docs/plugin-development)。
+fn 0.2.0 增加 `fn plugin create/check/build/pack`，开发入口为 `bun run agent plugin …`，需要开发者 Bun >=1.4.2；v0.1.0 不支持；所有子命令提供 --help/--json。命令沿用实例连接、进程取消和更新占用规则，保留调用目录、参数和退出码。插件安装仍走已有 plugins.install。用法与版本边界见 [插件开发](/fn/docs/plugin-development)。
 
 ## 市场与更新（0.4.2 起）
 
@@ -68,4 +70,4 @@ bun run agent call plugins.update --json '{"pluginId":"translate"}'
 
 市场事件只通知变化，订阅和重连后重新读取快照；安装任务接受不表示成功，须检查终态。
 
-插件内调用宿主能力使用[前端 API](/malatang/docs/plugin-client-api)，自定义业务方法使用[后端 API](/malatang/docs/plugin-backend-api)。这些接口与本页的宿主管理 CLI 分开；制作市场索引见[构建与分发](/malatang/docs/plugin-distribution)。
+插件内调用宿主能力使用[前端 API](/fn/docs/plugin-client-api)，自定义业务方法使用[后端 API](/fn/docs/plugin-backend-api)。这些接口与本页的宿主管理 CLI 分开；制作市场索引见[构建与分发](/fn/docs/plugin-distribution)。

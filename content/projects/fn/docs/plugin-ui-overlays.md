@@ -1,12 +1,14 @@
 ---
-id: "docs-malatang-plugin-ui-overlays"
+id: "docs-fn-plugin-ui-overlays"
 slug: "plugin-ui-overlays"
 title: "UI 浮层与反馈"
 description: "对话框、菜单、提示、通知、标签页、折叠区和反馈组件。"
-date: "2026-10-11"
+date: "2026-10-14"
 ---
 
-本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**，沿用 [UI 公共约定](/malatang/docs/plugin-ui#公共约定)。下面组件统一从 `@semicoder/malatang-sdk/ui` 导入；由宿主 UIProvider 提供 Portal、主题和页面可见性。
+> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+
+本页适用于 **fn 0.4.3 / SDK 0.3.2**，沿用 [UI 公共约定](/fn/docs/plugin-ui#公共约定)。下面组件统一从 `@semicoder/fn-sdk/ui` 导入；由宿主 UIProvider 提供 Portal、主题和页面可见性。
 
 ## 浮层组合与焦点
 
@@ -47,7 +49,7 @@ import {
   DialogClose,
   Field,
   Input,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 export function DialogExample() {
   return (
@@ -82,7 +84,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogClose,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 export function ConfirmExample({ remove }: { remove: () => Promise<void> }) {
   const [open, setOpen] = useState(false);
@@ -146,7 +148,7 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 export function HintsExample() {
   return (
@@ -202,7 +204,7 @@ import {
   ContextMenu,
   ContextMenuTrigger,
   ContextMenuContent,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 export function MenusExample() {
   const [wrap, setWrap] = useState(true);
@@ -270,7 +272,7 @@ import {
   AccordionContent,
   Separator,
   ScrollArea,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 export function SectionsExample() {
   return (
@@ -321,7 +323,7 @@ import {
   Progress,
   Avatar,
   Kbd,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 export function FeedbackExample() {
   return (
@@ -348,7 +350,7 @@ Kbd 只负责展示，不注册快捷键；进度与状态由业务更新。Skel
 `useToast()` 返回宿主 Provider 中的通知管理器，主要成员为 `toasts`、`add(options)`、`update(id, options)`、`close(id)` 和 `promise(promise, options)`。add 返回通知 ID；常用 options 包括 title、description、timeout（毫秒，0 表示不自动关闭）。当前默认 timeout 为 5000ms，建议对业务通知显式设置。
 
 ```tsx
-import { Button, useToast } from "@semicoder/malatang-sdk/ui";
+import { Button, useToast } from "@semicoder/fn-sdk/ui";
 
 export function ToastExample() {
   const toast = useToast();
@@ -368,4 +370,4 @@ export function ToastExample() {
 
 公开 `Toast` 是已加样式的底层 Root，需传通知对象 `toast`，用于定制展示；SDK 没有导出完整 Toast 子组件集合，普通插件使用 useToast，由 UIProvider 渲染现成通知区。切页隐藏时宿主会关闭该页面的通知。不要额外创建 Provider 或重复绘制同一通知。
 
-来源：[浮层](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/ui/overlays.tsx)、[布局](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/ui/layout.tsx)、[Provider](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/ui/provider.tsx)。
+来源：浮层：`packages/sdk/src/ui/overlays.tsx`（本地源码）、布局：`packages/sdk/src/ui/layout.tsx`（本地源码）、Provider：`packages/sdk/src/ui/provider.tsx`（本地源码）。

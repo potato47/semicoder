@@ -1,5 +1,17 @@
 # 项目资料与发布状态
 
+## 2026-10-14 fn 更名（本地开发、尚未发布）
+
+来源基线：应用 cc183e1、官方插件 678558f、本站 34765af，均在本地 codex/rename-fn 分支重构。应用目录改为 fn，插件目录改为 fn-plugins；应用标识 com.semicoder.fn，SDK @semicoder/fn-sdk，manifest fn，官网 /fn，内容 ID project-fn / docs-fn-*。用户明确覆盖本次稳定 ID 规则，不保留旧 URL 或迁移关联数据。
+
+用户随后授权提交并合入各仓库本地主干：应用来源固定 `a304dfa`，官方插件来源固定 `8db83bd`，两者均已快进合入本地 main；官网同步随本节所在提交保存。保留 codex/rename-fn 分支，暂不推送、发布或部署。SDK 固定归档与应用提交逐文件核对一致，来源哈希保持不变。
+
+新 SDK 仅通过经过校验的本地归档消费，插件市场索引为空；安装页提供本地源码构建与插件归档步骤。新名称的 GitHub、npm、应用、市场和官网尚未发布，本次未执行任何远端操作。版本号保持原值不能证明公开产物相同。旧名称、标签、URL、哈希与以下历史发行证据保持当时事实。后续需分别验收 GitHub 更名、新 SDK、插件归档及索引、完整 DMG 和网站部署，再提供正式下载入口。
+
+## 更名前的公开状态与布局
+
+以下保留 2026-10-11 的发行事实和当时目录名称；当前本地状态以上方更名记录为准。
+
 公开发行核对：2026-10-11；麻辣烫 0.4.3 / build 7、SDK 0.3.2、agent-webtool 0.7.1 和官方插件 0.1.1 已实际发布并验证，FIA 独立 npm 保持 0.18.0。网站内容由本站维护，不在构建时复制外部工作区。分别记录源码、公开固定归档、npm 和正式应用产物；网站上线以独立部署工作流为准。
 
 Semicoder 是各自有项目统一的官网文档入口。当前工作区已更名为 `semicoder-workspace`，包含 FIA、麻辣烫、malatang-plugins、Semicoder 和 agent-webtool 五个开发项目；FIA 活跃源码已迁入麻辣烫，原独立仓库保留历史；本站为工作区内实体目录。该布局只用于维护协作，不作为本站运行/构建的前提。
@@ -146,7 +158,7 @@ SDK [0.3.1](https://www.npmjs.com/package/@semicoder/malatang-sdk/v/0.3.1) 经 O
 
 ## 维护入口
 
-FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 14 篇指南位于 `content/projects/malatang/`；本站介绍和 2 篇指南位于 `content/projects/semicoder/`。agent-webtool 介绍及 4 篇指南位于 `content/projects/agent-webtool/`。发布状态首先更新各自安装页，再同步项目介绍与版本说明。发布后的下载链接应使用真实 Release 及其附件，保留平台要求与安装步骤；不要将 CI artifact 或框架包伪装为正式应用。
+FIA 介绍和 5 篇指南位于 `content/projects/fia/`；麻辣烫介绍和 14 篇指南位于 `content/projects/fn/`；本站介绍和 2 篇指南位于 `content/projects/semicoder/`。agent-webtool 介绍及 4 篇指南位于 `content/projects/agent-webtool/`。发布状态首先更新各自安装页，再同步项目介绍与版本说明。发布后的下载链接应使用真实 Release 及其附件，保留平台要求与安装步骤；不要将 CI artifact 或框架包伪装为正式应用。
 
 本站只链接公开源码和包地址，不托管二进制，不代替源项目发布框架、应用或 npm 包。网站随主干既有工作流执行质量检查、预发布和生产发布。
 

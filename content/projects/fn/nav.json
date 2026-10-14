@@ -1,0 +1,30 @@
+{
+  "groups": [
+    {
+      "title": "开始使用",
+      "items": ["docs-fn-installation", "docs-fn-getting-started"]
+    },
+    {
+      "title": "使用指南",
+      "items": ["docs-fn-models", "docs-fn-plugins", "docs-fn-troubleshooting"]
+    },
+    {
+      "title": "插件开发",
+      "items": [
+        "docs-fn-plugin-development",
+        "docs-fn-plugin-manifest",
+        "docs-fn-plugin-client-api",
+        "docs-fn-plugin-backend-api",
+        "docs-fn-plugin-distribution"
+      ]
+    },
+    {
+      "title": "UI 与样式",
+      "items": ["docs-fn-plugin-ui", "docs-fn-plugin-ui-overlays", "docs-fn-plugin-styling"]
+    },
+    {
+      "title": "自动化",
+      "items": ["docs-fn-automation"]
+    }
+  ]
+}

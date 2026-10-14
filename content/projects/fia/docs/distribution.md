@@ -2,7 +2,7 @@
 id: "docs-fia-distribution"
 slug: "distribution"
 title: "构建、版本与分发"
-description: "区分 npm 发行版、麻辣烫固定框架构建和最终应用安装包。"
+description: "区分 npm 发行版、fn 固定框架构建和最终应用安装包。"
 date: "2026-10-09"
 ---
 
@@ -10,11 +10,11 @@ date: "2026-10-09"
 
 核对日期：2026-10-09。
 
-| 产物                  | 获取方式                                                              | 范围                                                                    |
-| --------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| FIA npm 0.18.0        | [npm](https://www.npmjs.com/package/@semicoder/fia)                   | 新增原生标题栏置顶；包含默认浏览器界面、隔离预览、应用子命令和 DMG 分发 |
-| 麻辣烫固定 FIA 0.18.0 | [框架归档](https://github.com/semicoder-dev/fia/releases/tag/v0.18.0) | 源码 `85206f6f5322`，与公开 npm 0.18.0 和 Actions artifact 逐字节一致   |
-| 麻辣烫应用            | [下载与安装说明](/malatang/docs/installation)                         | 0.4.0 / Build 4 正式 DMG，macOS 14+ / Apple Silicon                     |
+| 产物                      | 获取方式                                                              | 范围                                                                    |
+| ------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| FIA npm 0.18.0            | [npm](https://www.npmjs.com/package/@semicoder/fia)                   | 新增原生标题栏置顶；包含默认浏览器界面、隔离预览、应用子命令和 DMG 分发 |
+| 历史应用使用的 FIA 0.18.0 | [框架归档](https://github.com/semicoder-dev/fia/releases/tag/v0.18.0) | 源码 `85206f6f5322`，与公开 npm 0.18.0 和 Actions artifact 逐字节一致   |
+| fn 应用                   | [下载与安装说明](/fn/docs/installation)                               | 本地更名开发版，尚未发布；macOS 14+ / Apple Silicon                     |
 
 框架归档 `.tgz` 是开发依赖，不是双击安装的应用。FIA 4 的“4”也不是 npm 版本号。
 

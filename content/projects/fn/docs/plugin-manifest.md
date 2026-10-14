@@ -1,21 +1,23 @@
 ---
-id: "docs-malatang-plugin-manifest"
+id: "docs-fn-plugin-manifest"
 slug: "plugin-manifest"
 title: "插件结构与生命周期"
 description: "完整 manifest 字段、SDK 导入入口、页面和后端生命周期。"
-date: "2026-10-11"
+date: "2026-10-14"
 ---
 
-本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**。新项目先按[入门教程](/malatang/docs/plugin-development)生成，再修改业务源码。
+> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+
+本页适用于 **fn 0.4.3 / SDK 0.3.2**。新项目先按[入门教程](/fn/docs/plugin-development)生成，再修改业务源码。
 
 ## 项目结构
 
 ```text
 my-notes/
-  package.json          # 包身份、版本、malatang 清单
+  package.json          # 包身份、版本、fn 清单
   tsconfig.json         # TypeScript 配置
   tools.ts              # SDK check/build/pack 入口
-  vendor/malatang-sdk.tgz
+  vendor/fn-sdk.tgz
   src/client.tsx        # 默认导出 React 页面
   src/styles.css        # 只导入 SDK tailwind.css
   src/page.module.css   # 可选局部样式
@@ -30,10 +32,10 @@ my-notes/
 
 ```json
 {
-  "name": "malatang-plugin-my-notes",
+  "name": "fn-plugin-my-notes",
   "version": "0.1.0",
   "type": "module",
-  "malatang": {
+  "fn": {
     "schemaVersion": 1,
     "id": "my-notes",
     "name": "我的笔记",
@@ -64,23 +66,23 @@ my-notes/
 | backend       | 可选        | 声明时固定 `dist/backend.js`，并存在 `src/backend.ts`                             |
 | keepAlive     | 默认 false  | 是否在当前窗口切页时保留已加载的页面实例                                          |
 
-清单使用 strict schema，未知字段会被拒绝。入口必须在包内，不能通过绝对路径、`..` 或软链接访问包外文件。`PluginManifest` 类型中的入口是 string，但实际安装与检查以这些固定路径的 schema 为准。`manifestSchema` 可从 `@semicoder/malatang-sdk/manifest` 导入用于构建工具校验；普通项目由 CLI 自动检查。
+清单使用 strict schema，未知字段会被拒绝。入口必须在包内，不能通过绝对路径、`..` 或软链接访问包外文件。`PluginManifest` 类型中的入口是 string，但实际安装与检查以这些固定路径的 schema 为准。`manifestSchema` 可从 `@semicoder/fn-sdk/manifest` 导入用于构建工具校验；普通项目由 CLI 自动检查。
 
 ## SDK 导入入口
 
-| 入口                                          | 用途                                                                         |
-| --------------------------------------------- | ---------------------------------------------------------------------------- |
-| `@semicoder/malatang-sdk/client`              | 前端 createPluginClient                                                      |
-| `@semicoder/malatang-sdk/types`               | JSONValue、模型、运行记录、插件与后端类型；使用 import type                  |
-| `@semicoder/malatang-sdk/runtime`             | 后端 definePlugin、defineMethod、z；也导出 BackendPlugin、PluginContext 类型 |
-| `@semicoder/malatang-sdk/ui`                  | 组件、图标、Size、Tone                                                       |
-| `@semicoder/malatang-sdk/manifest`            | 构建工具中的 manifestSchema                                                  |
-| `@semicoder/malatang-sdk/plugin`              | create/check/build/pack 工具及 runPluginTool                                 |
-| `@semicoder/malatang-sdk/build`               | 低层 buildPlugin                                                             |
-| `@semicoder/malatang-sdk/tailwind.css`        | 插件构建时的主题映射                                                         |
-| `@semicoder/malatang-sdk/theme.css`、`ui.css` | 宿主加载的全局资源，插件不得导入                                             |
+| 入口                                    | 用途                                                                         |
+| --------------------------------------- | ---------------------------------------------------------------------------- |
+| `@semicoder/fn-sdk/client`              | 前端 createPluginClient                                                      |
+| `@semicoder/fn-sdk/types`               | JSONValue、模型、运行记录、插件与后端类型；使用 import type                  |
+| `@semicoder/fn-sdk/runtime`             | 后端 definePlugin、defineMethod、z；也导出 BackendPlugin、PluginContext 类型 |
+| `@semicoder/fn-sdk/ui`                  | 组件、图标、Size、Tone                                                       |
+| `@semicoder/fn-sdk/manifest`            | 构建工具中的 manifestSchema                                                  |
+| `@semicoder/fn-sdk/plugin`              | create/check/build/pack 工具及 runPluginTool                                 |
+| `@semicoder/fn-sdk/build`               | 低层 buildPlugin                                                             |
+| `@semicoder/fn-sdk/tailwind.css`        | 插件构建时的主题映射                                                         |
+| `@semicoder/fn-sdk/theme.css`、`ui.css` | 宿主加载的全局资源，插件不得导入                                             |
 
-包没有根导出，不能直接从 `@semicoder/malatang-sdk` 导入客户端。不要深层导入 `src/`，也不要把后端模块导入前端。
+包没有根导出，不能直接从 `@semicoder/fn-sdk` 导入客户端。不要深层导入 `src/`，也不要把后端模块导入前端。
 
 ## 页面生命周期
 
@@ -97,7 +99,7 @@ my-notes/
 
 ## 后端生命周期与持久化
 
-前端卸载不等于后端 `dispose`，也不会自动取消模型任务。后端 `activate` 在插件启用加载时执行，`dispose` 负责正常停用、卸载、替换或宿主停止时的清理；进程意外终止不能保证执行清理。详见[后端 API](/malatang/docs/plugin-backend-api)。
+前端卸载不等于后端 `dispose`，也不会自动取消模型任务。后端 `activate` 在插件启用加载时执行，`dispose` 负责正常停用、卸载、替换或宿主停止时的清理；进程意外终止不能保证执行清理。详见[后端 API](/fn/docs/plugin-backend-api)。
 
 卸载保留 KV 和运行历史；同 ID 重新安装可继续访问。更新保留启停状态与已存数据，但会丢失未保存草稿。模型运行、方法调用或生命周期切换期间，宿主会阻止冲突的停用、卸载或更新操作。
 
@@ -105,4 +107,4 @@ my-notes/
 
 插件按可信本地代码执行。ID 命名空间、CSS 作用域和前后端入口区分都不是安全沙箱。宿主目前提供文本模型生成、运行记录、JSON KV 和插件方法；没有公共工具注册、预设 agent loop、自建长任务托管或自动升级 API。
 
-来源：[SDK 固定版本](https://github.com/semicoder-dev/malatang/tree/sdk-v0.3.2/packages/sdk/src)、[宿主插件实现](https://github.com/semicoder-dev/malatang/blob/v0.4.3/backend/plugins.ts)。
+来源：SDK 固定版本：`packages/sdk/src`（本地源码）、宿主插件实现：`backend/plugins.ts`（本地源码）。

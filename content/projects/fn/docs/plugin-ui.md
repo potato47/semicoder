@@ -1,12 +1,14 @@
 ---
-id: "docs-malatang-plugin-ui"
+id: "docs-fn-plugin-ui"
 slug: "plugin-ui"
 title: "UI 基础与表单"
 description: "SDK 公共组件、布局、输入、选择控件、模型选择及图标参考。"
-date: "2026-10-11"
+date: "2026-10-14"
 ---
 
-本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**。所有示例组件从 `@semicoder/malatang-sdk/ui` 导入，在 CLI 创建的插件页面中使用。宿主共享 React、ReactDOM 与公共 UI，不直接导入 Base UI、Radix、Lucide 或宿主源码。
+> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+
+本页适用于 **fn 0.4.3 / SDK 0.3.2**。所有示例组件从 `@semicoder/fn-sdk/ui` 导入，在 CLI 创建的插件页面中使用。宿主共享 React、ReactDOM 与公共 UI，不直接导入 Base UI、Radix、Lucide 或宿主源码。
 
 ## 公共约定
 
@@ -41,7 +43,7 @@ import {
   SettingsGroup,
   SettingsRow,
   Switch,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 export function LayoutExample() {
   return (
@@ -91,7 +93,7 @@ import {
   InputGroup,
   SearchInput,
   Textarea,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 export function InputsExample() {
   const [name, setName] = useState("");
@@ -149,7 +151,7 @@ import {
   RadioGroup,
   Slider,
   Switch,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 export function ControlsExample() {
   const [enabled, setEnabled] = useState(false);
@@ -205,7 +207,7 @@ import {
   SelectGroup,
   SelectGroupLabel,
   SelectItem,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 export function SelectExample() {
   const [language, setLanguage] = useState<string | null>("zh");
@@ -253,7 +255,7 @@ import {
   ComboboxEmpty,
   ComboboxList,
   ComboboxItem,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 const languages = ["中文", "English", "日本語"];
 export function ComboboxExample() {
@@ -288,7 +290,7 @@ export function ComboboxExample() {
 | disabled      | 可选 boolean；无任何 configured 模型时组件也会禁用 |
 | aria-label    | 可选 string，默认“选择模型”                        |
 
-组件按服务商分组，支持名称/provider/id 搜索，禁用不可用模型并标记 ChatGPT plan 用量入口。不自行加载目录，也不负责启动模型；不接受 className、size 或原生 onChange。完整用法见[模型生成示例](/malatang/docs/plugin-client-api#模型生成与取消)。
+组件按服务商分组，支持名称/provider/id 搜索，禁用不可用模型并标记 ChatGPT plan 用量入口。不自行加载目录，也不负责启动模型；不接受 className、size 或原生 onChange。完整用法见[模型生成示例](/fn/docs/plugin-client-api#模型生成与取消)。
 
 ## 图标与 Provider
 
@@ -298,4 +300,4 @@ export function ComboboxExample() {
 
 `UIProvider` 接受 children（必填）、visible（默认 true）、pluginId（可选）。宿主已经包裹插件页面，提供 Tooltip、Toast、可见性和带插件作用域的 Portal，**普通插件不要再嵌套 Provider**。Provider 的导出用于宿主集成等场景，不会让 createPluginClient 在普通网页中可用。
 
-后续阅读：[浮层与反馈](/malatang/docs/plugin-ui-overlays)、[样式与主题](/malatang/docs/plugin-styling)。来源：[UI 导出](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/ui.tsx)、[组件实现](https://github.com/semicoder-dev/malatang/tree/sdk-v0.3.2/packages/sdk/src/ui)。
+后续阅读：[浮层与反馈](/fn/docs/plugin-ui-overlays)、[样式与主题](/fn/docs/plugin-styling)。来源：UI 导出：`packages/sdk/src/ui.tsx`（本地源码）、组件实现：`packages/sdk/src/ui`（本地源码）。

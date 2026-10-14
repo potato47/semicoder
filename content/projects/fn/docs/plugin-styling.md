@@ -1,19 +1,21 @@
 ---
-id: "docs-malatang-plugin-styling"
+id: "docs-fn-plugin-styling"
 slug: "plugin-styling"
 title: "样式与主题"
 description: "使用语义 Tailwind 类、CSS Modules 与宿主主题，处理资源和样式校验。"
-date: "2026-10-11"
+date: "2026-10-14"
 ---
 
-本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**。宿主统一提供主题、公共组件 CSS 与 reset；插件只维护自己的业务布局和样式。
+> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+
+本页适用于 **fn 0.4.3 / SDK 0.3.2**。宿主统一提供主题、公共组件 CSS 与 reset；插件只维护自己的业务布局和样式。
 
 ## 样式入口与静态类名
 
 生成项目的 `src/styles.css` 只能包含以下导入（允许注释），不要追加规则或导入 Tailwind Preflight：
 
 ```css
-@import "@semicoder/malatang-sdk/tailwind.css";
+@import "@semicoder/fn-sdk/tailwind.css";
 ```
 
 在 `src/client.tsx` 导入 `./styles.css`。CLI 只扫描当前插件 src，在构建时编译 `p:` 工具类；宿主使用无前缀类，SDK 内部使用 `ui:`，插件不能依赖后者。
@@ -102,13 +104,13 @@ export function PluginIllustration() {
 
 ## 样式检查与例外
 
-`malatang plugin check` 会检查：全局选择器（如 :root、:global、html/body、ID）、data-theme 覆盖、--m-* 重定义、私有 `.m-*` / `ui:` 类、直接导入 Base UI/Radix/Lucide、导入 SDK theme.css/ui.css、非 Module 样式与缺失资源。
+`fn plugin check` 会检查：全局选择器（如 :root、:global、html/body、ID）、data-theme 覆盖、--m-* 重定义、私有 `.m-*` / `ui:` 类、直接导入 Base UI/Radix/Lucide、导入 SDK theme.css/ui.css、非 Module 样式与缺失资源。
 
 品牌或数据可视化确实需要固定颜色时，在 package.json **顶层**按文件声明理由：
 
 ```json
 {
-  "malatangStyleExceptions": {
+  "fnStyleExceptions": {
     "src/chart.module.css": "数据系列使用固定品牌色，文字与控件继续使用宿主语义 token。"
   }
 }
@@ -116,4 +118,4 @@ export function PluginIllustration() {
 
 例外只允许该样式文件使用固定颜色，不允许全局规则、公共 token 重定义或私有类依赖；文件必须存在且理由非空。没有必要时不声明。
 
-来源：[主题 token](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/theme.css)、[Tailwind 映射](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/tailwind.css)、[样式检查器](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/style-check.ts)。
+来源：主题 token：`packages/sdk/src/theme.css`（本地源码）、Tailwind 映射：`packages/sdk/src/tailwind.css`（本地源码）、样式检查器：`packages/sdk/src/style-check.ts`（本地源码）。

@@ -1,23 +1,25 @@
 ---
-id: "docs-malatang-plugin-client-api"
+id: "docs-fn-plugin-client-api"
 slug: "plugin-client-api"
 title: "前端 API"
 description: "模型、运行记录、KV、后端调用，以及事件订阅和重连的完整示例。"
-date: "2026-10-11"
+date: "2026-10-14"
 ---
 
-本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**。客户端只在宿主加载的插件页面中使用，不是独立网页或服务端 HTTP SDK。
+> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+
+本页适用于 **fn 0.4.3 / SDK 0.3.2**。客户端只在宿主加载的插件页面中使用，不是独立网页或服务端 HTTP SDK。
 
 ## 创建客户端
 
 ```ts
-import { createPluginClient } from "@semicoder/malatang-sdk/client";
-import type { JSONValue, ModelInfo, ModelRequest, ModelRun } from "@semicoder/malatang-sdk/types";
+import { createPluginClient } from "@semicoder/fn-sdk/client";
+import type { JSONValue, ModelInfo, ModelRequest, ModelRun } from "@semicoder/fn-sdk/types";
 
 const client = createPluginClient("my-model");
 ```
 
-参数 `pluginId: string` 应与 manifest 的 id 一致，用于模型任务、KV 和方法调用的归属。`createPluginClient` 同步返回对象；普通网页没有宿主 bridge 时会立即抛出 `This plugin must be opened in Malatang.`。不要把初始化放在官网或 SSR 环境执行。
+参数 `pluginId: string` 应与 manifest 的 id 一致，用于模型任务、KV 和方法调用的归属。`createPluginClient` 同步返回对象；普通网页没有宿主 bridge 时会立即抛出 `This plugin must be opened in fn.`。不要把初始化放在官网或 SSR 环境执行。
 
 ## models：模型目录与启动
 
@@ -50,7 +52,7 @@ const client = createPluginClient("my-model");
 
 前端 key 长度 1–200。`JSONValue` 包括 null、boolean、number、string、数组及字符串键对象，递归成员也必须为 JSON；不支持 undefined、Date 实例、函数、BigInt 或循环引用。中文字符占多个字节，字符计数不等于 64 KiB 上限。
 
-KV 按插件 ID 存在宿主数据目录，卸载保留；无跨设备同步或 KV 变化订阅 API。完整读写与错误处理见[笔记示例](/malatang/docs/plugin-development#创建随手记插件)。
+KV 按插件 ID 存在宿主数据目录，卸载保留；无跨设备同步或 KV 变化订阅 API。完整读写与错误处理见[笔记示例](/fn/docs/plugin-development#创建随手记插件)。
 
 ## invoke 与重连
 
@@ -59,7 +61,7 @@ KV 按插件 ID 存在宿主数据目录，卸载保留；无跨设备同步或 
 | `invoke<T = JSONValue>`(method: string, input: unknown) | `Promise<T>` | 调用当前插件后端 methods 中的方法 |
 | onReconnect(listener: () => void)                       | () => void   | 连接恢复时回调，返回解除订阅函数  |
 
-invoke 的 method 长度 1–100；虽然 TypeScript 接受 unknown，传输与宿主仍要求 input 为 JSON，再由后端 schema 校验。泛型 T 不会验证返回值。插件未激活、方法缺失、schema 不匹配、处理器抛错、结果不是 JSON 或超过 256 KiB 都会失败。完整示例见[后端 API](/malatang/docs/plugin-backend-api)。
+invoke 的 method 长度 1–100；虽然 TypeScript 接受 unknown，传输与宿主仍要求 input 为 JSON，再由后端 schema 校验。泛型 T 不会验证返回值。插件未激活、方法缺失、schema 不匹配、处理器抛错、结果不是 JSON 或超过 256 KiB 都会失败。完整示例见[后端 API](/fn/docs/plugin-backend-api)。
 
 所有远端调用都可能因连接或宿主校验失败而 reject，需要显示错误并允许用户重试。onReconnect 只通知连接恢复，不自动重放请求或恢复 UI；避免重连时重复发起生成或覆盖未保存草稿。
 
@@ -104,13 +106,13 @@ ChatGPT 模型绑定具体宿主账号；使用 SDK ModelSelect 会自动标记�
 
 ## 模型生成与取消
 
-执行 `malatang plugin create ./my-model --template model --id my-model` 并安装依赖，以下代码可完整替换 `src/client.tsx`。保留生成的 styles.css。示例不在模型失效时自动选择替代模型。
+执行 `fn plugin create ./my-model --template model --id my-model` 并安装依赖，以下代码可完整替换 `src/client.tsx`。保留生成的 styles.css。示例不在模型失效时自动选择替代模型。
 
 ```tsx
 import "./styles.css";
 import { useEffect, useRef, useState } from "react";
-import { createPluginClient } from "@semicoder/malatang-sdk/client";
-import type { ModelInfo, ModelRun } from "@semicoder/malatang-sdk/types";
+import { createPluginClient } from "@semicoder/fn-sdk/client";
+import type { ModelInfo, ModelRun } from "@semicoder/fn-sdk/types";
 import {
   Alert,
   Button,
@@ -121,7 +123,7 @@ import {
   Page,
   PageHeader,
   Textarea,
-} from "@semicoder/malatang-sdk/ui";
+} from "@semicoder/fn-sdk/ui";
 
 const client = createPluginClient("my-model");
 export default function ModelPage() {
@@ -281,6 +283,6 @@ export default function ModelPage() {
 | InstallJob     | id/source、operation（install/update）、可空 targetVersion、status（installing/completed/failed）、message、可空 pluginId、createdAt                                                                                              |
 | HostBridge     | call(method, input): `Promise<unknown>`；on(event, listener) 与 onReconnect(listener) 返回取消订阅函数；由宿主注入，不自行读写全局 bridge                                                                                         |
 
-BackendPlugin、PluginMethod、PluginContext 见[后端 API](/malatang/docs/plugin-backend-api)；PluginManifest 见[清单](/malatang/docs/plugin-manifest)。插件安装、市场配置和模型管理使用[宿主 CLI](/malatang/docs/automation)，不能写成 `client.plugins.install` 或 `client.marketplaces`。
+BackendPlugin、PluginMethod、PluginContext 见[后端 API](/fn/docs/plugin-backend-api)；PluginManifest 见[清单](/fn/docs/plugin-manifest)。插件安装、市场配置和模型管理使用[宿主 CLI](/fn/docs/automation)，不能写成 `client.plugins.install` 或 `client.marketplaces`。
 
-来源：[client.ts](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/client.ts)、[types.ts](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/types.ts)、[宿主校验](https://github.com/semicoder-dev/malatang/blob/v0.4.3/shared/api.ts)。
+来源：client.ts：`packages/sdk/src/client.ts`（本地源码）、types.ts：`packages/sdk/src/types.ts`（本地源码）、宿主校验：`shared/api.ts`（本地源码）。

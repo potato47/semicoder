@@ -4,7 +4,7 @@
   "scripts/content": ["docs/content.md"],
   "content/": ["docs/content.md"],
   "content/projects/fia/": ["docs/project-sources.md"],
-  "content/projects/malatang/": ["docs/project-sources.md"],
+  "content/projects/fn/": ["docs/project-sources.md"],
   "content/projects/agent-webtool/": ["docs/project-sources.md"],
   "drizzle/": ["docs/data.md", "docs/deployment.md"],
   "wrangler.jsonc": ["docs/deployment.md"],

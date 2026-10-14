@@ -1,38 +1,40 @@
 ---
-id: "docs-malatang-plugin-distribution"
+id: "docs-fn-plugin-distribution"
 slug: "plugin-distribution"
 title: "构建与分发"
 description: "插件 CLI、SDK 工具 API、归档校验、安装更新与静态市场索引。"
-date: "2026-10-11"
+date: "2026-10-14"
 ---
 
-本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2 / manifest 0.3**。制作插件从[入门教程](/malatang/docs/plugin-development)开始；用户安装操作见[插件管理](/malatang/docs/plugins)。
+> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+
+本页适用于 **fn 0.4.3 / SDK 0.3.2 / manifest 0.3**。制作插件从[入门教程](/fn/docs/plugin-development)开始；用户安装操作见[插件管理](/fn/docs/plugins)。
 
 ## CLI 命令
 
-| 命令                                     | 参数与行为                                                                                       |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| malatang plugin create &lt;directory&gt; | 目录必填；--template notes/model（默认 notes）、--id、--name；默认从目录名推导身份；拒绝非空目录 |
-| malatang plugin check [directory]        | 默认当前目录；检查包元信息、manifest、TypeScript、样式与资源，不修改源码                         |
-| malatang plugin build [directory]        | 先 check，再构建完整 dist；失败清除旧 dist 与半成品                                              |
-| malatang plugin pack [directory]         | 再次检查、构建，生成 `id-version.tgz` 并解包验证完整资源                                         |
+| 命令                               | 参数与行为                                                                                       |
+| ---------------------------------- | ------------------------------------------------------------------------------------------------ |
+| fn plugin create &lt;directory&gt; | 目录必填；--template notes/model（默认 notes）、--id、--name；默认从目录名推导身份；拒绝非空目录 |
+| fn plugin check [directory]        | 默认当前目录；检查包元信息、manifest、TypeScript、样式与资源，不修改源码                         |
+| fn plugin build [directory]        | 先 check，再构建完整 dist；失败清除旧 dist 与半成品                                              |
+| fn plugin pack [directory]         | 再次检查、构建，生成 `id-version.tgz` 并解包验证完整资源                                         |
 
 四个子命令均支持 `--help`、`--json`；结果输出到 stdout，诊断输出到 stderr。成功退出 0，校验失败退出 1。目录含空格时加引号。源码开发宿主中对应 `bun run agent plugin …`。
 
 ```bash
-malatang plugin create ./my-notes --template notes --id my-notes --name 我的笔记
+fn plugin create ./my-notes --template notes --id my-notes --name 我的笔记
 cd my-notes
 bun install --ignore-scripts
-malatang plugin check --json
-malatang plugin build --json
-malatang plugin pack --json
+fn plugin check --json
+fn plugin build --json
+fn plugin pack --json
 ```
 
-CLI 复制固定 SDK 到 vendor，脚本消费项目自己的 SDK；复制项目时一起保留 vendor。生成的 bun run check/build/pack 调用相同实现。普通开发无需直接从 npm 安装 SDK；独立维护时可使用固定公开 `@semicoder/malatang-sdk@0.3.2`，React 与 ReactDOM 19 应精确同版本，并保留生成项目所需的 TypeScript 和类型依赖。
+CLI 复制固定 SDK 到 vendor，脚本消费项目自己的 SDK；复制项目时一起保留 vendor。生成的 bun run check/build/pack 调用相同实现。普通开发无需直接从 npm 安装 SDK；独立维护时使用已验收的本地 `@semicoder/fn-sdk` 归档，新 npm 包尚未发布，React 与 ReactDOM 19 应精确同版本，并保留生成项目所需的 TypeScript 和类型依赖。
 
 ## SDK 构建工具 API
 
-这些 API 在 Bun 中执行，不能放进插件浏览器页面。来自 `@semicoder/malatang-sdk/plugin`：
+这些 API 在 Bun 中执行，不能放进插件浏览器页面。来自 `@semicoder/fn-sdk/plugin`：
 
 | 导出               | 参数                                                                                          | 返回值                                                    |
 | ------------------ | --------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
@@ -42,12 +44,12 @@ CLI 复制固定 SDK 到 vendor，脚本消费项目自己的 SDK；复制项目
 | packPlugin         | directory: string                                                                             | `Promise<string>`，归档绝对路径                           |
 | runPluginTool      | args: string[]；可选 `options: { cwd?, sdkArchive?, templatesDirectory? }`                    | `Promise<number>`，CLI 退出码；会输出结果与诊断           |
 
-低层 `buildPlugin(directory: string): Promise<void>` 从 `@semicoder/malatang-sdk/build` 导入，只做构建；发布流程用 buildCheckedPlugin 或 packPlugin 以保留完整校验。`manifestSchema` 从 `/manifest` 导入，parse 返回规范化清单（含默认 keepAlive），safeParse 可检查错误。
+低层 `buildPlugin(directory: string): Promise<void>` 从 `@semicoder/fn-sdk/build` 导入，只做构建；发布流程用 buildCheckedPlugin 或 packPlugin 以保留完整校验。`manifestSchema` 从 `/manifest` 导入，parse 返回规范化清单（含默认 keepAlive），safeParse 可检查错误。
 
 CLI 项目的 tools.ts 如下，通常无需修改：
 
 ```ts
-import { runPluginTool } from "@semicoder/malatang-sdk/plugin";
+import { runPluginTool } from "@semicoder/fn-sdk/plugin";
 process.exitCode = await runPluginTool(process.argv.slice(2), { cwd: import.meta.dir });
 ```
 
@@ -63,8 +65,8 @@ shasum -a 256 my-notes-0.1.0.tgz
 确认包含 client.js、client.css、可选 backend.js 及引用资源。在应用中心选择本地包安装，或使用**宿主管理 CLI**：
 
 ```bash
-malatang call plugins.install --json '{"source":"/absolute/path/my-notes-0.1.0.tgz"}'
-malatang call plugins.jobs --json '{}'
+fn call plugins.install --json '{"source":"/absolute/path/my-notes-0.1.0.tgz"}'
+fn call plugins.jobs --json '{}'
 ```
 
 把示例路径改为真实归档绝对路径。install 只返回任务，按任务 id 在 jobs 中查询，直到 completed 或 failed；失败查看 message。支持 npm spec、Git HTTPS/GitHub spec 和本地归档，包必须预构建，宿主禁用安装脚本。npm 分发需单独执行发布流程，CLI pack 不会自动发布；Git 分发必须携带 dist。
@@ -74,8 +76,8 @@ malatang call plugins.jobs --json '{}'
 修改后提高 package.json.version，保持 package name 和 manifest id。手动来源更新示例：
 
 ```bash
-malatang call plugins.update --json '{"pluginId":"my-notes","source":"/absolute/path/my-notes-0.1.1.tgz"}'
-malatang call plugins.jobs --json '{}'
+fn call plugins.update --json '{"pluginId":"my-notes","source":"/absolute/path/my-notes-0.1.1.tgz"}'
+fn call plugins.jobs --json '{}'
 ```
 
 市场安装的插件绑定原市场 ID、URL 和包身份；更新不提供 source，由宿主读取原市场。手动插件不会被同名市场自动接管。更新只接受更高稳定版本，不降级、不批量更新、不自动升级。
@@ -93,7 +95,7 @@ malatang call plugins.jobs --json '{}'
   "plugins": [
     {
       "id": "my-notes",
-      "packageName": "malatang-plugin-my-notes",
+      "packageName": "fn-plugin-my-notes",
       "name": "我的笔记",
       "description": "把想法保存到本机。",
       "icon": "记",
@@ -129,18 +131,12 @@ malatang call plugins.jobs --json '{}'
 
 宿主最多配置 20 个市场，索引最多 2 MiB，索引请求最长 15 秒；市场归档最多 50 MiB，安装过程最长 120 秒，最多跟随 5 次重定向。刷新失败保留旧缓存；安装和更新仍重新获取并验证条目、哈希及包身份，不能用过期缓存保证安装成功。
 
-官方源在[独立官方插件仓库](https://github.com/semicoder-dev/malatang-plugins)维护，宿主不携带官方插件。自行托管市场不等于进入官方源；官方上架遵守该仓库的贡献和发布流程。
+官方源在`fn-plugins` 本地仓库维护，宿主不携带官方插件。自行托管市场不等于进入官方源；官方上架遵守该仓库的贡献和发布流程。
 
 ## 宿主管理 API 与类型变更
 
-客户端没有 plugins 或 marketplaces 命名空间。管理安装与来源使用[自动化 CLI](/malatang/docs/automation)：marketplaces.list/add/update/remove/refresh/catalog、plugins.install/installFromMarket/update/jobs/list 等。普通插件业务只使用[客户端 API](/malatang/docs/plugin-client-api)。
+客户端没有 plugins 或 marketplaces 命名空间。管理安装与来源使用[自动化 CLI](/fn/docs/automation)：marketplaces.list/add/update/remove/refresh/catalog、plugins.install/installFromMarket/update/jobs/list 等。普通插件业务只使用[客户端 API](/fn/docs/plugin-client-api)。
 
-SDK 0.3.1 的 PluginInfo 删除 builtin，增加可空 market（marketId/marketURL）；InstallJob 增加 operation 和 targetVersion。manifest 仍为 0.3，SDK 0.3.0 插件的模型/KV/UI 契约不变。官方翻译、随手记 0.1.1 固定用公开 SDK 0.3.2 独立构建；组织迁移不改变 manifest 或模型/KV/UI 契约。
+PluginInfo 使用可空 market（marketId/marketURL），InstallJob 包含 operation 和 targetVersion；manifest 为 0.3。官方插件当前独立消费固定本地 fn SDK 快照，待新 npm 包公开验收后再切换固定版本。仅支持 fn 的包名、清单字段与运行时，不提供旧插件迁移。
 
-## 从 SDK 0.2 迁移
-
-旧插件不能只改 sdkVersion。需更新 SDK 依赖或 vendor 快照，改用组合式 Trigger/Content、render 和新事件参数，添加 styles.css 映射入口，以 p: 静态类/CSS Modules 使用主题，然后完整 check/build/pack。
-
-保持 ID 可继续访问 KV 和历史；旧宿主安装记录不迁移，升级应用前卸载旧手动插件，再安装完整 DMG，详见[安装与升级](/malatang/docs/installation#后续更新)。历史 API 以 [v0.4.0 文档](https://github.com/semicoder-dev/malatang/blob/v0.4.0/packages/sdk/README.md) 为参考，不作为当前教程默认路径。
-
-来源：[SDK 工具](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/plugin.ts)、[市场 schema](https://github.com/semicoder-dev/malatang/blob/v0.4.3/shared/marketplace.ts)、[安装与更新实现](https://github.com/semicoder-dev/malatang/blob/v0.4.3/backend/plugins.ts)。
+来源：SDK 工具：`packages/sdk/plugin.ts`（本地源码）、市场 schema：`shared/marketplace.ts`（本地源码）、安装与更新实现：`backend/plugins.ts`（本地源码）。

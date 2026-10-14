@@ -1,12 +1,14 @@
 ---
-id: "docs-malatang-plugin-backend-api"
+id: "docs-fn-plugin-backend-api"
 slug: "plugin-backend-api"
 title: "后端 API"
 description: "定义带 schema 的插件方法，使用后端模型和 KV 上下文。"
-date: "2026-10-11"
+date: "2026-10-14"
 ---
 
-本页适用于 **麻辣烫 0.4.3 / SDK 0.3.2**。后端在宿主 Bun 进程运行，适合业务校验、数据整理和调用宿主模型。纯前端笔记插件不需要后端。
+> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+
+本页适用于 **fn 0.4.3 / SDK 0.3.2**。后端在宿主 Bun 进程运行，适合业务校验、数据整理和调用宿主模型。纯前端笔记插件不需要后端。
 
 ## 定义与调用
 
@@ -31,14 +33,14 @@ schema 必须能转换成 JSON Schema；避免 Date、自定义 transform 等不
 | kv.set(key, value)    | `Promise<void>`     | 每值 JSON UTF-8 最多 64 KiB，等待持久化        |
 | kv.delete(key)        | `Promise<void>`     | 删除并持久化                                   |
 
-上下文没有 runs、invoke 或事件订阅接口。模型请求及限制见[前端 API](/malatang/docs/plugin-client-api#请求与返回类型)。前端 KV 所有操作均为 Promise，set/delete 返回 null；不要把前端与后端签名混用。
+上下文没有 runs、invoke 或事件订阅接口。模型请求及限制见[前端 API](/fn/docs/plugin-client-api#请求与返回类型)。前端 KV 所有操作均为 Promise，set/delete 返回 null；不要把前端与后端签名混用。
 
 ## 完整示例：保存并统计笔记
 
-在入门的 `my-notes` 项目添加 `src/backend.ts`，并在 `package.json.malatang` 添加 `"backend": "dist/backend.js"`。源码文件与清单必须同时存在。
+在入门的 `my-notes` 项目添加 `src/backend.ts`，并在 `package.json.fn` 添加 `"backend": "dist/backend.js"`。源码文件与清单必须同时存在。
 
 ```ts
-import { defineMethod, definePlugin, z } from "@semicoder/malatang-sdk/runtime";
+import { defineMethod, definePlugin, z } from "@semicoder/fn-sdk/runtime";
 
 export default definePlugin({
   methods: {
@@ -59,8 +61,8 @@ export default definePlugin({
 ```tsx
 import "./styles.css";
 import { useEffect, useState } from "react";
-import { createPluginClient } from "@semicoder/malatang-sdk/client";
-import { Alert, Button, Field, Page, PageHeader, Textarea } from "@semicoder/malatang-sdk/ui";
+import { createPluginClient } from "@semicoder/fn-sdk/client";
+import { Alert, Button, Field, Page, PageHeader, Textarea } from "@semicoder/fn-sdk/ui";
 
 const client = createPluginClient("my-notes");
 type SavedNote = { text: string; characters: number };
@@ -140,4 +142,4 @@ export default function BackendNotes() {
 | 返回结果失败       | 是否为 JSON、是否超过 256 KiB、是否遗漏 return   |
 | 激活失败           | backend 默认导出、清单入口、模块初始化异常       |
 
-类型来源：[runtime.ts](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/runtime.ts)、[types.ts](https://github.com/semicoder-dev/malatang/blob/sdk-v0.3.2/packages/sdk/src/types.ts)。宿主最终执行校验见[插件实现](https://github.com/semicoder-dev/malatang/blob/v0.4.3/backend/plugins.ts)。
+类型来源：runtime.ts：`packages/sdk/src/runtime.ts`（本地源码）、types.ts：`packages/sdk/src/types.ts`（本地源码）。宿主最终执行校验见插件实现：`backend/plugins.ts`（本地源码）。
