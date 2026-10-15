@@ -3,12 +3,12 @@ id: "docs-fn-plugin-manifest"
 slug: "plugin-manifest"
 title: "插件结构与生命周期"
 description: "完整 manifest 字段、SDK 导入入口、页面和后端生命周期。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
-> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
+> 适用于 fn 0.4.5 / SDK 0.3.5，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
-本页适用于 **fn 0.4.4 / SDK 0.3.4**。新项目先按[入门教程](/fn/docs/plugin-development)生成，再修改业务源码。
+本页适用于 **fn 0.4.5 / SDK 0.3.5**。新项目先按[入门教程](/fn/docs/plugin-development)生成，再修改业务源码。
 
 ## 项目结构
 
@@ -60,7 +60,7 @@ my-notes/
 | description   | 必填        | 字符串，最多 240 字符                                                             |
 | icon          | 必填        | 字符串长度 1–4，适合一个短字或符号                                                |
 | color         | 必填        | 六位十六进制颜色，如 `#686868`                                                    |
-| sdkVersion    | 必填        | 固定字符串 `"0.3"`，不是 npm 包版本 `0.3.4`                                       |
+| sdkVersion    | 必填        | 固定字符串 `"0.3"`，不是 npm 包版本 `0.3.5`                                       |
 | frontend      | 必填        | 固定 `dist/client.js`                                                             |
 | styles        | 必填        | 固定 `dist/client.css`                                                            |
 | backend       | 可选        | 声明时固定 `dist/backend.js`，并存在 `src/backend.ts`                             |
@@ -107,4 +107,4 @@ my-notes/
 
 插件按可信本地代码执行。ID 命名空间、CSS 作用域和前后端入口区分都不是安全沙箱。宿主目前提供文本模型生成、运行记录、JSON KV 和插件方法；没有公共工具注册、预设 agent loop、自建长任务托管或自动升级 API。
 
-来源：SDK 固定版本：`packages/sdk/src`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、宿主插件实现：`backend/plugins.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）。
+来源：SDK 固定版本：`packages/sdk/src`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）、宿主插件实现：`backend/plugins.ts`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）。

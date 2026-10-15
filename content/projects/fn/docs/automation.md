@@ -6,7 +6,7 @@ description: "查询模型、安装插件、调用插件方法，并跟踪任务
 date: "2026-10-04"
 ---
 
-> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
+> 适用于 fn 0.4.5 / SDK 0.3.5，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
 ## 选择正确实例
 
@@ -71,3 +71,18 @@ bun run agent call plugins.update --json '{"pluginId":"translate"}'
 市场事件只通知变化，订阅和重连后重新读取快照；安装任务接受不表示成功，须检查终态。
 
 插件内调用宿主能力使用[前端 API](/fn/docs/plugin-client-api)，自定义业务方法使用[后端 API](/fn/docs/plugin-backend-api)。这些接口与本页的宿主管理 CLI 分开；制作市场索引见[构建与分发](/fn/docs/plugin-distribution)。
+
+## 网络任务
+
+fn 0.4.5 起提供网络任务。先用 plugins.list 选择实际存在且启用的插件 ID，然后调用：
+
+```bash
+bun run agent call web.search --json '{"pluginId":"实际插件 ID","input":{"query":"Bun runtime","limit":5}}'
+bun run agent call web.fetch --json '{"pluginId":"实际插件 ID","input":{"url":"https://example.com","maxBytes":100000}}'
+bun run agent call web.get --json '{"pluginId":"实际插件 ID","taskId":"启动返回的 id"}'
+bun run agent call web.cancel --json '{"pluginId":"实际插件 ID","taskId":"启动返回的 id"}'
+```
+
+启动立即返回 WebTask；状态为 running/completed/failed/cancelled，result 为搜索或抓取结果，error 包含 code 和 message。web.changed 只通知 pluginId、id、kind、status，先订阅再启动，并在通知及重连后重读 web.get。连接中断时不要自动重发启动请求。
+
+任务只存内存，完成后最多保留 32 条/10 分钟；每次调用独立引用编号。限制与结果语义见[插件网络接口](/fn/docs/plugin-client-api#网络工具)。

@@ -2,23 +2,27 @@
 id: "docs-fn-installation"
 slug: "installation"
 title: "下载与安装"
-description: "下载 fn 0.4.4，安装官方插件，了解独立数据目录和源码构建。"
-date: "2026-10-15"
+description: "下载 fn 0.4.5，安装官方插件，了解独立数据目录和源码构建。"
+date: "2026-10-16"
 ---
 
 ## 下载 fn
 
-当前版本为 **fn 0.4.4 / build 8**，支持 **macOS 14+ / Apple Silicon**。应用与 DMG 使用 Developer ID 签名，DMG 已通过 Apple 公证并附带公证票据。
+当前版本为 **fn 0.4.5 / build 9**，支持 **macOS 14+ / Apple Silicon**。应用与 DMG 使用 Developer ID 签名，DMG 已通过 Apple 公证并附带公证票据。
 
-[下载 fn 0.4.4（Apple Silicon）](https://github.com/semicoder-dev/fn/releases/download/v0.4.4/fn-0.4.4-8-mac-arm64.dmg) · [发行说明](https://github.com/semicoder-dev/fn/releases/tag/v0.4.4)
+[下载 fn 0.4.5（Apple Silicon）](https://github.com/semicoder-dev/fn/releases/download/v0.4.5/fn-0.4.5-9-mac-arm64.dmg) · [发行说明](https://github.com/semicoder-dev/fn/releases/tag/v0.4.5)
 
 下载并打开 DMG，将 `fn.app` 拖入「应用程序」，然后从「应用程序」启动。普通用户无需安装 Bun、Node.js 或 Swift。
 
 安装包 SHA-256：
 
 ```text
-0258a257fec62dd3a4c081572103053a9025a4ffdabb9379f8f0a805c5909994
+3d2bd971e3d0ac654bf5139d54b97593bf502eaf03b6802ebc443ea69a28421e
 ```
+
+## 从 fn 0.4.4 升级
+
+现有插件、模型配置和本地数据保留；官方插件无需重建或重新安装。网络接口需要 fn 0.4.5 和 SDK 0.3.5。本次运行时标识不同，需要下载并替换完整 DMG，不能仅安装代码更新。
 
 ## 从原麻辣烫开始使用 fn
 
@@ -42,21 +46,21 @@ bun run pack
 bun run index:check
 ```
 
-当前仓库固定消费公开 `@semicoder/fn-sdk@0.3.4`，不依赖相邻源码。生成的 `artifacts/translate-0.1.2.tgz` 和 `artifacts/quick-notes-0.1.2.tgz` 可通过「从地址安装」选择；本地打包不会自动上架。
+当前官方插件仓库固定消费公开 `@semicoder/fn-sdk@0.3.4`，不依赖相邻源码。生成的 `artifacts/translate-0.1.2.tgz` 和 `artifacts/quick-notes-0.1.2.tgz` 可通过「从地址安装」选择；本地打包不会自动上架。
 
 ## 插件开发与 SDK
 
-应用菜单可安装 `fn` 命令行。按[插件开发](/fn/docs/plugin-development)创建项目，CLI 会携带 SDK 0.3.4 固定快照；项目可脱离宿主源码开发。独立维护时也可使用固定公开版本：
+应用菜单可安装 `fn` 命令行。按[插件开发](/fn/docs/plugin-development)创建项目，CLI 会携带 SDK 0.3.5 固定快照；项目可脱离宿主源码开发。独立维护时也可使用固定公开版本：
 
 ```bash
-bun add --dev --exact @semicoder/fn-sdk@0.3.4
+bun add --dev --exact @semicoder/fn-sdk@0.3.5
 ```
 
 开发插件需要 Bun 1.4.2 或更高版本；React 与 ReactDOM 19 应精确同版本，并保留模板所需的 TypeScript 和类型依赖。SDK、应用和插件的版本分别管理。
 
 ## 从源码构建
 
-源码见 [fn v0.4.4](https://github.com/semicoder-dev/fn/tree/v0.4.4)。源码构建需要 Bun 1.4.3 和 Swift 6 工具链（Xcode / Command Line Tools）。在仓库根执行：
+源码见 [fn v0.4.5](https://github.com/semicoder-dev/fn/tree/v0.4.5)。源码构建需要 Bun 1.4.3 和 Swift 6 工具链（Xcode / Command Line Tools）。在仓库根执行：
 
 ```bash
 bun install --frozen-lockfile --ignore-scripts
@@ -70,7 +74,7 @@ bun run build
 
 ## 后续更新
 
-应用更新源为 `https://semicoder-dev.github.io/fn/updates/latest.json`。启动时及每 24 小时检查更新，安装前需用户确认；任务忙碌时推迟，原生运行时变化需要完整 DMG。首次 fn 发行尚无跨版本公开升级实测，不将模拟回归当成真实升级证据。
+应用更新源为 `https://semicoder-dev.github.io/fn/updates/latest.json`。启动时及每 24 小时检查更新，安装前需用户确认；任务忙碌时推迟，原生运行时变化需要完整 DMG。新版本的公开安装包和更新源独立验收；不同运行时的升级按应用提示执行。
 
 更新站独立保存 fn 历史，不提供旧更新源回退。官方市场为 `https://raw.githubusercontent.com/semicoder-dev/fn-plugins/main/marketplace.json`；插件更新与宿主更新分开管理。
 

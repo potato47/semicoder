@@ -3,12 +3,12 @@ id: "docs-agent-webtool-cli"
 slug: "cli"
 title: "命令行抓取与搜索"
 description: "控制输出格式、搜索引擎、超时、站点限制与结果数量。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
 ## 抓取网页
 
-以下示例基于已安装的 0.8.0；本次 MCP 协议升级不改变普通 CLI 的文本输出、参数与退出码：
+以下示例基于已安装的 0.8.1；结构化抓取 SDK 的新增接口不改变普通 CLI 的文本输出、参数与退出码：
 
 ```sh
 webtool fetch https://example.com

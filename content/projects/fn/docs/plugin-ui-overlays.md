@@ -3,12 +3,12 @@ id: "docs-fn-plugin-ui-overlays"
 slug: "plugin-ui-overlays"
 title: "UI 浮层与反馈"
 description: "对话框、菜单、提示、通知、标签页、折叠区和反馈组件。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
-> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
+> 适用于 fn 0.4.5 / SDK 0.3.5，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
-本页适用于 **fn 0.4.4 / SDK 0.3.4**，沿用 [UI 公共约定](/fn/docs/plugin-ui#公共约定)。下面组件统一从 `@semicoder/fn-sdk/ui` 导入；由宿主 UIProvider 提供 Portal、主题和页面可见性。
+本页适用于 **fn 0.4.5 / SDK 0.3.5**，沿用 [UI 公共约定](/fn/docs/plugin-ui#公共约定)。下面组件统一从 `@semicoder/fn-sdk/ui` 导入；由宿主 UIProvider 提供 Portal、主题和页面可见性。
 
 ## 浮层组合与焦点
 
@@ -370,4 +370,4 @@ export function ToastExample() {
 
 公开 `Toast` 是已加样式的底层 Root，需传通知对象 `toast`，用于定制展示；SDK 没有导出完整 Toast 子组件集合，普通插件使用 useToast，由 UIProvider 渲染现成通知区。切页隐藏时宿主会关闭该页面的通知。不要额外创建 Provider 或重复绘制同一通知。
 
-来源：浮层：`packages/sdk/src/ui/overlays.tsx`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、布局：`packages/sdk/src/ui/layout.tsx`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、Provider：`packages/sdk/src/ui/provider.tsx`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）。
+来源：浮层：`packages/sdk/src/ui/overlays.tsx`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）、布局：`packages/sdk/src/ui/layout.tsx`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）、Provider：`packages/sdk/src/ui/provider.tsx`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）。

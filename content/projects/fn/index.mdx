@@ -3,7 +3,7 @@ id: "project-fn"
 slug: "fn"
 title: "fn"
 description: "把模型、存储和界面能力组合起来，让每个插件成为一个好用的小应用。"
-date: "2026-10-15"
+date: "2026-10-16"
 tags: ["AI 应用", "插件平台", "macOS"]
 stack: ["FIA", "React", "Pi AI"]
 status: "构建中"
@@ -38,12 +38,12 @@ start: { "label": "下载与安装", "doc": "docs-fn-installation" }
 
 插件默认导出 React 页面，通过 `@semicoder/fn-sdk` 获取模型、任务和 KV。后端可注册带输入 schema 的业务方法，UI 组件与 React 运行时由宿主共享。
 
-从 [第一个插件](/fn/docs/plugin-development) 开始，继续阅读[插件结构](/fn/docs/plugin-manifest)、[前端 API](/fn/docs/plugin-client-api)、[后端 API](/fn/docs/plugin-backend-api)、[UI 组件](/fn/docs/plugin-ui)、[浮层与反馈](/fn/docs/plugin-ui-overlays)、[样式主题](/fn/docs/plugin-styling)和[构建分发](/fn/docs/plugin-distribution)。SDK 0.3.4 已公开，CLI 创建的项目自带固定 SDK 快照，可脱离源码 workspace 开发。
+从 [第一个插件](/fn/docs/plugin-development) 开始，继续阅读[插件结构](/fn/docs/plugin-manifest)、[前端 API](/fn/docs/plugin-client-api)、[后端 API](/fn/docs/plugin-backend-api)、[UI 组件](/fn/docs/plugin-ui)、[浮层与反馈](/fn/docs/plugin-ui-overlays)、[样式主题](/fn/docs/plugin-styling)和[构建分发](/fn/docs/plugin-distribution)。SDK 0.3.5 已公开，CLI 创建的项目自带固定 SDK 快照，可脱离源码 workspace 开发。
 
 ## 当前边界
 
-当前发行版本为 **0.4.4 / build 8**，支持 macOS 14+ / Apple Silicon。插件按可信本地代码运行，具有本机代码执行能力，不是强隔离沙箱。用户内容在调用模型时会发送到所选服务商，并非离线 AI。ChatGPT 凭证明文保存在受限本地文件，不再访问钥匙串；fn 使用独立数据目录，不读取或迁移旧应用数据。
+当前发行版本为 **0.4.5 / build 9**，支持 macOS 14+ / Apple Silicon。插件按可信本地代码运行，具有本机代码执行能力，不是强隔离沙箱。用户内容在调用模型时会发送到所选服务商，并非离线 AI。ChatGPT 凭证明文保存在受限本地文件，不再访问钥匙串；fn 使用独立数据目录，不读取或迁移旧应用数据。
 
-工具注册与调用、预设 agent loop、调研应用、其他服务商订阅登录和插件自动升级尚未实现。不要把规划中的能力当成当前功能。
+fn 0.4.5 / SDK 0.3.5 提供插件网络搜索与抓取接口，参见[网络接口说明](/fn/docs/plugin-client-api#网络工具)。通用工具注册、模型自动工具调用、预设 agent loop、调研应用、其他服务商订阅登录和插件自动升级尚未实现。不要把规划中的能力当成当前功能。
 
-[下载与安装](/fn/docs/installation)提供已验收的完整 DMG、官方插件与源码构建步骤。应用、SDK 和插件分别发行；本次 SDK 为 0.3.4，官方译文与随手记为 0.1.2。底层框架见 [FIA](/fia)。
+[下载与安装](/fn/docs/installation)提供已验收的完整 DMG、官方插件与源码构建步骤。应用、SDK 和插件分别发行；本次 SDK 为 0.3.5，官方译文与随手记为 0.1.2。底层框架见 [FIA](/fia)。

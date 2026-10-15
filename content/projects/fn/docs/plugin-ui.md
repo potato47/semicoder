@@ -3,12 +3,12 @@ id: "docs-fn-plugin-ui"
 slug: "plugin-ui"
 title: "UI 基础与表单"
 description: "SDK 公共组件、布局、输入、选择控件、模型选择及图标参考。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
-> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
+> 适用于 fn 0.4.5 / SDK 0.3.5，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
-本页适用于 **fn 0.4.4 / SDK 0.3.4**。所有示例组件从 `@semicoder/fn-sdk/ui` 导入，在 CLI 创建的插件页面中使用。宿主共享 React、ReactDOM 与公共 UI，不直接导入 Base UI、Radix、Lucide 或宿主源码。
+本页适用于 **fn 0.4.5 / SDK 0.3.5**。所有示例组件从 `@semicoder/fn-sdk/ui` 导入，在 CLI 创建的插件页面中使用。宿主共享 React、ReactDOM 与公共 UI，不直接导入 Base UI、Radix、Lucide 或宿主源码。
 
 ## 公共约定
 
@@ -300,4 +300,4 @@ export function ComboboxExample() {
 
 `UIProvider` 接受 children（必填）、visible（默认 true）、pluginId（可选）。宿主已经包裹插件页面，提供 Tooltip、Toast、可见性和带插件作用域的 Portal，**普通插件不要再嵌套 Provider**。Provider 的导出用于宿主集成等场景，不会让 createPluginClient 在普通网页中可用。
 
-后续阅读：[浮层与反馈](/fn/docs/plugin-ui-overlays)、[样式与主题](/fn/docs/plugin-styling)。来源：UI 导出：`packages/sdk/src/ui.tsx`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、组件实现：`packages/sdk/src/ui`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）。
+后续阅读：[浮层与反馈](/fn/docs/plugin-ui-overlays)、[样式与主题](/fn/docs/plugin-styling)。来源：UI 导出：`packages/sdk/src/ui.tsx`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）、组件实现：`packages/sdk/src/ui`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）。

@@ -3,10 +3,10 @@ id: "docs-fn-troubleshooting"
 slug: "troubleshooting"
 title: "常见问题"
 description: "处理模型为空、浏览器登录、系统代理、插件失败和数据恢复。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
-> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
+> 适用于 fn 0.4.5 / SDK 0.3.5，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
 ## 为什么不能开始翻译
 

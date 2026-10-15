@@ -3,12 +3,12 @@ id: "docs-fn-plugin-client-api"
 slug: "plugin-client-api"
 title: "前端 API"
 description: "模型、运行记录、KV、后端调用，以及事件订阅和重连的完整示例。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
-> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
+> 适用于 fn 0.4.5 / SDK 0.3.5，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
-本页适用于 **fn 0.4.4 / SDK 0.3.4**。客户端只在宿主加载的插件页面中使用，不是独立网页或服务端 HTTP SDK。
+本页适用于 **fn 0.4.5 / SDK 0.3.5**。客户端只在宿主加载的插件页面中使用，不是独立网页或服务端 HTTP SDK。
 
 ## 创建客户端
 
@@ -285,4 +285,27 @@ export default function ModelPage() {
 
 BackendPlugin、PluginMethod、PluginContext 见[后端 API](/fn/docs/plugin-backend-api)；PluginManifest 见[清单](/fn/docs/plugin-manifest)。插件安装、市场配置和模型管理使用[宿主 CLI](/fn/docs/automation)，不能写成 `client.plugins.install` 或 `client.marketplaces`。
 
-来源：client.ts：`packages/sdk/src/client.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、types.ts：`packages/sdk/src/types.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、宿主校验：`shared/api.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）。
+来源：client.ts：`packages/sdk/src/client.ts`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）、types.ts：`packages/sdk/src/types.ts`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）、宿主校验：`shared/api.ts`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）。
+
+## 网络工具
+
+本节需要 **fn 0.4.5 / SDK 0.3.5 或以上**。现有 API 与 manifest 0.3 保持兼容，使用旧接口的插件无需重建。
+
+```ts
+const controller = new AbortController();
+const result = await client.web.search(
+  { query: "Bun runtime", engines: ["duckduckgo"], limit: 5 },
+  { signal: controller.signal },
+);
+const page = await client.web.fetch(
+  { url: "https://example.com", format: "markdown", maxBytes: 100_000 },
+  { signal: controller.signal },
+);
+// 页面卸载或用户取消时调用 controller.abort()。
+```
+
+两种方法直接返回结果。SDK 负责后台任务查询、重连后重读与取消；不会自动重发搜索或抓取。每次调用独立编号，不累计会话来源或持久化历史。
+
+搜索返回 text、results、engines；检查各引擎状态，区分无结果和失败。支持 baidu、wechat、toutiao、duckduckgo、limit（1–30）、timeRange、site、timeoutMs（默认每引擎 3000 毫秒）。抓取返回正文 text、url、finalUrl、status、contentType、title、format、truncated 和可选 redirect。HTTP 错误页和跨域跳转有明确元数据，不能只凭 Promise 成功判断页面正常。支持 markdown/text/html，maxBytes 默认 100000，timeoutMs 默认每请求 30000 毫秒；HTTP 地址会升级 HTTPS，不执行页面脚本或读取浏览器登录态。
+
+宿主最多并发 8 项，单任务总时限 120 秒，完整序列化结果最多 256 KiB（独立于 maxBytes，包含元数据与 JSON 转义）。错误包含 code；主动取消为 AbortError。终态只在内存保留最多 32 条、10 分钟，应用重启清空。需要保存结果时由插件自行存储。网络任务运行时会阻止对应插件停用、更新、卸载和应用更新，退出会取消在途请求。

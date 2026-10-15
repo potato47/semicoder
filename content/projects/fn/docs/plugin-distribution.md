@@ -3,12 +3,12 @@ id: "docs-fn-plugin-distribution"
 slug: "plugin-distribution"
 title: "构建与分发"
 description: "插件 CLI、SDK 工具 API、归档校验、安装更新与静态市场索引。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
-> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
+> 适用于 fn 0.4.5 / SDK 0.3.5，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
-本页适用于 **fn 0.4.4 / SDK 0.3.4 / manifest 0.3**。制作插件从[入门教程](/fn/docs/plugin-development)开始；用户安装操作见[插件管理](/fn/docs/plugins)。
+本页适用于 **fn 0.4.5 / SDK 0.3.5 / manifest 0.3**。制作插件从[入门教程](/fn/docs/plugin-development)开始；用户安装操作见[插件管理](/fn/docs/plugins)。
 
 ## CLI 命令
 
@@ -30,7 +30,7 @@ fn plugin build --json
 fn plugin pack --json
 ```
 
-CLI 复制固定 SDK 到 vendor，脚本消费项目自己的 SDK；复制项目时一起保留 vendor。生成的 bun run check/build/pack 调用相同实现。普通开发无需直接从 npm 安装 SDK；独立维护时可使用精确公开版本 `@semicoder/fn-sdk@0.3.4`，React 与 ReactDOM 19 应精确同版本，并保留生成项目所需的 TypeScript 和类型依赖。
+CLI 复制固定 SDK 到 vendor，脚本消费项目自己的 SDK；复制项目时一起保留 vendor。生成的 bun run check/build/pack 调用相同实现。普通开发无需直接从 npm 安装 SDK；独立维护时可使用精确公开版本 `@semicoder/fn-sdk@0.3.5`，React 与 ReactDOM 19 应精确同版本，并保留生成项目所需的 TypeScript 和类型依赖。
 
 ## SDK 构建工具 API
 
@@ -139,4 +139,4 @@ fn call plugins.jobs --json '{}'
 
 PluginInfo 使用可空 market（marketId/marketURL），InstallJob 包含 operation 和 targetVersion；manifest 为 0.3。官方插件当前独立消费固定公开 `@semicoder/fn-sdk@0.3.4`。仅支持 fn 的包名、清单字段与运行时，不提供旧插件迁移。
 
-来源：SDK 工具：`packages/sdk/plugin.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、市场 schema：`shared/marketplace.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、安装与更新实现：`backend/plugins.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）。
+来源：SDK 工具：`packages/sdk/plugin.ts`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）、市场 schema：`shared/marketplace.ts`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）、安装与更新实现：`backend/plugins.ts`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）。

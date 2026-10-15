@@ -1,5 +1,17 @@
 # 项目资料与发布状态
 
+## 2026-10-16 网络工具发行
+
+- agent-webtool `v0.8.1` 固定 `150275a6da3b7eac4777259da8b4a80370f7f749`。三平台 CI 38822757505、候选 38822756040、OIDC 38822896341 成功；公开归档与候选及正式产物一致，SHA-256 `e623cbac66fc9f43c4d6a8e4d80f77b73ee75d07fb7060fda733a15f0705107f`。Node 20/24 新缓存独立 SDK/CLI/MCP 消费及 provenance 通过。
+- SDK `sdk-v0.3.5` 固定 `8f38541e6731d847aa806c7ae93ea1985e11678e`，候选 38823701388、OIDC 38824246359 成功；公开归档 SHA-256 `39daa73ac992e9deabce84967c93d7f461eddb2c1e850ade32500c50e23683e6` 与本地/CI 一致，provenance 与新缓存独立插件构建通过。首次正式检查暴露宿主安装终态早于清理完成的竞态，应用修复并增加回归；SDK 内容不变，原标签重跑全部检查后发布。
+- fn `v0.4.5` / build 9 固定 `690eb1d0962b07a08e5c271e000037a5d484e6e2`，候选 38824928141、[正式发行 38825817130](https://github.com/semicoder-dev/fn/actions/runs/38825817130) 成功。本地 check、113 测试/1179 断言、build 与 FIA 独立消费通过。公开 DMG 为 36,014,151 字节，SHA-256 `3d2bd971e3d0ac654bf5139d54b97593bf502eaf03b6802ebc443ea69a28421e`；五附件匿名摘要、签名、公证票据、Gatekeeper 通过。
+
+公开应用内嵌 SDK 45 文件与 npm 一致，HTTPS 更新清单签名和全部 30 文件通过；runtimeId `11d652150693100bf055d58a4b72bf6ce360b047317e34ff47611531a31f3872`。全新隔离实例中，公开 SDK 构建的临时插件前后端抓取 200、四引擎真实搜索及前端 AbortError 通过；现有官方插件 0.1.2 均安装激活。前端产物不含服务端 agent-webtool。
+
+fn 新增前后端 web.search/fetch、短期内存任务和取消/重连，精确依赖公开 agent-webtool 0.8.1；不再使用开发归档。manifest 0.3、官方插件 0.1.2 及其精确 SDK 0.3.4 不变，旧插件不强制重建。新接口需要 fn 0.4.5 / SDK 0.3.5；本次运行时标识不同，需要完整 DMG，保留现有 fn 数据。
+
+官网介绍、安装、前后端 API、自动化与上游 SDK 说明按公开产物更新；部署与独立线上验收由 workspace `docs/agent/sessions/2026-10-16-fn-web-release.md` 记录。下面历史发行证据保留。
+
 ## 2026-10-15 agent-webtool 0.8.0
 
 `v0.8.0` 固定 `1b13f494008b68d527dbe07e7368201e3757bb67`，MCP 依赖锁定 server/client 2.3.1，使用 `serveStdio` 支持 2026-07-28 与五个旧协议。工具增加 `outputSchema` / `structuredContent`、严格输入校验、取消透传及连接级来源上下文。未知输入字段返回工具校验错误，未知或被筛除的工具返回 -32602；SDK 返回类型、CLI 命令和 Node >=20.18.1 不变。

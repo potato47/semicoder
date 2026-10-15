@@ -3,10 +3,10 @@ id: "docs-fn-getting-started"
 slug: "getting-started"
 title: "第一次使用"
 description: "配置一个模型、完成翻译，再体验不需要模型的随手记插件。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
-> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
+> 适用于 fn 0.4.5 / SDK 0.3.5，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
 ## 先安装插件
 

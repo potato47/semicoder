@@ -3,10 +3,10 @@ id: "docs-agent-webtool-sdk"
 slug: "sdk"
 title: "JavaScript SDK"
 description: "抓取网页、读取结构化搜索结果，并理解来源编号与取消行为。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
-## 抓取与搜索（0.8.0）
+## 抓取与搜索（0.8.1）
 
 ```ts
 import { webFetch, webSearch } from "agent-webtool";
@@ -56,3 +56,9 @@ const restored = createSourceContext(sources.snapshot());
 ## 从 0.6.0 升级
 
 原有 SDK 调用与全局来源 API 保持兼容；只有需要会话隔离的应用才需传入 `sources`。0.6.0 不含上下文 API，抓取缓存命中也不会重新登记已清空的来源表。0.7.0 已修复此行为，并将标题的 UTF-8 字节一起计入缓存容量。
+
+## 结构化抓取（0.8.1 起）
+
+0.8.1 新增 `webFetchResult`，参数与 webFetch 相同，返回 FetchResponse：url、finalUrl、status、contentType、title、format、text、truncated 及可选 redirect（from/to/status）。HTTP 错误页保留状态和正文，跨域跳转显式返回；网络错误、超时、取消和超限仍拒绝 Promise。
+
+webFetch 继续返回字符串，CLI/MCP 返回结构不变。结构化结果与正文共享缓存，缓存命中保留元数据且不共享可修改对象。10 MiB HTTP 响应上限改为流式检查；取消和超时覆盖 DNS 等待、重定向与正文读取。fn 通过精确 npm 0.8.1 消费这项服务端能力；浏览器端不直接导入 agent-webtool。

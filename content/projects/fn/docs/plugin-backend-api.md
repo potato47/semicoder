@@ -3,12 +3,12 @@ id: "docs-fn-plugin-backend-api"
 slug: "plugin-backend-api"
 title: "后端 API"
 description: "定义带 schema 的插件方法，使用后端模型和 KV 上下文。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
-> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
+> 适用于 fn 0.4.5 / SDK 0.3.5，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
-本页适用于 **fn 0.4.4 / SDK 0.3.4**。后端在宿主 Bun 进程运行，适合业务校验、数据整理和调用宿主模型。纯前端笔记插件不需要后端。
+本页适用于 **fn 0.4.5 / SDK 0.3.5**。后端在宿主 Bun 进程运行，适合业务校验、数据整理和调用宿主模型。纯前端笔记插件不需要后端。
 
 ## 定义与调用
 
@@ -142,4 +142,21 @@ export default function BackendNotes() {
 | 返回结果失败       | 是否为 JSON、是否超过 256 KiB、是否遗漏 return   |
 | 激活失败           | backend 默认导出、清单入口、模块初始化异常       |
 
-类型来源：runtime.ts：`packages/sdk/src/runtime.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、types.ts：`packages/sdk/src/types.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）。宿主最终执行校验见插件实现：`backend/plugins.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）。
+类型来源：runtime.ts：`packages/sdk/src/runtime.ts`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）、types.ts：`packages/sdk/src/types.ts`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）。宿主最终执行校验见插件实现：`backend/plugins.ts`（[v0.4.5 源码](https://github.com/semicoder-dev/fn/tree/v0.4.5)）。
+
+## 后端网络工具
+
+fn 0.4.5 / SDK 0.3.5 起，在 `PluginContext.web` 提供 `search(input, { signal? })` 和 `fetch(input, { signal? })`，直接等待结果；参数、错误和限制与[前端网络工具](/fn/docs/plugin-client-api#网络工具)一致。
+
+```ts
+import { defineMethod, definePlugin, z } from "@semicoder/fn-sdk/runtime";
+export default definePlugin({
+  methods: {
+    readPage: defineMethod("读取网页", z.object({ url: z.url() }), (input, context) =>
+      context.web.fetch({ url: input.url, maxBytes: 50_000 }),
+    ),
+  },
+});
+```
+
+agent-webtool 由宿主后端统一提供，插件无需安装或将它打进前端。每次调用创建独立来源上下文，不共享编号、也不提供会话恢复。普通 plugins.invoke 仍受原有调用时间限制；可能较慢的操作优先使用前端 client.web 或后端自行管理的异步流程，不把 Promise 包装当作无限等待的 RPC。

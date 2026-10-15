@@ -3,14 +3,14 @@ id: "docs-fn-plugin-development"
 slug: "plugin-development"
 title: "开发第一个插件"
 description: "从 CLI 创建笔记插件，到使用宿主 KV、构建归档并安装。"
-date: "2026-10-15"
+date: "2026-10-16"
 ---
 
-> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
+> 适用于 fn 0.4.5 / SDK 0.3.5，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
 ## 准备开发环境
 
-本手册适用于 **fn 0.4.4 / SDK 0.3.4 / manifest 0.3**。先完成[安装](/fn/docs/installation)，从应用菜单安装 CLI，并安装 Bun 1.4.2 或以上。普通应用用户不需要 Bun；宿主源码开发固定使用 1.4.3。
+本手册适用于 **fn 0.4.5 / SDK 0.3.5 / manifest 0.3**。先完成[安装](/fn/docs/installation)，从应用菜单安装 CLI，并安装 Bun 1.4.2 或以上。普通应用用户不需要 Bun；宿主源码开发固定使用 1.4.3。
 
 插件是独立 React 小应用。宿主提供模型、运行记录、KV、UI 和可选后端方法；插件不需要克隆宿主源码。CLI 将随应用提供的 SDK 归档复制到 `vendor/fn-sdk.tgz`，项目通过相对 `file:` 依赖使用它，可移动到任意目录。
 
@@ -136,4 +136,4 @@ SDK 0.3 使用 Base UI 1.9 与 Tailwind CSS 4.3。组合式组件使用 Trigger 
 
 ## 本地 SDK 与市场状态
 
-SDK 0.3.4 已公开；CLI 使用应用携带的固定归档，无需在创建时从 npm 下载 SDK。官方插件在独立 fn-plugins 仓库精确依赖公开 0.3.4，两个 0.1.2 归档经公开验收后上架。只接受 fn 清单和运行时标识，不兼容旧插件。
+SDK 0.3.5 已公开；CLI 使用应用携带的固定归档，无需在创建时从 npm 下载 SDK。官方插件在独立 fn-plugins 仓库继续精确依赖公开 0.3.4，两个 0.1.2 归档经公开验收后上架。只接受 fn 清单和运行时标识，不兼容旧插件。
