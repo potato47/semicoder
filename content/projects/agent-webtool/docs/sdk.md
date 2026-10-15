@@ -3,10 +3,10 @@ id: "docs-agent-webtool-sdk"
 slug: "sdk"
 title: "JavaScript SDK"
 description: "抓取网页、读取结构化搜索结果，并理解来源编号与取消行为。"
-date: "2026-10-06"
+date: "2026-10-15"
 ---
 
-## 抓取与搜索（0.7.1）
+## 抓取与搜索（0.8.0）
 
 ```ts
 import { webFetch, webSearch } from "agent-webtool";
@@ -27,6 +27,8 @@ console.log(search.engines);
 `webFetch()` 返回字符串，支持 `markdown`、`text`、`html`。`webSearch()` 返回当前调用的 `text`、结构化 `results` 和逐引擎 `engines` 状态；每项结果包括标题、URL、摘要、RRF 分数、来源引擎、引用 ID 和是否已抓取。ESM 与 CommonJS 均可使用，并附 TypeScript 声明。
 
 两种调用的第二参数都支持 `AbortSignal`。取消后应等待请求结束，再处理调用方的会话清理。部分搜索引擎失败时查看 `engines`；全部失败或无结果时，返回状态说明，不应把空列表视为成功找到了资料。
+
+0.8.0 的协议升级仅改变 MCP 包装层；上述 SDK 返回类型及调用方式保持兼容。MCP 会自动为每个连接创建来源上下文，SDK 仍由调用方按以下方式管理。
 
 ## 默认来源范围
 

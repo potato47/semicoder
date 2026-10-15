@@ -1,5 +1,13 @@
 # 项目资料与发布状态
 
+## 2026-10-15 agent-webtool 0.8.0
+
+`v0.8.0` 固定 `1b13f494008b68d527dbe07e7368201e3757bb67`，MCP 依赖锁定 server/client 2.3.1，使用 `serveStdio` 支持 2026-07-28 与五个旧协议。工具增加 `outputSchema` / `structuredContent`、严格输入校验、取消透传及连接级来源上下文。未知输入字段返回工具校验错误，未知或被筛除的工具返回 -32602；SDK 返回类型、CLI 命令和 Node >=20.18.1 不变。
+
+[三平台 CI 38757514787](https://github.com/semicoder-dev/agent-webtool/actions/runs/38757514787)、[手动归档 38757513695](https://github.com/semicoder-dev/agent-webtool/actions/runs/38757513695) 和 [真实 OIDC 38758509941](https://github.com/semicoder-dev/agent-webtool/actions/runs/38758509941) 成功。公开 tarball 与发布工作流归档逐字节一致，SHA-256 `910cfefc92a2ac8106146afaae49973da4f016622b6997bc493e579a65b020b4`；npm latest 为 0.8.0，provenance 指向该组织仓库、标签与提交。新缓存独立 registry 安装在 Node 20.18.1 / 24 上通过 ESM/CJS、TypeScript、两个 CLI 及六个协议的发现/初始化、schema、筛选、错误和 EOF 验收。源码 103 项离线测试 / 607 断言另覆盖成功结果、自动协商、并发、来源隔离及取消/关闭。
+
+用户追加“发布”授权后完成发行；GitHub npm 环境仅增加精确 v0.8.0 标签许可，未更改其他保护。官网默认入口在公开产物验收后切换至 0.8.0，五篇介绍/指南及兼容说明同步。网站质量、预发布/生产部署和线上验收独立执行，最终结果记录于 workspace 的 `docs/agent/sessions/2026-10-15-agent-webtool-mcp-v2.md`。本轮未验证真实搜索引擎或具体桌面 MCP 客户端；此前同名 0.7.1 开发归档不作为公开版本证据。
+
 ## 2026-10-15 fn 首次发行
 
 用户明确授权 GitHub 更名及按 SDK、插件、应用、官网顺序发布。两个仓库原生更名为 `semicoder-dev/fn` / `semicoder-dev/fn-plugins`，仓库 ID、历史标签和 51 个附件的身份/大小/哈希保留。Git remote 与分发地址已同步；GitHub 自身的旧地址跳转不作为应用或官网兼容层。

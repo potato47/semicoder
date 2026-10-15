@@ -3,7 +3,7 @@ id: "project-agent-webtool"
 slug: "agent-webtool"
 title: "agent-webtool"
 description: "通过 SDK、命令行或 MCP，为 agent 提供网页抓取与多引擎搜索。"
-date: "2026-10-06"
+date: "2026-10-15"
 tags: ["Agent", "搜索", "MCP"]
 stack: ["TypeScript", "Node.js", "Bun"]
 status: "已发布"
@@ -33,4 +33,6 @@ SDK 面向服务端，不是浏览器组件，也不包含模型或 agent loop�
 
 ## 版本
 
-本指南面向已发布的 npm **0.7.1**，源码和可信发布已迁入 `semicoder-dev` 组织，包名及 SDK/CLI/MCP 契约保持不变。0.7.0 起提供会话来源隔离 `SourceContext`、快照恢复和缓存容量修复。查看 [0.7.1 固定源码](https://github.com/semicoder-dev/agent-webtool/tree/v0.7.1)。
+本指南面向已发布的 npm **0.8.0**，提供 MCP SDK v2 / 2026-07-28 协议支持、结构化工具结果、取消和连接级来源隔离，并兼容五个旧协议版本。启动命令和 JavaScript SDK 返回类型保持一致；MCP 未知参数现在会被拒绝，详见 [MCP 接入](/agent-webtool/docs/mcp)。查看 [0.8.0 固定源码](https://github.com/semicoder-dev/agent-webtool/tree/v0.8.0)。
+
+0.7.0 起提供 SDK 会话来源隔离 `SourceContext`、快照恢复和缓存容量修复。MCP 新能力需要 0.8.0，公开 0.7.1 不包含这次协议升级。

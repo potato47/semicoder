@@ -47,7 +47,9 @@
 
 fn 安装页提供已独立验收的 0.4.4 / build 8 完整 DMG、签名公证与 SHA-256，SDK 固定公开 0.3.4 / manifest 0.3。官方市场的译文和随手记均为 0.1.2；npm、应用 DMG、市场与网站部署状态分别核实。
 
-agent-webtool 的介绍和安装/SDK/CLI/MCP 指南在 `content/projects/agent-webtool/`，默认使用已独立验证的公开 npm 0.7.1，包含 `SourceContext` 和 0.6.0 升级说明。项目的 CI 与 OIDC 发布已验收；网站内容和部署继续独立验证，不自动发布 npm 包。
+agent-webtool 的介绍和安装/SDK/CLI/MCP 指南在 `content/projects/agent-webtool/`，默认使用已独立验证的公开 npm 0.8.0，包含 `SourceContext` 和 0.6.0 升级说明。项目的 CI 与 OIDC 发布已验收；网站内容和部署继续独立验证，不自动发布 npm 包。
+
+2026-10-15 的 0.8.0 已通过真实 OIDC、公开归档一致性及新缓存独立消费，再同步介绍、安装、SDK、CLI 和 MCP 指南。MCP v2 / 2026-07-28 提供结构化结果、严格校验、取消和连接级来源编号；保留旧协议、SDK 返回类型和普通 CLI 输出。网站按既有质量、预发布和生产审核流程另行发布，来源证据见项目资料记录。
 
 主操作按钮悬停使用强调背景与深色前景 `--on-accent`，避免浅深色模式下白字与橙色背景对比不足。
 
