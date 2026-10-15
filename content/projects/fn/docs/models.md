@@ -6,13 +6,13 @@ description: "集中管理 API Key、兼容服务和 ChatGPT 订阅，再让插�
 date: "2026-10-15"
 ---
 
-> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
 ## 一处配置，多个插件使用
 
 模型服务由宿主管理。插件只拿到模型标识和公开配置，通过 SDK 调用；密钥不会通过业务 API 返回前端。
 
-当前 fn 本地源码使用固定版本 `@earendil-works/pi-ai@1.0.2` 的 provider 目录和协议适配，并支持自定义 OpenAI-compatible Chat Completions 服务。应用源码版本保持 **0.4.3 / build 7**，新名称下尚无公开 DMG；请按[安装指南](/fn/docs/installation)从源码构建。预设目录随应用依赖更新，不代表所有服务已用真实账号逐一验收。
+fn 0.4.4 使用固定版本 `@earendil-works/pi-ai@1.0.2` 的 provider 目录和协议适配，并支持自定义 OpenAI-compatible Chat Completions 服务。已发布 **0.4.4 / build 8** 完整 DMG，请按[安装指南](/fn/docs/installation)安装。预设目录随应用依赖更新，不代表所有服务已用真实账号逐一验收。
 
 从较早的开发版本升级时，已确认的模型 ID 重命名会自动迁移；已从目录移除且没有明确替代项的模型会保留配置和历史，并提示重新选择。应用不会擅自换用其他模型，需在设置中重新选择可用项后再生成。
 

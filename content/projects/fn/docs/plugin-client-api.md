@@ -3,12 +3,12 @@ id: "docs-fn-plugin-client-api"
 slug: "plugin-client-api"
 title: "前端 API"
 description: "模型、运行记录、KV、后端调用，以及事件订阅和重连的完整示例。"
-date: "2026-10-14"
+date: "2026-10-15"
 ---
 
-> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
-本页适用于 **fn 0.4.3 / SDK 0.3.2**。客户端只在宿主加载的插件页面中使用，不是独立网页或服务端 HTTP SDK。
+本页适用于 **fn 0.4.4 / SDK 0.3.4**。客户端只在宿主加载的插件页面中使用，不是独立网页或服务端 HTTP SDK。
 
 ## 创建客户端
 
@@ -285,4 +285,4 @@ export default function ModelPage() {
 
 BackendPlugin、PluginMethod、PluginContext 见[后端 API](/fn/docs/plugin-backend-api)；PluginManifest 见[清单](/fn/docs/plugin-manifest)。插件安装、市场配置和模型管理使用[宿主 CLI](/fn/docs/automation)，不能写成 `client.plugins.install` 或 `client.marketplaces`。
 
-来源：client.ts：`packages/sdk/src/client.ts`（本地源码）、types.ts：`packages/sdk/src/types.ts`（本地源码）、宿主校验：`shared/api.ts`（本地源码）。
+来源：client.ts：`packages/sdk/src/client.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、types.ts：`packages/sdk/src/types.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、宿主校验：`shared/api.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）。

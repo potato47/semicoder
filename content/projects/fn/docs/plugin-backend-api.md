@@ -3,12 +3,12 @@ id: "docs-fn-plugin-backend-api"
 slug: "plugin-backend-api"
 title: "后端 API"
 description: "定义带 schema 的插件方法，使用后端模型和 KV 上下文。"
-date: "2026-10-14"
+date: "2026-10-15"
 ---
 
-> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
-本页适用于 **fn 0.4.3 / SDK 0.3.2**。后端在宿主 Bun 进程运行，适合业务校验、数据整理和调用宿主模型。纯前端笔记插件不需要后端。
+本页适用于 **fn 0.4.4 / SDK 0.3.4**。后端在宿主 Bun 进程运行，适合业务校验、数据整理和调用宿主模型。纯前端笔记插件不需要后端。
 
 ## 定义与调用
 
@@ -142,4 +142,4 @@ export default function BackendNotes() {
 | 返回结果失败       | 是否为 JSON、是否超过 256 KiB、是否遗漏 return   |
 | 激活失败           | backend 默认导出、清单入口、模块初始化异常       |
 
-类型来源：runtime.ts：`packages/sdk/src/runtime.ts`（本地源码）、types.ts：`packages/sdk/src/types.ts`（本地源码）。宿主最终执行校验见插件实现：`backend/plugins.ts`（本地源码）。
+类型来源：runtime.ts：`packages/sdk/src/runtime.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）、types.ts：`packages/sdk/src/types.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）。宿主最终执行校验见插件实现：`backend/plugins.ts`（[v0.4.4 源码](https://github.com/semicoder-dev/fn/tree/v0.4.4)）。

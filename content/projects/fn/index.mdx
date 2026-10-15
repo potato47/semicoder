@@ -3,7 +3,7 @@ id: "project-fn"
 slug: "fn"
 title: "fn"
 description: "把模型、存储和界面能力组合起来，让每个插件成为一个好用的小应用。"
-date: "2026-10-14"
+date: "2026-10-15"
 tags: ["AI 应用", "插件平台", "macOS"]
 stack: ["FIA", "React", "Pi AI"]
 status: "构建中"
@@ -30,20 +30,20 @@ start: { "label": "下载与安装", "doc": "docs-fn-installation" }
 
 ## 从第一次翻译开始
 
-先按[本地构建说明](/fn/docs/installation)运行 fn，从「应用中心 → 从地址安装」安装译文归档，再在「设置 → 模型服务」添加模型。打开「译文」，选择模型、输入文字、开始翻译。没有配置时不会产生模拟结果。
+先按[安装指南](/fn/docs/installation)运行 fn，从「应用中心 → 插件市场」安装译文，再在「设置 → 模型服务」添加模型。打开「译文」，选择模型、输入文字、开始翻译。没有配置时不会产生模拟结果。
 
-还不想配置模型，也可以在应用中心安装本地随手记归档，先体验插件与本地存储。
+还不想配置模型，也可以在应用中心安装随手记，先体验插件与本地存储。
 
 ## 给插件开发者
 
 插件默认导出 React 页面，通过 `@semicoder/fn-sdk` 获取模型、任务和 KV。后端可注册带输入 schema 的业务方法，UI 组件与 React 运行时由宿主共享。
 
-从 [第一个插件](/fn/docs/plugin-development) 开始，继续阅读[插件结构](/fn/docs/plugin-manifest)、[前端 API](/fn/docs/plugin-client-api)、[后端 API](/fn/docs/plugin-backend-api)、[UI 组件](/fn/docs/plugin-ui)、[浮层与反馈](/fn/docs/plugin-ui-overlays)、[样式主题](/fn/docs/plugin-styling)和[构建分发](/fn/docs/plugin-distribution)。SDK 新包名尚未发布，CLI 创建的项目自带固定 SDK 快照，可脱离源码 workspace 开发。
+从 [第一个插件](/fn/docs/plugin-development) 开始，继续阅读[插件结构](/fn/docs/plugin-manifest)、[前端 API](/fn/docs/plugin-client-api)、[后端 API](/fn/docs/plugin-backend-api)、[UI 组件](/fn/docs/plugin-ui)、[浮层与反馈](/fn/docs/plugin-ui-overlays)、[样式主题](/fn/docs/plugin-styling)和[构建分发](/fn/docs/plugin-distribution)。SDK 0.3.4 已公开，CLI 创建的项目自带固定 SDK 快照，可脱离源码 workspace 开发。
 
 ## 当前边界
 
-当前本地源码版本保持 **0.4.3 / build 7**，支持 macOS 14+ / Apple Silicon。插件按可信本地代码运行，具有本机代码执行能力，不是强隔离沙箱。用户内容在调用模型时会发送到所选服务商，并非离线 AI。ChatGPT 凭证明文保存在受限本地文件，不再访问钥匙串；fn 使用独立数据目录，不读取或迁移旧应用数据。
+当前发行版本为 **0.4.4 / build 8**，支持 macOS 14+ / Apple Silicon。插件按可信本地代码运行，具有本机代码执行能力，不是强隔离沙箱。用户内容在调用模型时会发送到所选服务商，并非离线 AI。ChatGPT 凭证明文保存在受限本地文件，不再访问钥匙串；fn 使用独立数据目录，不读取或迁移旧应用数据。
 
 工具注册与调用、预设 agent loop、调研应用、其他服务商订阅登录和插件自动升级尚未实现。不要把规划中的能力当成当前功能。
 
-本页对应 fn 本地开发版，**尚未发布**。[本地构建与安装](/fn/docs/installation)提供可复现的源码步骤和插件归档用法。新名称的 GitHub 仓库、SDK npm、正式 DMG、更新源、市场和官网部署均待后续发布；现有版本号不是新产物已发布的证据。底层框架见 [FIA](/fia)。
+[下载与安装](/fn/docs/installation)提供已验收的完整 DMG、官方插件与源码构建步骤。应用、SDK 和插件分别发行；本次 SDK 为 0.3.4，官方译文与随手记为 0.1.2。底层框架见 [FIA](/fia)。

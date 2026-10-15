@@ -14,7 +14,7 @@ date: "2026-10-09"
 | ------------------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------- |
 | FIA npm 0.18.0            | [npm](https://www.npmjs.com/package/@semicoder/fia)                   | 新增原生标题栏置顶；包含默认浏览器界面、隔离预览、应用子命令和 DMG 分发 |
 | 历史应用使用的 FIA 0.18.0 | [框架归档](https://github.com/semicoder-dev/fia/releases/tag/v0.18.0) | 源码 `85206f6f5322`，与公开 npm 0.18.0 和 Actions artifact 逐字节一致   |
-| fn 应用                   | [下载与安装说明](/fn/docs/installation)                               | 本地更名开发版，尚未发布；macOS 14+ / Apple Silicon                     |
+| fn 应用                   | [下载与安装说明](/fn/docs/installation)                               | 0.4.4 / build 8；macOS 14+ / Apple Silicon                              |
 
 框架归档 `.tgz` 是开发依赖，不是双击安装的应用。FIA 4 的“4”也不是 npm 版本号。
 

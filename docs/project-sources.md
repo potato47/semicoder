@@ -1,6 +1,17 @@
 # 项目资料与发布状态
 
-## 2026-10-15 fn 发布前验收（未发布）
+## 2026-10-15 fn 首次发行
+
+用户明确授权 GitHub 更名及按 SDK、插件、应用、官网顺序发布。两个仓库原生更名为 `semicoder-dev/fn` / `semicoder-dev/fn-plugins`，仓库 ID、历史标签和 51 个附件的身份/大小/哈希保留。Git remote 与分发地址已同步；GitHub 自身的旧地址跳转不作为应用或官网兼容层。
+
+- SDK 0.3.3 使用完整验收归档完成首次创建；npm 在处理首次发布时自行生成的 `0.0.0-stage` 占位记录不是 SDK，未运行 staged publish。随后为新包配置限定 fn 仓库、`publish-npm.yml` 与 npm 环境的 Trusted Publisher，`sdk-v0.3.4` 固定 `38c93301fccf07bc6e979b062cb8d6c21bc36022`。实际 [OIDC 38689178626](https://github.com/semicoder-dev/fn/actions/runs/38689178626) 成功，latest 为 0.3.4；SHA-256 `255abaa94ef839a57810e7ce9aad87c873cd9578430fd9b427c7994cf901cbf5` 与 CI/本地产物一致，provenance 的仓库、标签、提交及归档摘要通过。新缓存独立安装、notes/model 创建/检查/构建/打包、UI/runtime/backend 与旧清单拒绝通过。
+- 官方译文 0.1.2 固定 `e6eebdac3f30ece19bd12ca5f336a91651ddcead`，随手记 0.1.2 固定 `11f6b6814166f8ff147a8145031f8052616122ef`，均精确消费 SDK 0.3.4。归档 SHA-256 分别为 `73dc775fb7e5b5d2125c1d01ed79f9a854bc8c6e54f6695cea421f17921bc938`、`ba05a8bba6c35de9b32a488d55bbdf9e928e5aea5b780fdbdc6964080ffdccff`。公开归档匿名验收后，市场 PR #8/#9 经 CI 合并；公开索引与候选条目逐项一致。旧 vendor 归档只保留历史，不参与当前依赖。
+- 应用 `v0.4.4` / build 8 固定 `0ddaeaaff7257085ff5a421b9fbc8b04c48a6440`，[正式流程 38690994572](https://github.com/semicoder-dev/fn/actions/runs/38690994572) 成功。公开 DMG `fn-0.4.4-8-mac-arm64.dmg` 为 35,442,136 字节，SHA-256 `0258a257fec62dd3a4c081572103053a9025a4ffdabb9379f8f0a805c5909994`。镜像、签名、公证票据、Gatekeeper、内嵌 SDK 43 文件与公开 npm 一致性通过。
+- 更新源 Ed25519 签名、全部 30 个 HTTPS 文件的大小/哈希及与 app 的逐文件一致性通过；runtimeId `63fc8f3442ec566b4502fa3e008db0a67237043546055380be32c71ff789d5b2`。全新数据目录最初没有模型或插件，从官方市场安装两个 0.1.2 插件并激活，页面、KV 保存/刷新恢复和临时目录安装的 fn CLI 通过。新 fn Dev 中公开译文归档使用用户已授权的 GPT-6-Luna 完成真实调用；未读取或迁移旧应用数据。首次 fn 发行暂无跨版本公开应用升级实测。
+
+官网全部 fn 指南、安装入口、内容 ID、导航和跨项目引用按这些公开产物同步，保持无旧路径重定向。网站质量、两环境部署与线上验收在 main 推送后独立执行，最终证据记录于 workspace 的 `docs/agent/sessions/2026-10-15-fn-release.md`；本节不以项目发布代替网站上线。以下为历史阶段记录。
+
+## 2026-10-15 fn 发布前验收（历史阶段）
 
 来源仍为应用 a304dfa、官方插件 8db83bd。新 fn Dev 由用户完成官方 OAuth，使用账号目录中的 GPT-6-Luna，通过本地官方译文归档完成一次真实调用，后台事件、终态及浏览器结果一致；正常退出重启后账号、模型及结果持久化。未验证令牌刷新/撤销、其他模型或正式签名公证。本次修正模型页残留的 0.4.1 / 已有 DMG 说明，统一为 0.4.3/build 7 本地源码与尚未发布边界；安装方式和契约未变。
 

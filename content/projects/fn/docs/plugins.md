@@ -3,12 +3,12 @@ id: "docs-fn-plugins"
 slug: "plugins"
 title: "安装与管理插件"
 description: "通过应用中心或 CLI 安装预构建插件，了解启停、升级和数据保留。"
-date: "2026-10-14"
+date: "2026-10-15"
 ---
 
-> 本地开发、尚未发布。本页对应 fn 更名后的源码；新 SDK、应用和官方市场尚未公开，请按[本地构建说明](/fn/docs/installation)使用。
+> 适用于 fn 0.4.4 / SDK 0.3.4，manifest 为 0.3。先按[安装指南](/fn/docs/installation)安装 fn；旧名称插件和旧应用数据不迁移。
 
-本页适用于 fn 本地源码。应用不内置插件，当前通过[本地归档步骤](/fn/docs/installation#安装官方插件的本地归档)安装官方插件；市场尚未发布。
+本页适用于 fn 0.4.4。应用不内置插件；官方市场已上架译文和随手记 0.1.2，详见[安装步骤](/fn/docs/installation#安装官方插件)。
 
 ## 从插件市场安装
 
@@ -18,7 +18,7 @@ date: "2026-10-14"
 
 ## 管理市场源
 
-默认配置目标官方市场，维护源码在 `fn-plugins` 本地仓库；新地址尚未上线。在「管理市场源」添加名称与 HTTPS 索引地址，也可重命名、启停和删除。官方源同样可以停用或删除，重启后不会恢复；修改地址请删除后重新添加。
+默认配置官方市场，维护源码在 [fn-plugins](https://github.com/semicoder-dev/fn-plugins)。在「管理市场源」添加名称与 HTTPS 索引地址，也可重命名、启停和删除。官方源同样可以停用或删除，重启后不会恢复；修改地址请删除后重新添加。
 
 不同源的同 ID 条目分别显示来源。已安装插件固定使用原市场更新，不跨来源替换；来源被删后插件仍可运行。手动安装不自动关联市场，如需市场更新，先卸载再从选定市场安装相同 ID。
 
@@ -63,6 +63,6 @@ fn call plugins.install --json '{"source":"/absolute/path/plugin.tgz"}'
 
 市场使用静态 JSON v1，包含 `schemaVersion/name/plugins`；条目包含 `id/packageName/name/description/icon/color/version/sdkVersion/url/sha256`。只列当前稳定版本，索引与归档使用 HTTPS，无需专门市场服务。
 
-参考`fn-plugins` 本地仓库及宿主协议：`docs/plugin-marketplace.md`（本地源码）。官方插件分别打标签、上传归档，验收公开下载哈希后通过索引 PR 上架。
+参考 [fn-plugins](https://github.com/semicoder-dev/fn-plugins) 及[宿主市场协议](https://github.com/semicoder-dev/fn/blob/v0.4.4/docs/plugin-marketplace.md)。官方插件分别打标签、上传归档，验收公开下载哈希后通过索引 PR 上架。
 
 制作自己的插件可从[第一个插件](/fn/docs/plugin-development)开始；归档、市场索引与更新规则见[构建与分发](/fn/docs/plugin-distribution)。

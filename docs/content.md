@@ -2,7 +2,7 @@
 
 ## 按项目维护内容
 
-2026-10-14：fn 更名仅在本地完成，官网源码与内容 ID 同步更新，新名称尚未发布。来源及既有发行历史见 [项目资料](project-sources.md)。
+2026-10-15：fn 两个 GitHub 仓库已更名，SDK 0.3.4、官方插件 0.1.2 和应用 0.4.4 / build 8 已公开并独立验收；本次官网内容按这些产物同步，网站部署单独验收。来源及既有发行历史见 [项目资料](project-sources.md)。
 
 博客放在 `content/blog/`。每个项目使用 `content/projects/<目录名>/index.mdx` 保存项目介绍和元信息；文档放在该项目的 `docs/` 下，支持递归子目录；`nav.json` 保存文档分组与阅读顺序。工程说明只放在仓库根目录的 `docs/`，不参与网站内容发布。
 
@@ -45,7 +45,7 @@
 
 当前真实内容包含 FIA、fn、agent-webtool 与本站。FIA 和 fn 分别在 `content/projects/fia/`、`content/projects/fn/` 维护，统一从项目集合页进入，时间首页不再展示项目推荐。资料、版本差异和跨项目同步流程见 [内容核对记录](project-sources.md)。各外部项目内容变更由 `docs/impact.json` 同时关联内容规范和来源记录；单纯文字修正无来源影响时按 PR 规则说明原因。fn 官网固定为 `https://semicoder.dev/fn`，统一安装入口为 `/fn/docs/installation`；应用更新文件继续由独立更新源提供。新增正式安装包时先核实 Release、文件、平台与签名状态，再更新 fn 安装页；框架 `.tgz` 不能标为应用下载。网站不代理安装包，不在访问时请求 GitHub 或 npm。
 
-fn 安装页明确标注“本地开发、尚未发布”，提供本地源码构建和 SDK 归档使用步骤，不提供尚不存在的 fn DMG 或 npm 安装入口。应用 0.4.3 / build 7、SDK 0.3.2 / manifest 0.3 是当前源码版本；相同版本号不代表原名产物就是 fn 产物。npm、应用 DMG 与网站部署状态分别核实。
+fn 安装页提供已独立验收的 0.4.4 / build 8 完整 DMG、签名公证与 SHA-256，SDK 固定公开 0.3.4 / manifest 0.3。官方市场的译文和随手记均为 0.1.2；npm、应用 DMG、市场与网站部署状态分别核实。
 
 agent-webtool 的介绍和安装/SDK/CLI/MCP 指南在 `content/projects/agent-webtool/`，默认使用已独立验证的公开 npm 0.7.1，包含 `SourceContext` 和 0.6.0 升级说明。项目的 CI 与 OIDC 发布已验收；网站内容和部署继续独立验证，不自动发布 npm 包。
 
@@ -57,11 +57,11 @@ fn 共 14 篇指南，其中 8 篇覆盖插件开发：工程入口、清单、�
 
 代码示例作为静态 Markdown 代码块展示，不在网站执行，不导入 SDK 或相邻工作区；组件与 API 以来源记录中注明的源码或发行归档核对，代码提取到独立临时插件工程验证。更新 SDK 时按公开导出核对全手册，同时维护版本边界、来源记录、站内链接、搜索与构建结果。
 
-## 分发目标与本地状态
+## 分发状态
 
-fn 目标仓库为 `semicoder-dev/fn` 和 `semicoder-dev/fn-plugins`；Git remote 保持当前真实旧地址。目标更新源为 `https://semicoder-dev.github.io/fn/updates/latest.json`，使用独立 `fn-updates-site` 生成分支；旧更新历史不读取或改写。当前官网只提供本地构建与归档使用步骤，等待 GitHub 更名、SDK 和插件公开验收、应用发行及网站部署后再增加公开入口。
+fn 仓库已更名为 `semicoder-dev/fn` 和 `semicoder-dev/fn-plugins`，本地 Git remote 已同步。更新源 `https://semicoder-dev.github.io/fn/updates/latest.json` 使用独立 `fn-updates-site` 生成分支；签名与 30 个公开文件均已验收。旧更新历史不读取或改写；历史标签和附件保留当时名称。
 
-官方插件暂用仓库内 `vendor/fn-sdk.tgz`，记录来源与哈希；新市场索引为空，不将旧归档登记为 fn 已发布插件。新应用身份使用独立数据目录，不提供旧名称、旧插件兼容或迁移。
+官方插件已切换精确公开 SDK 0.3.4，旧 `vendor/fn-sdk.tgz` 仅作历史证据，不参与安装。正式索引只登记公开验收过的两个 0.1.2 归档。新应用身份使用独立数据目录，不提供旧名称、旧插件兼容或迁移。
 
 ## 更名前的历史同步记录
 
